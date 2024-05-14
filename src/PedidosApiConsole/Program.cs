@@ -5,10 +5,12 @@ using TangoRestApiClient.services.pedidos.model;
 using TangoRestApiClient.services.condicionVentas;
 
 // Configuracion de conexión a Tango Delta.
-ITangoConfig config = new TangoConfig();
-config.TangoUrl = "http://euforia19.axoft.com:17000";
-config.ApiAuthorization = "F61B1448-486D-4C20-964B-EB30157976FD";
-config.CompanyId = "1";
+ITangoConfig config = new TangoConfig()
+{
+    TangoUrl = "http://euforia19.axoft.com:17000",
+    ApiAuthorization = "F61B1448-486D-4C20-964B-EB30157976FD",
+    CompanyId = "1"
+};
 
 
 // Instancia de PedidosServices

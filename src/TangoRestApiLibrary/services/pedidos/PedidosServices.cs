@@ -1,8 +1,7 @@
-using TangoRestApiClient.services.pedidos.model;
-using TangoRestApiClient.services.baseServices;
 using TangoRestApiClient.Common.Config;
 using TangoRestApiClient.Common.Model;
-using System.Collections.Generic;
+using TangoRestApiClient.services.baseServices;
+using TangoRestApiClient.services.pedidos.model;
 
 namespace TangoRestApiClient.services.pedidos;
 
@@ -44,5 +43,3 @@ public class PedidosServices : BaseServices, IPedidosServices
         throw new System.NotImplementedException();
     }
 }
-
-
