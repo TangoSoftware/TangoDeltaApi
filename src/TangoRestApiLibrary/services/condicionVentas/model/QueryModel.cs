@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Globalization;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace TangoRestApiClient.services.condicionVentas.model;
 
@@ -98,4 +94,3 @@ public class CondicionVentaQueryRecord
     [JsonProperty("COD_DESCRIP")]
     public string CodDescrip { get; set; }
 }
-

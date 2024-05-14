@@ -1,6 +1,5 @@
-using System.Net.Http;
-using System.Text;
 using System.Net.Http.Headers;
+using System.Text;
 using TangoRestApiClient.Common.Config;
 
 namespace TangoRestApiClient.services.baseServices;
@@ -98,7 +97,4 @@ public class BaseServices
             return "An error occurred";
         }
     }
-
-
-    
 }
