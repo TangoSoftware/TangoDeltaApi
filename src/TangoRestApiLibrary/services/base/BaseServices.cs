@@ -7,7 +7,7 @@ using TangoRestApiLibrary.services.DTO;
 namespace TangoRestApiClient.services.baseServices;
 
 public abstract class BaseServices<Q, D, QR>(ITangoConfig config)
-    where QR : BaseQueryRecord
+    : IBaseService<Q, D> where QR : BaseQueryRecord
 {
     protected readonly ITangoConfig _config = config;
 
