@@ -7,7 +7,7 @@ namespace TangoRestApiClient.services.condicionVentas;
 
 public class CondicionVentaServices(ITangoConfig config) : BaseServices(config), ICondicionVentaServices
 {
-    protected override string ProcessId { get => "2497"; }
+    protected override string ProcessId => "2497";
 
     public CondicionVentaQuery GetData()
     {
@@ -18,7 +18,7 @@ public class CondicionVentaServices(ITangoConfig config) : BaseServices(config),
 
     public CondicionVentaDataset GetDataById(int id)
     {
-        throw new System.NotImplementedException();
+        throw new NotImplementedException();
     }
 
     public TransactionResultModel Insert(CondicionVentaDataset data)
@@ -31,12 +31,12 @@ public class CondicionVentaServices(ITangoConfig config) : BaseServices(config),
 
     public TransactionResultModel Edit(CondicionVentaDataset data)
     {
-        throw new System.NotImplementedException();
+        throw new NotImplementedException();
     }
 
     public TransactionResultModel Delete(int id)
     {
-        throw new System.NotImplementedException();
+        throw new NotImplementedException();
     }
 
     public int GetIdByFilter(string filter)

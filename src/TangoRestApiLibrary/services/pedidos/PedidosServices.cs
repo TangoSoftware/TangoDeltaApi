@@ -18,7 +18,7 @@ public class PedidosServices(ITangoConfig config) : BaseServices(config), IPedid
 
     public PedidoDataset GetDataById(int id)
     {
-        throw new System.NotImplementedException();
+        throw new NotImplementedException();
     }
 
     
@@ -31,11 +31,11 @@ public class PedidosServices(ITangoConfig config) : BaseServices(config), IPedid
     }
     public TransactionResultModel Edit(PedidoDataset data)
     {
-        throw new System.NotImplementedException();
+        throw new NotImplementedException();
     }
 
     public TransactionResultModel Delete(int id)
     {
-        throw new System.NotImplementedException();
+        throw new NotImplementedException();
     }
 }

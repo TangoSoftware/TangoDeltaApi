@@ -2,6 +2,7 @@ using TangoRestApiClient.Common.Model;
 using TangoRestApiClient.services.condicionVentas.model;
 
 namespace TangoRestApiClient.services.condicionVentas;
+
 public interface ICondicionVentaServices
 {
     CondicionVentaQuery GetData();
