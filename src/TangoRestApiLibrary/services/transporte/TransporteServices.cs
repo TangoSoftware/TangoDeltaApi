@@ -1,53 +1,53 @@
-using TangoRestApiClient.Common.Config;
 using TangoRestApiClient.Common.Model;
+using TangoRestApiClient.Common.Config;
+using TangoRestApiClient.services.transporte.model;
 using TangoRestApiClient.services.baseServices;
-using TangoRestApiClient.services.pedidos.model;
 
-namespace TangoRestApiClient.services.pedidos;
+namespace TangoRestApiClient.services.transporte;
 
-public class PedidosServices : BaseServices, IPedidosServices
+public class TransporteServices : BaseServices, ITransporteServices
 {
-
-    public PedidosServices(ITangoConfig config) : base(config)
+    public TransporteServices(ITangoConfig config) : base(config)
     {
-        ProcessId = "19845";
+        ProcessId = "960";
     }
 
-    public PedidoQuery GetData()
+    public TransporteQuery GetData()
     {
         var dataJson = ServiceGetData();
         if (dataJson.Result != null)
         {
             try
             {
-                PedidoQuery data = Newtonsoft.Json.JsonConvert.DeserializeObject<PedidoQuery>(dataJson.Result);
+                TransporteQuery data = Newtonsoft.Json.JsonConvert.DeserializeObject<TransporteQuery>(dataJson.Result);
                 return data;
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error al deserializar el resultado de la transacción: {ex.Message}");
-                return new PedidoQuery();
+                return new TransporteQuery();
             }
         }
         else
         {
+
             Console.WriteLine($"dataJson.Result is null");
-            return new PedidoQuery();
+            return new TransporteQuery();
         }
     }
 
-    public PedidoDataset GetDataById(int id)
+    public TransporteDataset GetDataById(int id)
     {
         throw new System.NotImplementedException();
     }
 
-    public TransactionResultModel Insert(PedidoDataset data)
+    public TransactionResultModel Insert(TransporteDataset data)
     {
         string jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(data);
         string resultJson = ServicePostData(jsonData).Result;
         if (resultJson != null)
         {
-            try
+            try 
             {
                 TransactionResultModel result = Newtonsoft.Json.JsonConvert.DeserializeObject<TransactionResultModel>(resultJson);
                 return result;
@@ -65,7 +65,7 @@ public class PedidosServices : BaseServices, IPedidosServices
         }
     }
 
-    public TransactionResultModel Edit(PedidoDataset data)
+    public TransactionResultModel Edit(TransporteDataset data)
     {
         throw new System.NotImplementedException();
     }
@@ -73,5 +73,19 @@ public class PedidosServices : BaseServices, IPedidosServices
     public TransactionResultModel Delete(int id)
     {
         throw new System.NotImplementedException();
+    }
+
+    public int GetIdByFilter(string filter)
+    {
+        var dataJson = ServiceGetDataFilter(filter);
+        if (dataJson.Result != null)
+        {
+            ResultData data = Newtonsoft.Json.JsonConvert.DeserializeObject<ResultData>(dataJson.Result);
+            if ((data.List != null) && (data.List.Count()) > 0)
+            {
+                return data.List[0].IdGva24;
+            }
+        }
+        return 0;
     }
 }

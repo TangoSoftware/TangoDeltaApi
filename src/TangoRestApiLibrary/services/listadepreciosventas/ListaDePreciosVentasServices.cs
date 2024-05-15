@@ -1,53 +1,53 @@
-using TangoRestApiClient.Common.Config;
 using TangoRestApiClient.Common.Model;
+using TangoRestApiClient.Common.Config;
+using TangoRestApiClient.services.listadepreciosventas.model;
 using TangoRestApiClient.services.baseServices;
-using TangoRestApiClient.services.pedidos.model;
 
-namespace TangoRestApiClient.services.pedidos;
+namespace TangoRestApiClient.services.listadepreciosventas;
 
-public class PedidosServices : BaseServices, IPedidosServices
+public class ListaDePreciosVentasServices : BaseServices, IListaDePreciosVentasServices
 {
-
-    public PedidosServices(ITangoConfig config) : base(config)
+    public ListaDePreciosVentasServices(ITangoConfig config) : base(config)
     {
-        ProcessId = "19845";
+        ProcessId = "984";
     }
 
-    public PedidoQuery GetData()
+    public ListaDePreciosVentasQuery GetData()
     {
         var dataJson = ServiceGetData();
         if (dataJson.Result != null)
         {
             try
             {
-                PedidoQuery data = Newtonsoft.Json.JsonConvert.DeserializeObject<PedidoQuery>(dataJson.Result);
+                ListaDePreciosVentasQuery data = Newtonsoft.Json.JsonConvert.DeserializeObject<ListaDePreciosVentasQuery>(dataJson.Result);
                 return data;
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error al deserializar el resultado de la transacción: {ex.Message}");
-                return new PedidoQuery();
+                return new ListaDePreciosVentasQuery();
             }
         }
         else
         {
+
             Console.WriteLine($"dataJson.Result is null");
-            return new PedidoQuery();
+            return new ListaDePreciosVentasQuery();
         }
     }
 
-    public PedidoDataset GetDataById(int id)
+    public ListaDePreciosVentasDataset GetDataById(int id)
     {
         throw new System.NotImplementedException();
     }
 
-    public TransactionResultModel Insert(PedidoDataset data)
+    public TransactionResultModel Insert(ListaDePreciosVentasDataset data)
     {
         string jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(data);
         string resultJson = ServicePostData(jsonData).Result;
         if (resultJson != null)
         {
-            try
+            try 
             {
                 TransactionResultModel result = Newtonsoft.Json.JsonConvert.DeserializeObject<TransactionResultModel>(resultJson);
                 return result;
@@ -65,7 +65,7 @@ public class PedidosServices : BaseServices, IPedidosServices
         }
     }
 
-    public TransactionResultModel Edit(PedidoDataset data)
+    public TransactionResultModel Edit(ListaDePreciosVentasDataset data)
     {
         throw new System.NotImplementedException();
     }
@@ -73,5 +73,19 @@ public class PedidosServices : BaseServices, IPedidosServices
     public TransactionResultModel Delete(int id)
     {
         throw new System.NotImplementedException();
+    }
+
+    public int GetIdByFilter(string filter)
+    {
+        var dataJson = ServiceGetDataFilter(filter);
+        if (dataJson.Result != null)
+        {
+            ResultData data = Newtonsoft.Json.JsonConvert.DeserializeObject<ResultData>(dataJson.Result);
+            if ((data.List != null) && (data.List.Count()) > 0)
+            {
+                return data.List[0].IdGva10;
+            }
+        }
+        return 0;
     }
 }

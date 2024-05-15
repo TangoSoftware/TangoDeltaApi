@@ -5,10 +5,10 @@ namespace TangoRestApiClient.Common.Model;
 public class TransactionResultModel
 {
     [JsonProperty("message")]
-    public string Message { get; set; }
+    public string? Message { get; set; }
 
     [JsonProperty("exceptionInfo")]
-    public ExceptionInfo ExceptionInfo { get; set; }
+    public ExceptionInfo? ExceptionInfo { get; set; }
 
     [JsonProperty("succeeded")]
     public bool Succeeded { get; set; }
@@ -20,11 +20,11 @@ public class TransactionResultModel
 public class ExceptionInfo
 {
     [JsonProperty("title")]
-    public string Title { get; set; }
+    public string? Title { get; set; }
 
     [JsonProperty("messages")]
-    public string[] Messages { get; set; }
+    public string[]? Messages { get; set; }
 
     [JsonProperty("detailMessages")]
-    public string[] DetailMessages { get; set; }
+    public string[]? DetailMessages { get; set; }
 }

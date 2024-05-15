@@ -12,6 +12,7 @@ public class BaseServices
     public BaseServices(ITangoConfig config)
     {
         _config = config;
+        ProcessId = "0";
     }
 
     public async Task<string> ServiceGetData(){

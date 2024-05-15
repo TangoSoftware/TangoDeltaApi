@@ -5,13 +5,13 @@ namespace TangoRestApiClient.services.pedidos.model;
 public class PedidoData
 {
     [JsonProperty("value")]
-    public PedidoDataset Value { get; set; }
+    public PedidoDataset? Value { get; set; }
 
     [JsonProperty("message")]
-    public string Message { get; set; }
+    public string? Message { get; set; }
 
     [JsonProperty("exceptionInfo")]
-    public string ExceptionInfo { get; set; }
+    public object? ExceptionInfo { get; set; }
 
     [JsonProperty("succeeded")]
     public bool Succeeded { get; set; }
@@ -26,7 +26,7 @@ public class PedidoDataset
     public int IdGva43TalonPed { get; set; }
 
     [JsonProperty("NRO_PEDIDO")]
-    public string NroPedido { get; set; }
+    public string? NroPedido { get; set; }
 
     [JsonProperty("FECHA_PEDIDO")]
     public DateTimeOffset FechaPedido { get; set; }
@@ -62,7 +62,7 @@ public class PedidoDataset
     public DateTimeOffset FechaEntrega { get; set; }
 
     [JsonProperty("ID_ASIENTO_MODELO_GV")]
-    public string IdAsientoModeloGv { get; set; }
+    public int IdAsientoModeloGv { get; set; }
 
     [JsonProperty("ID_GVA43_TALONARIO_FACTURA")]
     public int? IdGva43TalonarioFactura { get; set; }
@@ -83,32 +83,32 @@ public class PedidoDataset
     public string? NroRemito { get; set; }
 
     [JsonProperty("ID_ACTIVIDAD_EMPRESA_AFIP")]
-    public string IdActividadEmpresaAfip { get; set; }
+    public int IdActividadEmpresaAfip { get; set; }
 
     [JsonProperty("ACTIVIDAD_COMPROBANTE_AFIP")]
-    public string ActividadComprobanteAfip { get; set; }
+    public string? ActividadComprobanteAfip { get; set; }
 
 // hablar con Ruiz para ver si se puede sacar
     [JsonProperty("ID_TIPO_DOCUMENTO_GV")]
     public int? IdTipoDocumentoGv { get; set; }
 
     [JsonProperty("NUMERO_DOCUMENTO_PAGADOR")]
-    public string NumeroDocumentoPagador { get; set; }
+    public string? NumeroDocumentoPagador { get; set; }
 
     [JsonProperty("LEYENDA_1")]
-    public string Leyenda1 { get; set; }
+    public string? Leyenda1 { get; set; }
 
     [JsonProperty("LEYENDA_2")]
-    public string Leyenda2 { get; set; }
+    public string? Leyenda2 { get; set; }
 
     [JsonProperty("LEYENDA_3")]
-    public string Leyenda3 { get; set; }
+    public string? Leyenda3 { get; set; }
 
     [JsonProperty("LEYENDA_4")]
-    public string Leyenda4 { get; set; }
+    public string? Leyenda4 { get; set; }
 
     [JsonProperty("LEYENDA_5")]
-    public string Leyenda5 { get; set; }
+    public string? Leyenda5 { get; set; }
 
     [JsonProperty("APLICA_DESCUENTO_CLIENTE")]
     public bool AplicaDescuentoCliente { get; set; }
@@ -138,10 +138,10 @@ public class PedidoDataset
     public decimal ImporteInteres { get; set; }
 
     [JsonProperty("COMENTARIO")]
-    public string Comentario { get; set; }
+    public string? Comentario { get; set; }
 
     [JsonProperty("OBSERVACIONES")]
-    public string Observaciones { get; set; }
+    public string? Observaciones { get; set; }
 
     [JsonProperty("COMPROMETE_STOCK")]
     public bool ComprometeStock { get; set; }
@@ -150,7 +150,7 @@ public class PedidoDataset
     public int? IdSucursalDestino { get; set; }
 
     [JsonProperty("RENGLON_DTO")]
-    public List<RenglonDto> RenglonDto { get; set; }
+    public List<RenglonDto>? RenglonDto { get; set; }
 
     [JsonProperty("ES_CLIENTE_HABITUAL")]
     public bool EsClienteHabitual { get; set; }
@@ -162,13 +162,13 @@ public class PedidoDataset
     public bool ValidarLimiteCredito { get; set; }
 
     [JsonProperty("ID_SBA01")]
-    public string IdSba01 { get; set; }
+    public int? IdSba01 { get; set; }
 
     [JsonProperty("CLIENTE_OCASIONAL_DTO")]
-    public string ClienteOcasionalDto { get; set; }
+    public string? ClienteOcasionalDto { get; set; }
 
     [JsonProperty("NOTA_PEDIDO_DTO")]
-    public string NotaPedidoDto { get; set; }
+    public string? NotaPedidoDto { get; set; }
 }
 
 public class RenglonDto
@@ -201,20 +201,20 @@ public class RenglonDto
     public int IdGva81 { get; set; }
 
     [JsonProperty("OBSERVACIONES")]
-    public string Observaciones { get; set; }
+    public string? Observaciones { get; set; }
 
     [JsonProperty("DESCRIPCION_ARTICULO")]
-    public string DescripcionArticulo { get; set; }
+    public string? DescripcionArticulo { get; set; }
 
     [JsonProperty("DESCRIPCION_ADICIONAL_ARTICULO")]
-    public string DescripcionAdicionalArticulo { get; set; }
+    public string? DescripcionAdicionalArticulo { get; set; }
 
     [JsonProperty("PLAN_DE_ENTREGA_DTO")]
-    public string PlanDeEntregaDto { get; set; }
+    public string? PlanDeEntregaDto { get; set; }
 
     [JsonProperty("DESCRIPCION_ADICIONAL_DTO")]
-    public string DescripcionAdicionalDto { get; set; }
+    public string? DescripcionAdicionalDto { get; set; }
 
     [JsonProperty("MODULO_UNIDAD_MEDIDA")]
-    public string ModuloUnidadMedida { get; set; }
+    public string? ModuloUnidadMedida { get; set; }
 }
