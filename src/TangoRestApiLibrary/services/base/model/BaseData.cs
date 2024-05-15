@@ -5,7 +5,7 @@ namespace TangoRestApiLibrary.services.basemodel;
 public abstract class BaseData<D> where D : BaseDataset
 {
     [JsonProperty("value")]
-    public D Value { get; set; }
+    public D? Value { get; set; }
 
     [JsonProperty("message")]
     public string? Message { get; set; }

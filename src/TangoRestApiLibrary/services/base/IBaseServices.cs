@@ -5,8 +5,8 @@ namespace TangoRestApiClient.services.baseServices;
 /// <summary>
 /// llename
 /// </summary>
-/// <typeparam name="Q"></typeparam>
-/// <typeparam name="D"></typeparam>
+/// <typeparam name="Q">Query</typeparam>
+/// <typeparam name="D">Dataset</typeparam>
 public interface IBaseServices<Q, D>
 {
     Q GetData();

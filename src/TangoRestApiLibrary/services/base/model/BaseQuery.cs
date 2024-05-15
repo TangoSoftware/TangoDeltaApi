@@ -4,7 +4,7 @@ namespace TangoRestApiLibrary.services.basemodel;
 public abstract class BaseQuery<D, QR> where D : BaseResultData<QR> where QR : BaseQueryRecord
 {
     [JsonProperty("resultData")]
-    public D ResultData { get; set; }
+    public D? ResultData { get; set; }
 
     [JsonProperty("message")]
     public object Message { get; set; }
@@ -19,7 +19,7 @@ public abstract class BaseQuery<D, QR> where D : BaseResultData<QR> where QR : B
 public abstract class BaseResultData<QR> where QR : BaseQueryRecord
 {
     [JsonProperty("list")]
-    public QR[] List { get; set; }
+    public QR[]? List { get; set; }
 
     [JsonProperty("pageIndex")]
     public int PageIndex { get; set; }

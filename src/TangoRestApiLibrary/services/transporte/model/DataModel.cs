@@ -1,23 +1,13 @@
 using Newtonsoft.Json;
+using TangoRestApiLibrary.services.basemodel;
 
 namespace TangoRestApiClient.services.transporte.model;
 
-public class TransporteData
+public class TransporteData: BaseData<TransporteDataset>
 {
-    [JsonProperty("value")]
-    public TransporteDataset? Value { get; set; }
-
-    [JsonProperty("message")]
-    public string? Message { get; set; }
-
-    [JsonProperty("exceptionInfo")]
-    public object? ExceptionInfo { get; set; }
-
-    [JsonProperty("succeeded")]
-    public bool Succeeded { get; set; }
 }
 
-public partial class TransporteDataset
+public partial class TransporteDataset: BaseDataset
 {
     [JsonProperty("ID_GVA24")]
     public int IdGva24 { get; set; }
