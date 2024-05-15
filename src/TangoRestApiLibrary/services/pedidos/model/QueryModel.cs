@@ -1,48 +1,23 @@
 using Newtonsoft.Json;
+using TangoRestApiLibrary.services.DTO;
 
 namespace TangoRestApiClient.services.pedidos.model;
 
-public class PedidoQuery
+public class PedidoQuery: BaseQuery<ResultData, PedidoQueryRecord>
 {
-    [JsonProperty("resultData")]
-    public ResultData ResultData { get; set; }
-
-    [JsonProperty("message")]
-    public object Message { get; set; }
-
-    [JsonProperty("exceptionInfo")]
-    public object ExceptionInfo { get; set; }
-
-    [JsonProperty("succeeded")]
-    public bool Succeeded { get; set; }
 }
 
-public class ResultData
+public class ResultData: BaseResultData<PedidoQueryRecord>
 {
-    [JsonProperty("list")]
-    public PedidoQueryRecord[] List { get; set; }
-
-    [JsonProperty("pageIndex")]
-    public long PageIndex { get; set; }
-
-    [JsonProperty("pageSize")]
-    public long PageSize { get; set; }
-
-    [JsonProperty("totalCount")]
-    public long TotalCount { get; set; }
-
-    [JsonProperty("totalPages")]
-    public long TotalPages { get; set; }
-
-    [JsonProperty("hasPreviousPage")]
-    public bool HasPreviousPage { get; set; }
-
-    [JsonProperty("hasNextPage")]
-    public bool HasNextPage { get; set; }
 }
 
-public class PedidoQueryRecord
+public class PedidoQueryRecord: BaseQueryRecord
 {
+    public override int GetId()
+    {
+        return IdGva21;
+    }
+
     [JsonProperty("ID_GVA21")]
     public int IdGva21 { get; set; }
 

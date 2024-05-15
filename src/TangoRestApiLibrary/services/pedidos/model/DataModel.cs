@@ -1,23 +1,13 @@
 using Newtonsoft.Json;
+using TangoRestApiLibrary.services.DTO;
 
 namespace TangoRestApiClient.services.pedidos.model;
 
-public class PedidoData
+public class PedidoData: BaseData<PedidoDataset>
 {
-    [JsonProperty("value")]
-    public PedidoDataset Value { get; set; }
-
-    [JsonProperty("message")]
-    public string Message { get; set; }
-
-    [JsonProperty("exceptionInfo")]
-    public string ExceptionInfo { get; set; }
-
-    [JsonProperty("succeeded")]
-    public bool Succeeded { get; set; }
 }
 
-public class PedidoDataset
+public class PedidoDataset: BaseDataset
 {
     [JsonProperty("ID_GVA21")]
     public int IdGva21 { get; set; }

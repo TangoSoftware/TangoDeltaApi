@@ -1,23 +1,13 @@
 using Newtonsoft.Json;
+using TangoRestApiLibrary.services.DTO;
 
 namespace TangoRestApiClient.services.condicionVentas.model;
 
-public class CondicionVentaData
+public class CondicionVentaData: BaseData<CondicionVentaDataset>
 {
-    [JsonProperty("value")]
-    public CondicionVentaDataset Value { get; set; }
-
-    [JsonProperty("message")]
-    public object Message { get; set; }
-
-    [JsonProperty("exceptionInfo")]
-    public object ExceptionInfo { get; set; }
-
-    [JsonProperty("succeeded")]
-    public bool Succeeded { get; set; }
 }
 
-public class CondicionVentaDataset
+public class CondicionVentaDataset: BaseDataset
 {
     [JsonProperty("ID_GVA01")]
     public int IdGva01 { get; set; }
