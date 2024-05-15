@@ -3,21 +3,19 @@ using System.Text;
 using TangoRestApiClient.Common.Config;
 
 namespace TangoRestApiClient.services.baseServices;
-public class BaseServices
-{
-    protected string ProcessId {get;set;}
-    
-    protected ITangoConfig _config;
 
-    public BaseServices(ITangoConfig config)
-    {
-        _config = config;
-    }
+public abstract class BaseServices(ITangoConfig config)
+{
+    protected readonly ITangoConfig _config = config;
+
+    protected abstract string ProcessId { get; }
 
     public async Task<string> ServiceGetData(){
-        var builder = new UriBuilder(_config.TangoUrl);
-        builder.Path = "api/Get";
-        builder.Query = $"process={ProcessId}&pageSize={100}&pageIndex={0}&view=";
+        var builder = new UriBuilder(_config.TangoUrl)
+        {
+            Path = "api/Get",
+            Query = $"process={ProcessId}&pageSize={100}&pageIndex={0}&view="
+        };
 
         var client = new HttpClient();
         client.DefaultRequestHeaders.Accept.Clear();
@@ -42,9 +40,11 @@ public class BaseServices
     }
 
    public async Task<string> ServiceGetDataFilter(string filter){
-        var builder = new UriBuilder(_config.TangoUrl);
-        builder.Path = "api/GetByFilter";
-        builder.Query = $"process={ProcessId}&view=&filtroSql=WHERE%20{System.Net.WebUtility.UrlEncode(filter)}";
+        var builder = new UriBuilder(_config.TangoUrl)
+        {
+            Path = "api/GetByFilter",
+            Query = $"process={ProcessId}&view=&filtroSql=WHERE%20{System.Net.WebUtility.UrlEncode(filter)}"
+        };
 
         var client = new HttpClient();
         client.DefaultRequestHeaders.Accept.Clear();
@@ -70,9 +70,11 @@ public class BaseServices
 
     public async Task<string> ServicePostData(string jsonData)
     {
-        var builder = new UriBuilder(_config.TangoUrl);
-        builder.Path = "api/Create";
-        builder.Query = $"process={ProcessId}";
+        var builder = new UriBuilder(_config.TangoUrl)
+        {
+            Path = "api/Create",
+            Query = $"process={ProcessId}"
+        };
         var client = new HttpClient();
         client.DefaultRequestHeaders.Accept.Clear();
         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));

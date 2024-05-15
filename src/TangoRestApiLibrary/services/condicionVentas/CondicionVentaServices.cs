@@ -1,16 +1,13 @@
-using TangoRestApiClient.Common.Model;
 using TangoRestApiClient.Common.Config;
-using TangoRestApiClient.services.condicionVentas.model;
+using TangoRestApiClient.Common.Model;
 using TangoRestApiClient.services.baseServices;
+using TangoRestApiClient.services.condicionVentas.model;
 
 namespace TangoRestApiClient.services.condicionVentas;
 
-public class CondicionVentaServices : BaseServices, ICondicionVentaServices
+public class CondicionVentaServices(ITangoConfig config) : BaseServices(config), ICondicionVentaServices
 {
-    public CondicionVentaServices(ITangoConfig config) : base(config)
-    {
-        ProcessId = "2497";
-    }
+    protected override string ProcessId { get => "2497"; }
 
     public CondicionVentaQuery GetData()
     {
