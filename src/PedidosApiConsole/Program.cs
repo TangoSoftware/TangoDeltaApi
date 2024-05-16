@@ -67,14 +67,13 @@ pedido.RenglonDto = new List<RenglonDto>();
 pedido.RenglonDto.Add(new RenglonDto() { IdSta22 = 1,  IdSta11 = 33, IdGva81 = 1, ModuloUnidadMedida = "GV",  CantidadPedida = 10, Precio = 100 });
 
 // Enviamos a insertar el pedido cargado.
-TransactionResultModel transactionResult = pedidosServices.Insert(pedido);
-
-if (transactionResult.Succeeded)
+try
 {
-    Console.WriteLine($"Id Pedido {transactionResult.SavedId} creado con exito!");
+    int savedId = pedidosServices.Insert(pedido);
+    Console.WriteLine($"Id Pedido {savedId} creado con exito!");
 }
-else
+catch (Exception ex)
 {
-    Console.WriteLine($"Error al crear el pedido {pedido.NroPedido}. ({transactionResult.Message})");
-    Console.WriteLine($"Title: ({transactionResult.ExceptionInfo.Title}), Messeges: {transactionResult.ExceptionInfo.Messages.FirstOrDefault()}");
+    Console.WriteLine($"Error al crear el pedido {pedido.NroPedido}. ({ex.Message})");
+//    Console.WriteLine($"Title: ({transactionResult.ExceptionInfo.Title}), Messeges: {transactionResult.ExceptionInfo.Messages.FirstOrDefault()}");
 }
