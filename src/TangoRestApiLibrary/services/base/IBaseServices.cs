@@ -7,12 +7,12 @@ namespace TangoRestApiClient.services.baseServices;
 /// </summary>
 /// <typeparam name="Q">Query</typeparam>
 /// <typeparam name="D">Dataset</typeparam>
-public interface IBaseServices<Q, D>
+public interface IBaseServices<Q, D, BD>
 {
     Q GetData();
     D GetDataById(int id);
     int GetIdByFilter(string filter);
-    TransactionResultModel Insert(D data);
-    TransactionResultModel Edit(D data);
+    TransactionResultModel Insert(BD data);
+    TransactionResultModel Edit(BD data);
     TransactionResultModel Delete(int id);
 }

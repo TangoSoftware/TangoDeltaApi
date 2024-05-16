@@ -3,6 +3,6 @@ using TangoRestApiClient.services.condicionVentas.model;
 
 namespace TangoRestApiClient.services.condicionVentas;
 
-public interface ICondicionVentaServices: IBaseServices<CondicionVentaQuery, CondicionVentaDataset>
+public interface ICondicionVentaServices: IBaseServices<CondicionVentaQuery, CondicionVentaData, CondicionVentaDataset>
 {
 }

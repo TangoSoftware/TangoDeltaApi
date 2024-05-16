@@ -33,11 +33,11 @@ else
 
 // Crear un nuevo cliente
 
-ClienteDataset cliente = new ClienteDataset{ CodGva14  = "330002"};
+ClienteDataset cliente = new ClienteDataset{ CodGva14  = "330004"};
 
 cliente.RazonSoci = "Cliente Prueba";
 cliente.NomCom = "Api Fiendly S.A.";
-cliente.Cuit = "20330021111";
+cliente.Cuit = "20330041111";
 cliente.CupoCredi=0;
 cliente.Exporta=true;
 cliente.IiD="N";

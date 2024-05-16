@@ -3,6 +3,6 @@ using TangoRestApiClient.services.vendedor.model;
 
 namespace TangoRestApiClient.services.vendedor;
 
-public interface IVendedorServices: IBaseServices<VendedorQuery, VendedorDataset>
+public interface IVendedorServices: IBaseServices<VendedorQuery, VendedorData, VendedorDataset>
 {
 }

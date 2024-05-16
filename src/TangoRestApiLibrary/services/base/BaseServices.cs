@@ -1,5 +1,6 @@
 using System.Net.Http.Headers;
 using System.Text;
+using Newtonsoft.Json.Linq;
 using TangoRestApiClient.Common.Config;
 using TangoRestApiClient.Common.Model;
 using TangoRestApiLibrary.services.basemodel;
@@ -10,13 +11,17 @@ namespace TangoRestApiClient.services.baseServices;
 /// 
 /// </summary>
 /// <typeparam name="Q">Query</typeparam>
-/// <typeparam name="D">Dataset</typeparam>
+/// <typeparam name="BD">Dataset</typeparam>
 /// <typeparam name="QR">QueryRecord</typeparam>
 /// <param name="config"></param>
-public abstract class BaseServices<Q, D, QR>(ITangoConfig config)
-    : IBaseServices<Q, D>
+public abstract class BaseServices<Q, D ,BD, QR, BRD>(ITangoConfig config)
+    : IBaseServices<Q, D, BD>
     where Q : new()
     where QR : BaseQueryRecord
+    where BRD : BaseResultData<QR>
+    where D: BaseData<BD>
+    where BD : BaseDataset
+
 {
     protected readonly ITangoConfig _config = config;
 
@@ -209,7 +214,8 @@ public abstract class BaseServices<Q, D, QR>(ITangoConfig config)
         {
             try
             {
-                D? data = Newtonsoft.Json.JsonConvert.DeserializeObject<D>(dataJson.Result);
+                //JToken.Parse(dataJson.Result).Value<D>();
+                D? data = JToken.Parse(dataJson.Result).Value<D>(); //Newtonsoft.Json.JsonConvert.DeserializeObject<BD>(dataJson.Result);
                 ThrowExceptionIfDataIsNull(data);
                 return data;
             }
@@ -232,8 +238,9 @@ public abstract class BaseServices<Q, D, QR>(ITangoConfig config)
         var dataJson = ServiceGetDataFilter(filter);
         if (dataJson.Result != null)
         {
-            BaseResultData<QR> data = Newtonsoft.Json.JsonConvert.DeserializeObject<BaseResultData<QR>>(dataJson.Result);
-            if ((data.List != null) && (data.List.Count()) > 0)
+            BRD? data = Newtonsoft.Json.JsonConvert.DeserializeObject<BRD>(dataJson.Result);
+            ThrowExceptionIfDataIsNull(data);
+            if ((data.List != null) && (data.List.Count() > 0))
             {
                 return data.List[0].GetId();
             }
@@ -241,7 +248,7 @@ public abstract class BaseServices<Q, D, QR>(ITangoConfig config)
         return 0;
     }
 
-    public TransactionResultModel Insert(D data)
+    public TransactionResultModel Insert(BD data)
     {
         string jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(data);
         string resultJson = ServicePostData(jsonData).Result;
@@ -265,7 +272,7 @@ public abstract class BaseServices<Q, D, QR>(ITangoConfig config)
         }
     }
 
-    public TransactionResultModel Edit(D data)
+    public TransactionResultModel Edit(BD data)
     {
         string jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(data);
         string resultJson = ServicePutData(jsonData).Result;
