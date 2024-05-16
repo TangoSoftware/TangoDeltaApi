@@ -3,14 +3,6 @@ using TangoRestApiLibrary.services.basemodel;
 
 namespace TangoRestApiClient.services.listadepreciosventas.model;
 
-public class ListaDePreciosVentasQuery: BaseQuery<ResultData, ListaDePreciosVentasQueryRecord>
-{
-}
-
-public class ResultData: BaseResultData<ListaDePreciosVentasQueryRecord>
-{
-}
-
 public class ListaDePreciosVentasQueryRecord : BaseQueryRecord
 {
     public override int GetId()

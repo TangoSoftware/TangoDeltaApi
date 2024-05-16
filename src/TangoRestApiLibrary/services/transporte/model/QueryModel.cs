@@ -3,14 +3,6 @@ using TangoRestApiLibrary.services.basemodel;
 
 namespace TangoRestApiClient.services.transporte.model;
 
-public partial class TransporteQuery: BaseQuery<ResultData, TransporteQueryRecord>
-{
-}
-
-public partial class ResultData: BaseResultData<TransporteQueryRecord>
-{    
-}
-
 public  class TransporteQueryRecord: BaseQueryRecord
 {
     public override int GetId()

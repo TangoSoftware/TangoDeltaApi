@@ -25,23 +25,17 @@ ITransporteServices transporteServices = new TransporteServices(config);
 IVendedorServices vendedorServices = new VendedorServices(config);
 
 // Obtengo los pedidos de la vista principal de pedidos.
-PedidoQuery data = pedidosServices.GetData();
+List<PedidoQueryRecord> data = pedidosServices.GetData();
 
-if (data.Succeeded)
+
+foreach (var item in data)
 {
-    foreach (var item in data.ResultData.List)
-    {
-        Console.WriteLine($"Pedido: {item.IdGva21} - NroPedido: {item.NroPedido} - Cliente: {item.RazonSocialCliente}");
-    }
-}
-else
-{
-    Console.WriteLine($"Error al obtener los pedidos. ({data.Message})");
+    Console.WriteLine($"Pedido: {item.IdGva21} - NroPedido: {item.NroPedido} - Cliente: {item.RazonSocialCliente}");
 }
 
 // Alta de nuevo pedido.
 
-PedidoDataset pedido = new PedidoDataset();
+PedidoData pedido = new PedidoData();
 
 // talonario pedido. 
 pedido.IdGva43TalonPed = 6; // Talonario = 5

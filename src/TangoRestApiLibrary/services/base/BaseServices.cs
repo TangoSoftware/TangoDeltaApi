@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Net.Http.Headers;
 using System.Text;
 using Newtonsoft.Json.Linq;
@@ -10,18 +11,13 @@ namespace TangoRestApiClient.services.baseServices;
 /// <summary>
 /// 
 /// </summary>
-/// <typeparam name="Q">Query</typeparam>
-/// <typeparam name="BD">Dataset</typeparam>
 /// <typeparam name="QR">QueryRecord</typeparam>
+/// /// <typeparam name="D">Data</typeparam>
 /// <param name="config"></param>
-public abstract class BaseServices<Q, D ,BD, QR, BRD>(ITangoConfig config)
-    : IBaseServices<Q, D, BD>
-    where Q : new()
+public abstract class BaseServices<QR, D>(ITangoConfig config)
+    : IBaseServices<QR, D>
     where QR : BaseQueryRecord
-    where BRD : BaseResultData<QR>
-    where D: BaseData<BD>
-    where BD : BaseDataset
-
+    where D : BaseData
 {
     protected readonly ITangoConfig _config = config;
 
@@ -174,14 +170,23 @@ public abstract class BaseServices<Q, D ,BD, QR, BRD>(ITangoConfig config)
 
     #endregion
 
-    public Q GetData()
+    private static void ThrowExceptionIfDataIsNull(object? data)
+    {
+        if (data == null)
+        {
+            throw new Exception("Error al deserializar (GetData)");
+        }
+    }
+
+
+    public List<QR> GetData()
     {
         var dataJson = ServiceGetData();
         if ((dataJson != null) && (dataJson.Result != null))
         {
             try
             {
-                Q? data = Newtonsoft.Json.JsonConvert.DeserializeObject<Q>(dataJson.Result);
+                List<QR>? data = Newtonsoft.Json.JsonConvert.DeserializeObject<List<QR>>(dataJson.Result);
                 ThrowExceptionIfDataIsNull(data);
                 return data;
             }
@@ -196,14 +201,6 @@ public abstract class BaseServices<Q, D ,BD, QR, BRD>(ITangoConfig config)
 
             Console.WriteLine($"dataJson.Result is null GetData");
             throw new Exception("dataJson.Result is null GetData");
-        }
-    }
-
-    private static void ThrowExceptionIfDataIsNull(object? data)
-    {
-        if (data == null)
-        {
-            throw new Exception("Error al deserializar (GetData)");
         }
     }
 
@@ -238,17 +235,17 @@ public abstract class BaseServices<Q, D ,BD, QR, BRD>(ITangoConfig config)
         var dataJson = ServiceGetDataFilter(filter);
         if (dataJson.Result != null)
         {
-            BRD? data = Newtonsoft.Json.JsonConvert.DeserializeObject<BRD>(dataJson.Result);
+            List<QR>? data = Newtonsoft.Json.JsonConvert.DeserializeObject<List<QR>>(dataJson.Result);
             ThrowExceptionIfDataIsNull(data);
-            if ((data.List != null) && (data.List.Count() > 0))
+            if ((data != null) && (data.Count() == 0))
             {
-                return data.List[0].GetId();
+                return data.Single().GetId();
             }
         }
         return 0;
     }
 
-    public TransactionResultModel Insert(BD data)
+    public TransactionResultModel Insert(D data)
     {
         string jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(data);
         string resultJson = ServicePostData(jsonData).Result;
@@ -272,7 +269,7 @@ public abstract class BaseServices<Q, D ,BD, QR, BRD>(ITangoConfig config)
         }
     }
 
-    public TransactionResultModel Edit(BD data)
+    public TransactionResultModel Edit(D data)
     {
         string jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(data);
         string resultJson = ServicePutData(jsonData).Result;

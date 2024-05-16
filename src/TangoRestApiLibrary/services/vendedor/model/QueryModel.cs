@@ -3,14 +3,6 @@ using TangoRestApiLibrary.services.basemodel;
 
 namespace TangoRestApiClient.services.vendedor.model;
 
-public class VendedorQuery: BaseQuery<ResultData, VendedorQueryRecord>
-{
-}
-
-public class ResultData: BaseResultData<VendedorQueryRecord>
-{
-}
-
 public class VendedorQueryRecord: BaseQueryRecord
 {
     public override int GetId()

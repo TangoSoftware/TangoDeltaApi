@@ -3,11 +3,7 @@ using TangoRestApiLibrary.services.basemodel;
 
 namespace TangoRestApiClient.services.transporte.model;
 
-public class TransporteData: BaseData<TransporteDataset>
-{
-}
-
-public partial class TransporteDataset: BaseDataset
+public partial class TransporteData: BaseData
 {
     [JsonProperty("ID_GVA24")]
     public int IdGva24 { get; set; }

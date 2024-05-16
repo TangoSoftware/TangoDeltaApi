@@ -3,11 +3,7 @@ using TangoRestApiLibrary.services.basemodel;
 
 namespace TangoRestApiClient.services.listadepreciosventas.model;
 
-public  class ListaDePreciosVentasData: BaseData<ListaDePreciosVentasDataset>
-{
-}
-
-public partial class ListaDePreciosVentasDataset: BaseDataset
+public partial class ListaDePreciosVentasData: BaseData
 {
     [JsonProperty("GVA10_PARAMETROS_AUTOMATIZACION")]
     public string? Gva10ParametrosAutomatizacion { get; set; }

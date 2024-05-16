@@ -1,18 +1,50 @@
 ﻿using TangoRestApiClient.Common.Model;
+using TangoRestApiLibrary.services.basemodel;
 
 namespace TangoRestApiClient.services.baseServices;
 
 /// <summary>
-/// llename
+/// 
 /// </summary>
-/// <typeparam name="Q">Query</typeparam>
-/// <typeparam name="D">Dataset</typeparam>
-public interface IBaseServices<Q, D, BD>
+/// <typeparam name="QR"></typeparam>
+/// <typeparam name="D"></typeparam>
+public interface IBaseServices<QR, D>
+    where QR : BaseQueryRecord
+    where D : BaseData
 {
-    Q GetData();
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    List<QR> GetData();
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     D GetDataById(int id);
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     int GetIdByFilter(string filter);
-    TransactionResultModel Insert(BD data);
-    TransactionResultModel Edit(BD data);
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    TransactionResultModel Insert(D data);
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    TransactionResultModel Edit(D data);
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     TransactionResultModel Delete(int id);
 }

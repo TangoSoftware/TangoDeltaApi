@@ -1,17 +1,7 @@
 using Newtonsoft.Json;
 using TangoRestApiLibrary.services.basemodel;
 
-
 namespace TangoRestApiClient.services.cliente.model;
-
-public class ClienteQuery : BaseQuery<ResultData, ClienteQueryRecord>
-{
-}
-
-public class ResultData : BaseResultData<ClienteQueryRecord>
-{
-}
-
 
 public partial class ClienteQueryRecord : BaseQueryRecord
 {

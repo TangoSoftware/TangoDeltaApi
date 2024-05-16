@@ -5,7 +5,7 @@ using TangoRestApiClient.services.transporte.model;
 namespace TangoRestApiClient.services.transporte;
 
 public class TransporteServices(ITangoConfig config)
-    : BaseServices<TransporteQuery, TransporteData, TransporteDataset, TransporteQueryRecord, ResultData>(config), ITransporteServices
+    : BaseServices<TransporteQueryRecord, TransporteData>(config), ITransporteServices
 {
     protected override string ProcessId => "960";
 }

@@ -3,6 +3,6 @@ using TangoRestApiClient.services.pedidos.model;
 
 namespace TangoRestApiClient.services.pedidos;
 
-public interface IPedidosServices: IBaseServices<PedidoQuery, PedidoData, PedidoDataset>
+public interface IPedidosServices: IBaseServices<PedidoQueryRecord, PedidoData>
 {
 }

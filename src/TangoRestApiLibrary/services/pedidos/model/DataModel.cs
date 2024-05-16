@@ -1,13 +1,7 @@
 using Newtonsoft.Json;
 using TangoRestApiLibrary.services.basemodel;
 
-namespace TangoRestApiClient.services.pedidos.model;
-
-public class PedidoData: BaseData<PedidoDataset>
-{
-}
-
-public class PedidoDataset: BaseDataset
+public class PedidoData: BaseData
 {
     [JsonProperty("ID_GVA21")]
     public int IdGva21 { get; set; }

@@ -17,23 +17,17 @@ IClienteServices clienteServices = new ClienteServices(config);
 
 
 // Obtener todos los clientes (como si fuese la VISTA del ABM)
-ClienteQuery data = clienteServices.GetData();
+List<ClienteQueryRecord> data = clienteServices.GetData();
 
-if (data.Succeeded)
+foreach (var item in data)
 {
-    foreach (var item in data.ResultData.List)
-    {
-        Console.WriteLine($"Id: {item.IdGva14} - Código: {item.CodGva14} - Razon Social: {item.RazonSoci} - Nom comercial: {item.NomCom} - CUIT: {item.Cuit}");
-    }
+    Console.WriteLine($"Id: {item.IdGva14} - Código: {item.CodGva14} - Razon Social: {item.RazonSoci} - Nom comercial: {item.NomCom} - CUIT: {item.Cuit}");
 }
-else
-{
-    Console.WriteLine($"Error al obtener los clientes. ({data.Message})");
-}
+
 
 // Crear un nuevo cliente
 
-ClienteDataset cliente = new ClienteDataset{ CodGva14  = "330004"};
+ClienteData cliente = new ClienteData{ CodGva14  = "330004"};
 
 cliente.RazonSoci = "Cliente Prueba";
 cliente.NomCom = "Api Fiendly S.A.";
@@ -118,7 +112,7 @@ else
 // Actualizar el cliente ingresado. 
 // Vamos a buscar al cliente por codigo y luego actualizamos las observaciones del mismo
 int idGva14 = clienteServices.GetIdByFilter($"COD_GVA14 = '{cliente.CodGva14}'");
-ClienteDataset clienteToUpdate = clienteServices.GetDataById(idGva14);
+ClienteData clienteToUpdate = clienteServices.GetDataById(idGva14);
 
 if (clienteToUpdate == null)
 {

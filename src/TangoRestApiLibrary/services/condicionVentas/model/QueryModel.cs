@@ -3,14 +3,6 @@ using TangoRestApiLibrary.services.basemodel;
 
 namespace TangoRestApiClient.services.condicionVentas.model;
 
-public class CondicionVentaQuery : BaseQuery<ResultData, CondicionVentaQueryRecord>
-{
-}
-
-public class ResultData : BaseResultData<CondicionVentaQueryRecord>
-{
-}
-
 public class CondicionVentaQueryRecord : BaseQueryRecord
 {
     public override int GetId()

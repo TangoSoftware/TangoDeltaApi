@@ -5,7 +5,7 @@ using TangoRestApiClient.services.pedidos.model;
 namespace TangoRestApiClient.services.pedidos;
 
 public class PedidosServices(ITangoConfig config)
-    : BaseServices<PedidoQuery, PedidoData, PedidoDataset, PedidoQueryRecord, ResultData>(config), IPedidosServices
+    : BaseServices<PedidoQueryRecord, PedidoData>(config), IPedidosServices
 {
     protected override string ProcessId => "19845";
 }

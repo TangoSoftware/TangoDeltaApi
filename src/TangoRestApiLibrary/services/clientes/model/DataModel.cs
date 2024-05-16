@@ -3,11 +3,7 @@ using TangoRestApiLibrary.services.basemodel;
 
 namespace TangoRestApiClient.services.cliente.model;
 
-public class ClienteData : BaseData<ClienteDataset>
-{
-}
-
-public partial class ClienteDataset : BaseDataset
+public partial class ClienteData : BaseData
 {
     [JsonProperty("DIRECCION_ENTREGA")]
     public List<DireccionEntrega>? DireccionEntrega { get; set; }

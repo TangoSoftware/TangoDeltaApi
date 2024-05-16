@@ -3,6 +3,6 @@ using TangoRestApiClient.services.cliente.model;
 
 namespace TangoRestApiClient.services.cliente;
 
-public interface IClienteServices: IBaseServices<ClienteQuery, ClienteData, ClienteDataset>
+public interface IClienteServices: IBaseServices<ClienteQueryRecord, ClienteData>
 {
 }

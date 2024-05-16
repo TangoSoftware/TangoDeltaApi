@@ -5,7 +5,7 @@ using TangoRestApiClient.services.condicionVentas.model;
 namespace TangoRestApiClient.services.condicionVentas;
 
 public class CondicionVentaServices(ITangoConfig config)
-    : BaseServices<CondicionVentaQuery, CondicionVentaData, CondicionVentaDataset, CondicionVentaQueryRecord, ResultData>(config), ICondicionVentaServices
+    : BaseServices<CondicionVentaQueryRecord, CondicionVentaData>(config), ICondicionVentaServices
 {
     protected override string ProcessId => "2497";
 }
