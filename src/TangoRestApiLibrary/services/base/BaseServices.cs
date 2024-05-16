@@ -1,7 +1,8 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
 using System.Text;
-using Newtonsoft.Json.Linq;
 using TangoRestApiClient.Common.Config;
 using TangoRestApiClient.Common.Model;
 using TangoRestApiLibrary.services.basemodel;
@@ -24,7 +25,7 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
     protected abstract string ProcessId { get; }
 
     #region private
-    private async Task<string> ServiceGetData()
+    private async Task<string> ApiGetTask()
     {
         var builder = new UriBuilder(_config.TangoUrl);
         builder.Path = "api/Get";
@@ -52,7 +53,7 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
         }
     }
 
-    private async Task<string> ServiceGetDataFilter(string filter)
+    private async Task<string> ApiGetByFilterTask(string filter)
     {
         var builder = new UriBuilder(_config.TangoUrl);
         builder.Path = "api/GetByFilter";
@@ -80,7 +81,7 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
         }
     }
 
-    private async Task<string> ServicePostData(string jsonData)
+    private async Task<string> ApiCreateTask(string jsonData)
     {
         var builder = new UriBuilder(_config.TangoUrl);
         builder.Path = "api/Create";
@@ -110,7 +111,7 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
         }
     }
 
-    private async Task<string> ServicePutData(string jsonData)
+    private async Task<string> ApiUpdateTask(string jsonData)
     {
         var builder = new UriBuilder(_config.TangoUrl);
         builder.Path = "api/Update";
@@ -140,7 +141,7 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
         }
     }
 
-    private async Task<string> ServiceGetDataById(int idValue)
+    private async Task<string> ApiGetByIdTask(int idValue)
     {
         var builder = new UriBuilder(_config.TangoUrl);
         builder.Path = "api/GetById";
@@ -178,77 +179,45 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
         }
     }
 
-
     public List<QR> GetData()
     {
-        var dataJson = ServiceGetData();
-        if ((dataJson != null) && (dataJson.Result != null))
+        string apiGetResponse = ApiGetTask().Result;
+        try
         {
-            try
-            {
-                List<QR>? data = Newtonsoft.Json.JsonConvert.DeserializeObject<List<QR>>(dataJson.Result);
-                ThrowExceptionIfDataIsNull(data);
-                return data;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error al deserializar el resultado de la transacci�n: {ex.Message}");
-                throw new Exception("Error al deserializar (GetData): " + ex.Message);
-            }
+            // TODO: mejorar esto
+            List<QR> data = JToken.Parse(apiGetResponse).SelectToken("resultData.list").ToObject<List<QR>>();
+            ThrowExceptionIfDataIsNull(data);
+            return data;
         }
-        else
+        catch (Exception ex)
         {
-
-            Console.WriteLine($"dataJson.Result is null GetData");
-            throw new Exception("dataJson.Result is null GetData");
+            Console.WriteLine($"Error al deserializar el resultado de la transacci�n: {ex.Message}");
+            throw new Exception("Error al deserializar (GetData): " + ex.Message);
         }
     }
 
     public D GetDataById(int id)
     {
-        var dataJson = ServiceGetDataById(id);
-        if (dataJson.Result != null)
-        {
-            try
-            {
-                //JToken.Parse(dataJson.Result).Value<D>();
-                D? data = JToken.Parse(dataJson.Result).Value<D>(); //Newtonsoft.Json.JsonConvert.DeserializeObject<BD>(dataJson.Result);
-                ThrowExceptionIfDataIsNull(data);
-                return data;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error al deserializar el resultado de la transacci�n: {ex.Message}");
-                throw new Exception("Error al deserializar (GetDataById): " + ex.Message);
-            }
-        }
-        else
-        {
-
-            Console.WriteLine($"dataJson.Result is null");
-            throw new Exception("dataJson.Result is null");
-        }
+        var dataJson = ApiGetByIdTask(id).Result;
+        //JToken.Parse(dataJson.Result).Value<D>();
+        D? data = JToken.Parse(dataJson).SelectToken("value").ToObject<D>();
+        ThrowExceptionIfDataIsNull(data);
+        return data;
     }
 
     public int GetIdByFilter(string filter)
     {
-        var dataJson = ServiceGetDataFilter(filter);
-        if (dataJson.Result != null)
-        {
-            List<QR>? data = Newtonsoft.Json.JsonConvert.DeserializeObject<List<QR>>(dataJson.Result);
-            ThrowExceptionIfDataIsNull(data);
-            if ((data != null) && (data.Count() == 0))
-            {
-                return data.Single().GetId();
-            }
-        }
-        return 0;
+        var response = ApiGetByFilterTask(filter).Result;
+
+        List<QR> data = JToken.Parse(response).SelectToken("list").ToObject<List<QR>>();
+        ThrowExceptionIfDataIsNull(data);
+        return data.Single().GetId();
     }
 
     public TransactionResultModel Insert(D data)
     {
         string jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(data);
-        string resultJson = ServicePostData(jsonData).Result;
+        string resultJson = ApiCreateTask(jsonData).Result;
         if (resultJson != null)
         {
             try
@@ -271,13 +240,13 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
 
     public TransactionResultModel Edit(D data)
     {
-        string jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(data);
-        string resultJson = ServicePutData(jsonData).Result;
+        string jsonData = JsonConvert.SerializeObject(data);
+        string resultJson = ApiUpdateTask(jsonData).Result;
         if (resultJson != null)
         {
             try
             {
-                TransactionResultModel? result = Newtonsoft.Json.JsonConvert.DeserializeObject<TransactionResultModel>(resultJson);
+                TransactionResultModel? result = JsonConvert.DeserializeObject<TransactionResultModel>(resultJson);
                 ThrowExceptionIfDataIsNull(result);
                 return result;
             }
