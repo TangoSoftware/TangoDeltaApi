@@ -1,5 +1,4 @@
 ﻿using TangoRestApiClient.Common.Config;
-using TangoRestApiClient.Common.Model;
 using TangoRestApiClient.services.cliente;
 using TangoRestApiClient.services.cliente.model;
 
@@ -27,11 +26,11 @@ foreach (var item in data)
 
 // Crear un nuevo cliente
 
-ClienteData cliente = new ClienteData{ CodGva14  = "330004"};
+ClienteData cliente = new ClienteData{ CodGva14  = "330006"};
 
 cliente.RazonSoci = "Cliente Prueba";
 cliente.NomCom = "Api Fiendly S.A.";
-cliente.Cuit = "20330041111";
+cliente.Cuit = "20330041999";
 cliente.CupoCredi=0;
 cliente.Exporta=true;
 cliente.IiD="N";
@@ -96,16 +95,15 @@ DireccionEntrega direccionEntrega = new DireccionEntrega{
 cliente.DireccionEntrega.Add(direccionEntrega);
 
 // Insertamos el nuevo cliente por API
-TransactionResultModel transactionResult = clienteServices.Insert(cliente);
-
-if (transactionResult.Succeeded)
+try
 {
-    Console.WriteLine($"Id Cliente (gva14) {transactionResult.SavedId} creado con exito!");
+    int savedId = clienteServices.Insert(cliente);
+    Console.WriteLine($"Id Cliente (gva14) {savedId} creado con exito!");
 }
-else
+catch (Exception ex)
 {
-    Console.WriteLine($"Error al crear el cliente {cliente.CodGva14}. ({transactionResult.Message})");
-    Console.WriteLine($"Title: ({transactionResult.ExceptionInfo.Title}), Messeges: {transactionResult.ExceptionInfo.Messages.FirstOrDefault()}");
+    Console.WriteLine($"Error al crear el cliente {cliente.CodGva14}. ({ex.Message})");
+//    Console.WriteLine($"Title: ({transactionResult.ExceptionInfo.Title}), Messeges: {transactionResult.ExceptionInfo.Messages.FirstOrDefault()}");
 }
 
 
@@ -122,14 +120,14 @@ if (clienteToUpdate == null)
 
 clienteToUpdate.Observaciones = "Observaciones actualizadas para el cliente";
 
-TransactionResultModel transactionResultUpdate = clienteServices.Edit(clienteToUpdate);
-
-if (transactionResult.Succeeded)
+try
 {
-    Console.WriteLine($"Id Cliente (gva14) {transactionResult.SavedId} creado con exito!");
+    clienteServices.Edit(clienteToUpdate);
+    Console.WriteLine($"Id Cliente (gva14) {clienteToUpdate.IdGva14} updateado con exito!");
 }
-else
+catch (Exception ex)
 {
-    Console.WriteLine($"Error al crear el cliente {clienteToUpdate.CodGva14}. ({transactionResult.Message})");
-    Console.WriteLine($"Title: ({transactionResult.ExceptionInfo.Title}), Messeges: {transactionResult.ExceptionInfo.Messages.FirstOrDefault()}");
-}
+    Console.WriteLine($"Error al crear el cliente {clienteToUpdate.CodGva14}. ({ex.Message})");
+    // Console.WriteLine($"Title: ({transactionResult.ExceptionInfo.Title}), Messeges: {transactionResult.ExceptionInfo.Messages.FirstOrDefault()}");
+};
+  

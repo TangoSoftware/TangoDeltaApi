@@ -2,6 +2,16 @@ using Newtonsoft.Json;
 
 namespace TangoRestApiClient.Common.Model;
 
+public class TransactionException : Exception
+{
+    public readonly ExceptionInfo exceptionInfo;
+
+    public TransactionException(string message, ExceptionInfo exceptionInfo) : base(message)
+    {
+        this.exceptionInfo = exceptionInfo;
+    }
+}
+
 public class TransactionResultModel
 {
     [JsonProperty("message")]

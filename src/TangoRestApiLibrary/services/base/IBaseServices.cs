@@ -34,17 +34,17 @@ public interface IBaseServices<QR, D>
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
-    TransactionResultModel Insert(D data);
+    int Insert(D data);
     /// <summary>
     ///
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
-    TransactionResultModel Edit(D data);
+    void Edit(D data);
     /// <summary>
     /// 
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    TransactionResultModel Delete(int id);
+    void Delete(int id);
 }

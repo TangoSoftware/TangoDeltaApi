@@ -214,31 +214,28 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
         return data.Single().GetId();
     }
 
-    public TransactionResultModel Insert(D data)
+    public int Insert(D data)
     {
-        string jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(data);
+        string jsonData = JsonConvert.SerializeObject(data);
         string resultJson = ApiCreateTask(jsonData).Result;
-        if (resultJson != null)
+        try
         {
-            try
+            TransactionResultModel result = JsonConvert.DeserializeObject<TransactionResultModel>(resultJson);
+            if (result.Succeeded) {
+                return result.SavedId;
+            } else
             {
-                TransactionResultModel result = Newtonsoft.Json.JsonConvert.DeserializeObject<TransactionResultModel>(resultJson);
-                return result;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error al deserializar el resultado de la transacci�n: {ex.Message}");
-                return new TransactionResultModel();
+                throw new TransactionException(result.Message, result.ExceptionInfo);
             }
         }
-        else
+        catch (Exception ex)
         {
-            // Devuelve un nuevo TransactionResultModel en lugar de lanzar una excepci�n
-            return new TransactionResultModel();
+            Console.WriteLine($"Error al deserializar el resultado de la transacci�n: {ex.Message}");
+            throw ex;
         }
     }
 
-    public TransactionResultModel Edit(D data)
+    public void Edit(D data)
     {
         string jsonData = JsonConvert.SerializeObject(data);
         string resultJson = ApiUpdateTask(jsonData).Result;
@@ -248,7 +245,10 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
             {
                 TransactionResultModel? result = JsonConvert.DeserializeObject<TransactionResultModel>(resultJson);
                 ThrowExceptionIfDataIsNull(result);
-                return result;
+                if (!result.Succeeded)
+                {
+                    throw new TransactionException(result.Message, result.ExceptionInfo);
+                }
             }
             catch (Exception ex)
             {
@@ -263,7 +263,7 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
         }
     }
 
-    public TransactionResultModel Delete(int id)
+    public void Delete(int id)
     {
         throw new NotImplementedException();
     }
