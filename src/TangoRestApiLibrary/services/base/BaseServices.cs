@@ -29,8 +29,8 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
     private async Task<string> ApiDeleteTask(int id)
     {
         var builder = new UriBuilder(_config.TangoUrl);
-        builder.Path = "api/Delete/{ProcessId}/{id}";
-        builder.Query = $"{id}";
+        builder.Path = "api/Delete";
+        builder.Query = $"process={ProcessId}&id={id}";
 
         var client = new HttpClient();
         client.DefaultRequestHeaders.Accept.Clear();
