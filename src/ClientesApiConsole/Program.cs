@@ -1,4 +1,5 @@
 ﻿using TangoRestApiClient.Common.Config;
+using TangoRestApiClient.Common.Model;
 using TangoRestApiClient.services.cliente;
 using TangoRestApiClient.services.cliente.model;
 
@@ -93,17 +94,20 @@ DireccionEntrega direccionEntrega = new DireccionEntrega{
 };
 
 cliente.DireccionEntrega.Add(direccionEntrega);
-
 // Insertamos el nuevo cliente por API
 try
 {
     int savedId = clienteServices.Insert(cliente);
     Console.WriteLine($"Id Cliente (gva14) {savedId} creado con exito!");
 }
+catch (TransactionException axCloudException)
+{
+    var fallo = axCloudException.exceptionInfo;
+    Console.WriteLine($"Title: ({fallo.Title}), Messeges: {fallo.Messages.FirstOrDefault()}");
+}
 catch (Exception ex)
 {
     Console.WriteLine($"Error al crear el cliente {cliente.CodGva14}. ({ex.Message})");
-//    Console.WriteLine($"Title: ({transactionResult.ExceptionInfo.Title}), Messeges: {transactionResult.ExceptionInfo.Messages.FirstOrDefault()}");
 }
 
 
@@ -125,9 +129,14 @@ try
     clienteServices.Edit(clienteToUpdate);
     Console.WriteLine($"Id Cliente (gva14) {clienteToUpdate.IdGva14} updateado con exito!");
 }
+catch (TransactionException axCloudException)
+{
+    var fallo = axCloudException.exceptionInfo;
+    Console.WriteLine($"Title: ({fallo.Title}), Messeges: {fallo.Messages.FirstOrDefault()}");
+}
 catch (Exception ex)
 {
     Console.WriteLine($"Error al crear el cliente {clienteToUpdate.CodGva14}. ({ex.Message})");
-    // Console.WriteLine($"Title: ({transactionResult.ExceptionInfo.Title}), Messeges: {transactionResult.ExceptionInfo.Messages.FirstOrDefault()}");
+
 };
   

@@ -1,5 +1,4 @@
-﻿using TangoRestApiClient.Common.Model;
-using TangoRestApiLibrary.services.basemodel;
+﻿using TangoRestApiLibrary.services.basemodel;
 
 namespace TangoRestApiClient.services.baseServices;
 
