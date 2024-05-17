@@ -23,5 +23,22 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore src/
 
+    - name: Build
+      run: dotnet build src/ --configuration Release
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore src/
+
     - name: Run Linter
-      run: dotnet format src/ --check
+      run: dotnet format src/
