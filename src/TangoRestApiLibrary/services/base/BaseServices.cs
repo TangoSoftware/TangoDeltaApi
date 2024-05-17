@@ -25,6 +25,35 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
     protected abstract string ProcessId { get; }
 
     #region private
+
+    private async Task<string> ApiDeleteTask(int id)
+    {
+        var builder = new UriBuilder(_config.TangoUrl);
+        builder.Path = "api/Delete/{ProcessId}/{id}";
+        builder.Query = $"{id}";
+
+        var client = new HttpClient();
+        client.DefaultRequestHeaders.Accept.Clear();
+        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        client.DefaultRequestHeaders.Add("Company", _config.CompanyId);
+        client.DefaultRequestHeaders.Add("ApiAuthorization", _config.ApiAuthorization);
+        var response = await client.DeleteAsync(builder.Uri);
+        try
+        {
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                return content;
+            }
+            return "No data found";
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            return "An error ocurred";
+        }
+    }
+
     private async Task<string> ApiGetTask()
     {
         var builder = new UriBuilder(_config.TangoUrl);
@@ -265,6 +294,28 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
 
     public void Delete(int id)
     {
-        throw new NotImplementedException();
+        string resultJson = ApiDeleteTask(id).Result;
+        if (resultJson != null)
+        {
+            try
+            {
+                TransactionResultModel? result = JsonConvert.DeserializeObject<TransactionResultModel>(resultJson);
+                ThrowExceptionIfDataIsNull(result);
+                if (!result.Succeeded)
+                {
+                    throw new TransactionException(result.Message, result.ExceptionInfo);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al deserializar el resultado de la transacci�n: {ex.Message}");
+                throw new Exception("Error al deserializar (Edit): " + ex.Message);
+            }
+        }
+        else
+        {
+            // Devuelve un nuevo TransactionResultModel en lugar de lanzar una excepci�n
+            throw new Exception("resultJson is null");
+        }
     }
 }
