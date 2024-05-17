@@ -124,7 +124,7 @@ try
 {
     //Llamo al metodo Edit para actualizar el cliente
     clienteServices.Edit(clienteToUpdate);
-    Console.WriteLine($"Id Cliente (gva14) {clienteToUpdate.IdGva14} updateado con exito!");
+    Console.WriteLine($"Id Cliente (gva14) {clienteToUpdate.IdGva14} editado con exito!");
 }
 catch (TransactionException axCloudException)
 {
