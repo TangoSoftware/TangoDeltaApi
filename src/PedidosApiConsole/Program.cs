@@ -1,5 +1,4 @@
 ﻿using TangoRestApiClient.Common.Config;
-using TangoRestApiClient.Common.Model;
 using TangoRestApiClient.services.pedidos;
 using TangoRestApiClient.services.pedidos.model;
 using TangoRestApiClient.services.condicionVentas;
@@ -27,34 +26,29 @@ IVendedorServices vendedorServices = new VendedorServices(config);
 // Obtengo los pedidos de la vista principal de pedidos.
 List<PedidoQueryRecord> data = pedidosServices.GetData();
 
-
 foreach (var item in data)
 {
     Console.WriteLine($"Pedido: {item.IdGva21} - NroPedido: {item.NroPedido} - Cliente: {item.RazonSocialCliente}");
 }
 
 // Alta de nuevo pedido.
-
 PedidoData pedido = new PedidoData();
-
 // talonario pedido. 
 pedido.IdGva43TalonPed = 6; // Talonario = 5
-//pedido.NroPedido = " 0000000000042"; // voy a probarlo sin cargar nro de pedido
 pedido.FechaPedido = DateTime.Now;
 pedido.FechaEntrega = DateTime.Now.AddDays(10);
 // condicion de venta
-pedido.IdGva01 =  condicionVentaServices.GetIdByFilter("GVA01.COND_VTA = 1"); // 1 = CONTADO, gva01.cond_vta = 1
+pedido.IdGva01 =  condicionVentaServices.GetIdByFilter("GVA01.COND_VTA = 1"); 
 // Lista de precios
-pedido.IdGva10 = listaDePreciosVentasServices.GetIdByFilter("gva10.NOMBRE_LIS = 'Venta Mayorista'"); // 1 = Venta Mayorista. Nro_de_Lis = 1
-//Console.WriteLine($"IdGva10: {pedido.IdGva10}");
+pedido.IdGva10 = listaDePreciosVentasServices.GetIdByFilter("gva10.NOMBRE_LIS = 'Venta Mayorista'"); 
 // Clientes
 pedido.IdGva14 = 1; // 1 = Lombardi , cod_client = 010001
 pedido.EsClienteHabitual = true;
 pedido.IdDireccionEntrega = 1;
 // Vendedor
-pedido.IdGva23 = vendedorServices.GetIdByFilter("cod_vended=1"); // 1 = Vendedor Walter arevalo. Cod_vended = 1
+pedido.IdGva23 = vendedorServices.GetIdByFilter("cod_vended = 1"); 
 // transporte
-pedido.IdGva24 = transporteServices.GetIdByFilter("Gva24.cod_transp='01'"); // 1 = Transporte propio. Cod_transp = "01"
+pedido.IdGva24 = transporteServices.GetIdByFilter("Gva24.cod_transp = '01'"); 
 // clasificacion de comprobante
 pedido.IdGva81 = 1; // 1 = casa central. 
 //moneda

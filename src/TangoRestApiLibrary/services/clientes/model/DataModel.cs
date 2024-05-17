@@ -11,15 +11,6 @@ public partial class ClienteData : BaseData
     [JsonProperty("CONTACTOS")]
     public List<Contacto>? Contactos { get; set; }
 
-    //[JsonProperty("GVA111")]
-    //public object[] Gva111 { get; set; }  //ver
-
-    //[JsonProperty("CLIENTE_CM_JURISDICCION")]
-    //public object[] ClienteCmJurisdiccion { get; set; } //ver
-
-    //[JsonProperty("CTA_CLIENTE_POR_SUCURSAL")]
-    //public object[] CtaClientePorSucursal { get; set; } //ver
-
     [JsonProperty("ID_GVA14_DEFECTO")]
     public int? IdGva14Defecto { get; set; }
 

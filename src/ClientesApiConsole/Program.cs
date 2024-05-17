@@ -14,8 +14,6 @@ ITangoConfig config = new TangoConfig()
 // Instancia de ClienteServices
 IClienteServices clienteServices = new ClienteServices(config);
 
-
-
 // Obtener todos los clientes (como si fuese la VISTA del ABM)
 List<ClienteQueryRecord> data = clienteServices.GetData();
 
@@ -24,9 +22,7 @@ foreach (var item in data)
     Console.WriteLine($"Id: {item.IdGva14} - Código: {item.CodGva14} - Razon Social: {item.RazonSoci} - Nom comercial: {item.NomCom} - CUIT: {item.Cuit}");
 }
 
-
 // Crear un nuevo cliente
-
 ClienteData cliente = new ClienteData{ CodGva14  = "330006"};
 
 cliente.RazonSoci = "Cliente Prueba";
@@ -110,11 +106,10 @@ catch (Exception ex)
     Console.WriteLine($"Error al crear el cliente {cliente.CodGva14}. ({ex.Message})");
 }
 
-
 // Actualizar el cliente ingresado. 
 // Vamos a buscar al cliente por codigo y luego actualizamos las observaciones del mismo
-int idGva14 = clienteServices.GetIdByFilter($"COD_GVA14 = '{cliente.CodGva14}'");
-ClienteData clienteToUpdate = clienteServices.GetDataById(idGva14);
+int idGva14ToUpdate = clienteServices.GetIdByFilter($"COD_GVA14 = '{cliente.CodGva14}'");
+ClienteData clienteToUpdate = clienteServices.GetDataById(idGva14ToUpdate);
 
 if (clienteToUpdate == null)
 {
@@ -122,10 +117,12 @@ if (clienteToUpdate == null)
     return;
 }
 
+// Modificamos en cliente. En este caso solo las observaciones
 clienteToUpdate.Observaciones = "Observaciones actualizadas para el cliente";
 
 try
 {
+    //Llamo al metodo Edit para actualizar el cliente
     clienteServices.Edit(clienteToUpdate);
     Console.WriteLine($"Id Cliente (gva14) {clienteToUpdate.IdGva14} updateado con exito!");
 }
@@ -137,6 +134,33 @@ catch (TransactionException axCloudException)
 catch (Exception ex)
 {
     Console.WriteLine($"Error al crear el cliente {clienteToUpdate.CodGva14}. ({ex.Message})");
+};
+  
+// Eliminamos el cliente ingresado. 
+// Vamos a buscar al cliente por codigo para luego eliminarlo
+int idGva14ToDelte = clienteServices.GetIdByFilter($"COD_GVA14 = '{cliente.CodGva14}'");
 
+if (idGva14ToDelte == 0)
+{
+    Console.WriteLine($"No se encontro el cliente con el código {cliente.CodGva14}");
+    return;
+}
+
+try
+{
+    //Eliminamos el cliente por su id
+    clienteServices.Delete(idGva14ToDelte);
+    Console.WriteLine($"Id Cliente (gva14) {idGva14ToDelte} eliminado con éxito!");
+}
+catch (TransactionException axCloudException)
+{
+    // Si el cliente tiene movimientos no se puede eliminar y se lanza una excepción.
+    var fallo = axCloudException.exceptionInfo;
+    Console.WriteLine($"Title: ({fallo.Title}), Messeges: {fallo.Messages.FirstOrDefault()}");
+}
+catch (Exception ex)
+{
+    // Si ocurre un error en la eliminación se lanza una excepción genérica.
+    Console.WriteLine($"Error al crear el cliente {clienteToUpdate.CodGva14}. ({ex.Message})");
 };
   
