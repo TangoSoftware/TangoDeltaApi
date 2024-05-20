@@ -132,7 +132,7 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
     private async Task<string> ApiCreateAsync(string jsonData)
     {
         var builder = GetNewUriBuilder("Create");
-        var client = GetNewHttpClient()
+        var client = GetNewHttpClient();
         var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
         var response = await client.PostAsync(builder.Uri, content);
 
@@ -188,7 +188,7 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
     /// <returns></returns>
     private async Task<string> ApiGetByIdAsync(int idValue)
     {
-        var builder = GetNewUriBuilder("GetById", $"&view=&id={idValue}")
+        var builder = GetNewUriBuilder("GetById", $"&view=&id={idValue}");
         var client = GetNewHttpClient();
         var response = await client.GetAsync(builder.Uri);
         try

@@ -138,7 +138,7 @@ catch (Exception ex)
   
 // Eliminamos el cliente ingresado. 
 // Vamos a buscar al cliente por codigo para luego eliminarlo
-int idGva14ToDelte = clienteServices.GetByFilter($"COD_GVA14 = '{cliente.CodGva14}'").Single().IdGva14();
+int idGva14ToDelte = clienteServices.GetByFilter($"COD_GVA14 = '{cliente.CodGva14}'").Single().IdGva14;
 
 if (idGva14ToDelte == 0)
 {
