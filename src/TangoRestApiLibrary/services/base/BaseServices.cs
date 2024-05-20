@@ -34,6 +34,16 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
         return builder;
     }
 
+    private HttpClient GetNewHttpClient()
+    {
+        var client = new HttpClient();
+        client.DefaultRequestHeaders.Accept.Clear();
+        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        client.DefaultRequestHeaders.Add("Company", _config.CompanyId);
+        client.DefaultRequestHeaders.Add("ApiAuthorization", _config.ApiAuthorization);
+        return client;
+    }
+
     /// <summary>
     /// DeleteAsync api/Delete
     /// </summary>
@@ -42,12 +52,7 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
     private async Task<string> ApiDeleteAsync(int id)
     {
         var builder = GetNewUriBuilder("Delete", $"&id={id}");
-
-        var client = new HttpClient();
-        client.DefaultRequestHeaders.Accept.Clear();
-        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        client.DefaultRequestHeaders.Add("Company", _config.CompanyId);
-        client.DefaultRequestHeaders.Add("ApiAuthorization", _config.ApiAuthorization);
+        var client = GetNewHttpClient();
         var response = await client.DeleteAsync(builder.Uri);
         try
         {
@@ -74,12 +79,7 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
     private async Task<string> ApiGetAsync(int pageSize, int pageIndex)
     {
         var builder = GetNewUriBuilder("Get", $"&pageSize={pageSize}&pageIndex={pageIndex}&view=");
-
-        var client = new HttpClient();
-        client.DefaultRequestHeaders.Accept.Clear();
-        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        client.DefaultRequestHeaders.Add("Company", _config.CompanyId);
-        client.DefaultRequestHeaders.Add("ApiAuthorization", _config.ApiAuthorization);
+        var client = GetNewHttpClient();
         var response = await client.GetAsync(builder.Uri);
         try
         {
@@ -106,12 +106,7 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
     {
         // revisar el where
         var builder = GetNewUriBuilder("GetByFilter", $"&view=&filtroSql=WHERE%20{System.Net.WebUtility.UrlEncode(filter)}");
-
-        var client = new HttpClient();
-        client.DefaultRequestHeaders.Accept.Clear();
-        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        client.DefaultRequestHeaders.Add("Company", _config.CompanyId);
-        client.DefaultRequestHeaders.Add("ApiAuthorization", _config.ApiAuthorization);
+        var client = GetNewHttpClient();
         var response = await client.GetAsync(builder.Uri);
         try
         {
@@ -137,13 +132,7 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
     private async Task<string> ApiCreateAsync(string jsonData)
     {
         var builder = GetNewUriBuilder("Create");
-
-        var client = new HttpClient();
-        client.DefaultRequestHeaders.Accept.Clear();
-        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        client.DefaultRequestHeaders.Add("Company", _config.CompanyId);
-        client.DefaultRequestHeaders.Add("ApiAuthorization", _config.ApiAuthorization);
-
+        var client = GetNewHttpClient()
         var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
         var response = await client.PostAsync(builder.Uri, content);
 
@@ -171,12 +160,7 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
     private async Task<string> ApiUpdateAsync(string jsonData)
     {
         var builder = GetNewUriBuilder("Update");
-
-        var client = new HttpClient();
-        client.DefaultRequestHeaders.Accept.Clear();
-        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        client.DefaultRequestHeaders.Add("Company", _config.CompanyId);
-        client.DefaultRequestHeaders.Add("ApiAuthorization", _config.ApiAuthorization);
+        var client = GetNewHttpClient();
 
         var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
         var response = await client.PutAsync(builder.Uri, content);
@@ -204,13 +188,8 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
     /// <returns></returns>
     private async Task<string> ApiGetByIdAsync(int idValue)
     {
-        var builder = GetNewUriBuilder("GetById", $"&view=&id={idValue}");
-
-        var client = new HttpClient();
-        client.DefaultRequestHeaders.Accept.Clear();
-        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        client.DefaultRequestHeaders.Add("Company", _config.CompanyId);
-        client.DefaultRequestHeaders.Add("ApiAuthorization", _config.ApiAuthorization);
+        var builder = GetNewUriBuilder("GetById", $"&view=&id={idValue}")
+        var client = GetNewHttpClient();
         var response = await client.GetAsync(builder.Uri);
         try
         {

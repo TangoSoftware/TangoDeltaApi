@@ -108,7 +108,7 @@ catch (Exception ex)
 
 // Actualizar el cliente ingresado. 
 // Vamos a buscar al cliente por codigo y luego actualizamos las observaciones del mismo
-int idGva14ToUpdate = clienteServices.GetByFilter($"COD_GVA14 = '{cliente.CodGva14}'");
+int idGva14ToUpdate = clienteServices.GetByFilter($"COD_GVA14 = '{cliente.CodGva14}'").Single().IdGva14;
 ClienteData clienteToUpdate = clienteServices.GetById(idGva14ToUpdate);
 
 if (clienteToUpdate == null)
@@ -138,7 +138,7 @@ catch (Exception ex)
   
 // Eliminamos el cliente ingresado. 
 // Vamos a buscar al cliente por codigo para luego eliminarlo
-int idGva14ToDelte = clienteServices.GetByFilter($"COD_GVA14 = '{cliente.CodGva14}'");
+int idGva14ToDelte = clienteServices.GetByFilter($"COD_GVA14 = '{cliente.CodGva14}'").Single().IdGva14();
 
 if (idGva14ToDelte == 0)
 {
