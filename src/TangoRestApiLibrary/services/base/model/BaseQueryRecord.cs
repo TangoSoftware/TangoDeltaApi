@@ -2,5 +2,4 @@
 
 public abstract class BaseQueryRecord
 {
-    public abstract int GetId();
 }

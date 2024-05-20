@@ -24,7 +24,7 @@ ITransporteServices transporteServices = new TransporteServices(config);
 IVendedorServices vendedorServices = new VendedorServices(config);
 
 // Obtengo los pedidos de la vista principal de pedidos.
-List<PedidoQueryRecord> data = pedidosServices.GetData();
+List<PedidoQueryRecord> data = pedidosServices.Get(1000, 0);
 
 foreach (var item in data)
 {
@@ -38,17 +38,17 @@ pedido.IdGva43TalonPed = 6; // Talonario = 5
 pedido.FechaPedido = DateTime.Now;
 pedido.FechaEntrega = DateTime.Now.AddDays(10);
 // condicion de venta
-pedido.IdGva01 =  condicionVentaServices.GetIdByFilter("GVA01.COND_VTA = 1"); 
+pedido.IdGva01 =  condicionVentaServices.GetByFilter("GVA01.COND_VTA = 1").Single().IdGva01; 
 // Lista de precios
-pedido.IdGva10 = listaDePreciosVentasServices.GetIdByFilter("gva10.NOMBRE_LIS = 'Venta Mayorista'"); 
+pedido.IdGva10 = listaDePreciosVentasServices.GetByFilter("gva10.NOMBRE_LIS = 'Venta Mayorista'").Single().IdGva10; 
 // Clientes
 pedido.IdGva14 = 1; // 1 = Lombardi , cod_client = 010001
 pedido.EsClienteHabitual = true;
 pedido.IdDireccionEntrega = 1;
 // Vendedor
-pedido.IdGva23 = vendedorServices.GetIdByFilter("cod_vended = 1"); 
+pedido.IdGva23 = vendedorServices.GetByFilter("cod_vended = 1").Single().IdGva23;
 // transporte
-pedido.IdGva24 = transporteServices.GetIdByFilter("Gva24.cod_transp = '01'"); 
+pedido.IdGva24 = transporteServices.GetByFilter("Gva24.cod_transp = '01'").Single().IdGva24;
 // clasificacion de comprobante
 pedido.IdGva81 = 1; // 1 = casa central. 
 //moneda
@@ -63,7 +63,7 @@ pedido.RenglonDto.Add(new RenglonDto() { IdSta22 = 1,  IdSta11 = 33, IdGva81 = 1
 // Enviamos a insertar el pedido cargado.
 try
 {
-    int savedId = pedidosServices.Insert(pedido);
+    int savedId = pedidosServices.Create(pedido);
     Console.WriteLine($"Id Pedido {savedId} creado con exito!");
 }
 catch (Exception ex)

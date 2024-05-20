@@ -5,11 +5,6 @@ namespace TangoRestApiClient.services.condicionVentas.model;
 
 public class CondicionVentaQueryRecord : BaseQueryRecord
 {
-    public override int GetId()
-    {
-        return IdGva01;
-    }
-
     [JsonProperty("ID_GVA01")]
     public int IdGva01 { get; set; }
 

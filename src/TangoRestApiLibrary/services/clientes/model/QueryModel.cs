@@ -5,11 +5,6 @@ namespace TangoRestApiClient.services.cliente.model;
 
 public partial class ClienteQueryRecord : BaseQueryRecord
 {
-    public override int GetId()
-    {
-        return IdGva14;
-    }
-
     [JsonProperty("COD_GVA14")]
     public required string CodGva14 { get; set; }
 

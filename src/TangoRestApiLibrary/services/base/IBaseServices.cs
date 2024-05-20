@@ -15,31 +15,31 @@ public interface IBaseServices<QR, D>
     /// 
     /// </summary>
     /// <returns></returns>
-    List<QR> GetData();
+    List<QR> Get(int pageSize, int pageIndex);
     /// <summary>
     /// 
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    D GetDataById(int id);
+    D GetById(int id);
     /// <summary>
     /// 
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    int GetIdByFilter(string filter);
+    IQueryable<QR> GetByFilter(string filter);
     /// <summary>
     /// 
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
-    int Insert(D data);
+    int Create(D data);
     /// <summary>
     ///
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
-    void Edit(D data);
+    void Update(D data);
     /// <summary>
     /// 
     /// </summary>

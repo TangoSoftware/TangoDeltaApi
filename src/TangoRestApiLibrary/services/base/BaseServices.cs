@@ -1,6 +1,5 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
 using System.Net.Http.Headers;
 using System.Text;
 using TangoRestApiClient.Common.Config;
@@ -25,12 +24,24 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
     protected abstract string ProcessId { get; }
 
     #region private
-
-    private async Task<string> ApiDeleteTask(int id)
+    private UriBuilder GetNewUriBuilder(string actionPath, string queryParams = "")
     {
-        var builder = new UriBuilder(_config.TangoUrl);
-        builder.Path = "api/Delete";
-        builder.Query = $"process={ProcessId}&id={id}";
+        var builder = new UriBuilder(_config.TangoUrl)
+        {
+            Path = $"api/{actionPath}",
+            Query = $"process={ProcessId}{queryParams}"
+        };
+        return builder;
+    }
+
+    /// <summary>
+    /// DeleteAsync api/Delete
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    private async Task<string> ApiDeleteAsync(int id)
+    {
+        var builder = GetNewUriBuilder("Delete", $"&id={id}");
 
         var client = new HttpClient();
         client.DefaultRequestHeaders.Accept.Clear();
@@ -54,11 +65,15 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
         }
     }
 
-    private async Task<string> ApiGetTask()
+    /// <summary>
+    /// GetAsync api/Get
+    /// </summary>
+    /// <param name="pageSize"></param>
+    /// <param name="pageIndex"></param>
+    /// <returns></returns>
+    private async Task<string> ApiGetAsync(int pageSize, int pageIndex)
     {
-        var builder = new UriBuilder(_config.TangoUrl);
-        builder.Path = "api/Get";
-        builder.Query = $"process={ProcessId}&pageSize={100}&pageIndex={0}&view=";
+        var builder = GetNewUriBuilder("Get", $"&pageSize={pageSize}&pageIndex={pageIndex}&view=");
 
         var client = new HttpClient();
         client.DefaultRequestHeaders.Accept.Clear();
@@ -82,11 +97,15 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
         }
     }
 
-    private async Task<string> ApiGetByFilterTask(string filter)
+    /// <summary>
+    /// GetAsync api/GetByFilter
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
+    private async Task<string> ApiGetByFilterAsync(string filter)
     {
-        var builder = new UriBuilder(_config.TangoUrl);
-        builder.Path = "api/GetByFilter";
-        builder.Query = $"process={ProcessId}&view=&filtroSql=WHERE%20{System.Net.WebUtility.UrlEncode(filter)}";
+        // revisar el where
+        var builder = GetNewUriBuilder("GetByFilter", $"&view=&filtroSql=WHERE%20{System.Net.WebUtility.UrlEncode(filter)}");
 
         var client = new HttpClient();
         client.DefaultRequestHeaders.Accept.Clear();
@@ -110,11 +129,15 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
         }
     }
 
-    private async Task<string> ApiCreateTask(string jsonData)
+    /// <summary>
+    /// PostAsync api/Create
+    /// </summary>
+    /// <param name="jsonData"></param>
+    /// <returns></returns>
+    private async Task<string> ApiCreateAsync(string jsonData)
     {
-        var builder = new UriBuilder(_config.TangoUrl);
-        builder.Path = "api/Create";
-        builder.Query = $"process={ProcessId}";
+        var builder = GetNewUriBuilder("Create");
+
         var client = new HttpClient();
         client.DefaultRequestHeaders.Accept.Clear();
         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -140,11 +163,15 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
         }
     }
 
-    private async Task<string> ApiUpdateTask(string jsonData)
+    /// <summary>
+    /// PutAsync api/Update
+    /// </summary>
+    /// <param name="jsonData"></param>
+    /// <returns></returns>
+    private async Task<string> ApiUpdateAsync(string jsonData)
     {
-        var builder = new UriBuilder(_config.TangoUrl);
-        builder.Path = "api/Update";
-        builder.Query = $"process={ProcessId}";
+        var builder = GetNewUriBuilder("Update");
+
         var client = new HttpClient();
         client.DefaultRequestHeaders.Accept.Clear();
         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -170,11 +197,14 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
         }
     }
 
-    private async Task<string> ApiGetByIdTask(int idValue)
+    /// <summary>
+    /// GetAsync api/GetById
+    /// </summary>
+    /// <param name="idValue"></param>
+    /// <returns></returns>
+    private async Task<string> ApiGetByIdAsync(int idValue)
     {
-        var builder = new UriBuilder(_config.TangoUrl);
-        builder.Path = "api/GetById";
-        builder.Query = $"process={ProcessId}&view=&id={idValue}";
+        var builder = GetNewUriBuilder("GetById", $"&view=&id={idValue}");
 
         var client = new HttpClient();
         client.DefaultRequestHeaders.Accept.Clear();
@@ -197,7 +227,6 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
             return "An error ocurred";
         }
     }
-
     #endregion
 
     private static void ThrowExceptionIfDataIsNull(object? data)
@@ -208,9 +237,9 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
         }
     }
 
-    public List<QR> GetData()
+    public List<QR> Get(int pageSize, int pageIndex)
     {
-        string apiGetResponse = ApiGetTask().Result;
+        string apiGetResponse = ApiGetAsync(pageSize, pageIndex).Result;
         try
         {
             // TODO: mejorar esto
@@ -225,28 +254,29 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
         }
     }
 
-    public D GetDataById(int id)
+    public D GetById(int id)
     {
-        var dataJson = ApiGetByIdTask(id).Result;
+        var dataJson = ApiGetByIdAsync(id).Result;
         //JToken.Parse(dataJson.Result).Value<D>();
         D? data = JToken.Parse(dataJson).SelectToken("value").ToObject<D>();
         ThrowExceptionIfDataIsNull(data);
         return data;
     }
 
-    public int GetIdByFilter(string filter)
+    public IQueryable<QR> GetByFilter(string filter)
     {
-        var response = ApiGetByFilterTask(filter).Result;
+        /// ver esto, de no enmascarar
+        var response = ApiGetByFilterAsync(filter).Result;
 
         List<QR> data = JToken.Parse(response).SelectToken("list").ToObject<List<QR>>();
         ThrowExceptionIfDataIsNull(data);
-        return data.Single().GetId();
+        return data.AsQueryable();
     }
 
-    public int Insert(D data)
+    public int Create(D data)
     {
         string jsonData = JsonConvert.SerializeObject(data);
-        string resultJson = ApiCreateTask(jsonData).Result;
+        string resultJson = ApiCreateAsync(jsonData).Result;
         try
         {
             TransactionResultModel result = JsonConvert.DeserializeObject<TransactionResultModel>(resultJson);
@@ -264,10 +294,10 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
         }
     }
 
-    public void Edit(D data)
+    public void Update(D data)
     {
         string jsonData = JsonConvert.SerializeObject(data);
-        string resultJson = ApiUpdateTask(jsonData).Result;
+        string resultJson = ApiUpdateAsync(jsonData).Result;
         if (resultJson != null)
         {
             try
@@ -294,7 +324,7 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
 
     public void Delete(int id)
     {
-        string resultJson = ApiDeleteTask(id).Result;
+        string resultJson = ApiDeleteAsync(id).Result;
         if (resultJson != null)
         {
             try

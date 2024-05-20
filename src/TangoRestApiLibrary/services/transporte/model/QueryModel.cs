@@ -5,11 +5,6 @@ namespace TangoRestApiClient.services.transporte.model;
 
 public  class TransporteQueryRecord: BaseQueryRecord
 {
-    public override int GetId()
-    {
-        return IdGva24;
-    }
-
     [JsonProperty("ID_GVA24")]
     public int IdGva24 { get; set; }
 

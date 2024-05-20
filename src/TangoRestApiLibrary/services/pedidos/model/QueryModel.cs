@@ -5,11 +5,6 @@ namespace TangoRestApiClient.services.pedidos.model;
 
 public class PedidoQueryRecord : BaseQueryRecord
 {
-    public override int GetId()
-    {
-        throw new NotImplementedException();
-    }
-
     [JsonProperty("ID_GVA21")]
     public int IdGva21 { get; set; }
 

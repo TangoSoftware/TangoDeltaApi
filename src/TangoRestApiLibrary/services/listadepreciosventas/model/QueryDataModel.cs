@@ -5,11 +5,6 @@ namespace TangoRestApiClient.services.listadepreciosventas.model;
 
 public class ListaDePreciosVentasQueryRecord : BaseQueryRecord
 {
-    public override int GetId()
-    {
-        return IdGva10;
-    }
-
     [JsonProperty("GVA10_PARAMETROS_AUTOMATIZACION")]
     public string? Gva10ParametrosAutomatizacion { get; set; }
 

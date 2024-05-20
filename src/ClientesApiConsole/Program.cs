@@ -15,7 +15,7 @@ ITangoConfig config = new TangoConfig()
 IClienteServices clienteServices = new ClienteServices(config);
 
 // Obtener todos los clientes (como si fuese la VISTA del ABM)
-List<ClienteQueryRecord> data = clienteServices.GetData();
+List<ClienteQueryRecord> data = clienteServices.Get(1000, 0);
 
 foreach (var item in data)
 {
@@ -93,7 +93,7 @@ cliente.DireccionEntrega.Add(direccionEntrega);
 // Insertamos el nuevo cliente por API
 try
 {
-    int savedId = clienteServices.Insert(cliente);
+    int savedId = clienteServices.Create(cliente);
     Console.WriteLine($"Id Cliente (gva14) {savedId} creado con exito!");
 }
 catch (TransactionException axCloudException)
@@ -108,8 +108,8 @@ catch (Exception ex)
 
 // Actualizar el cliente ingresado. 
 // Vamos a buscar al cliente por codigo y luego actualizamos las observaciones del mismo
-int idGva14ToUpdate = clienteServices.GetIdByFilter($"COD_GVA14 = '{cliente.CodGva14}'");
-ClienteData clienteToUpdate = clienteServices.GetDataById(idGva14ToUpdate);
+int idGva14ToUpdate = clienteServices.GetByFilter($"COD_GVA14 = '{cliente.CodGva14}'");
+ClienteData clienteToUpdate = clienteServices.GetById(idGva14ToUpdate);
 
 if (clienteToUpdate == null)
 {
@@ -123,7 +123,7 @@ clienteToUpdate.Observaciones = "Observaciones actualizadas para el cliente";
 try
 {
     //Llamo al metodo Edit para actualizar el cliente
-    clienteServices.Edit(clienteToUpdate);
+    clienteServices.Update(clienteToUpdate);
     Console.WriteLine($"Id Cliente (gva14) {clienteToUpdate.IdGva14} editado con exito!");
 }
 catch (TransactionException axCloudException)
@@ -138,7 +138,7 @@ catch (Exception ex)
   
 // Eliminamos el cliente ingresado. 
 // Vamos a buscar al cliente por codigo para luego eliminarlo
-int idGva14ToDelte = clienteServices.GetIdByFilter($"COD_GVA14 = '{cliente.CodGva14}'");
+int idGva14ToDelte = clienteServices.GetByFilter($"COD_GVA14 = '{cliente.CodGva14}'");
 
 if (idGva14ToDelte == 0)
 {

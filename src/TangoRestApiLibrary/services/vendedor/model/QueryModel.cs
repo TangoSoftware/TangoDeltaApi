@@ -5,11 +5,6 @@ namespace TangoRestApiClient.services.vendedor.model;
 
 public class VendedorQueryRecord: BaseQueryRecord
 {
-    public override int GetId()
-    {
-        return IdGva23;
-    }
-
     [JsonProperty("ID_GVA23")]
     public int IdGva23 { get; set; }
 
