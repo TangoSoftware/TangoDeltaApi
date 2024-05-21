@@ -6,6 +6,7 @@ using System.Text;
 using TangoRestApiClient.Common.Config;
 using TangoRestApiClient.Common.Model;
 using TangoRestApiLibrary.services.basemodel;
+using TangoRestApiLibrary.servicesBase;
 
 namespace TangoRestApiClient.services.baseServices;
 
@@ -20,17 +21,13 @@ public abstract class BaseServices<QR, D>
     where QR : BaseQueryRecord
     where D : BaseData
 {
-    private HttpClient _httpCLient;
+    private IAxHttpClient _httpCLient;
     protected readonly ITangoConfig _config;
 
     protected BaseServices(ITangoConfig config)
     {
         _config = config;
-        _httpCLient = new HttpClient();
-        _httpCLient.DefaultRequestHeaders.Accept.Clear();
-        _httpCLient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        _httpCLient.DefaultRequestHeaders.Add("Company", _config.CompanyId);
-        _httpCLient.DefaultRequestHeaders.Add("ApiAuthorization", _config.ApiAuthorization);
+        _httpCLient = new AxHttpClient(config);
     }
 
     protected abstract string ProcessId { get; }
