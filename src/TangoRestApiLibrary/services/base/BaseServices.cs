@@ -1,7 +1,5 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using TangoRestApiClient.Common.Config;
 using TangoRestApiClient.Common.Model;
@@ -21,13 +19,19 @@ public abstract class BaseServices<QR, D>
     where QR : BaseQueryRecord
     where D : BaseData
 {
-    private IAxHttpClient _httpCLient;
+    private IAxHttpClient _axHttpCLient;
     protected readonly ITangoConfig _config;
 
-    protected BaseServices(ITangoConfig config)
+    protected BaseServices(ITangoConfig config, IAxHttpClient? axHttpClient = null)
     {
         _config = config;
-        _httpCLient = new AxHttpClient(config);
+        if (axHttpClient == null)
+        {
+            _axHttpCLient = new AxHttpClient(config);
+        } else
+        {
+            _axHttpCLient = axHttpClient;
+        }        
     }
 
     protected abstract string ProcessId { get; }
@@ -51,7 +55,7 @@ public abstract class BaseServices<QR, D>
     private async Task<string> ApiDeleteAsync(int id)
     {
         var builder = GetNewUriBuilder("Delete", $"&id={id}");
-        var response = await _httpCLient.DeleteAsync(builder.Uri);
+        var response = await _axHttpCLient.DeleteAsync(builder.Uri);
         try
         {
             if (response.IsSuccessStatusCode)
@@ -77,7 +81,7 @@ public abstract class BaseServices<QR, D>
     private async Task<string> ApiGetAsync(int pageSize, int pageIndex)
     {
         var builder = GetNewUriBuilder("Get", $"&pageSize={pageSize}&pageIndex={pageIndex}&view=");
-        var response = await _httpCLient.GetAsync(builder.Uri);
+        var response = await _axHttpCLient.GetAsync(builder.Uri);
         try
         {
             if (response.IsSuccessStatusCode)
@@ -103,7 +107,7 @@ public abstract class BaseServices<QR, D>
     {
         // revisar el where
         var builder = GetNewUriBuilder("GetByFilter", $"&view=&filtroSql=WHERE%20{System.Net.WebUtility.UrlEncode(filter)}");
-        var response = await _httpCLient.GetAsync(builder.Uri);
+        var response = await _axHttpCLient.GetAsync(builder.Uri);
         try
         {
             if (response.IsSuccessStatusCode)
@@ -129,7 +133,7 @@ public abstract class BaseServices<QR, D>
     {
         var builder = GetNewUriBuilder("Create");
         var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-        var response = await _httpCLient.PostAsync(builder.Uri, content);
+        var response = await _axHttpCLient.PostAsync(builder.Uri, content);
 
         try
         {
@@ -157,7 +161,7 @@ public abstract class BaseServices<QR, D>
         var builder = GetNewUriBuilder("Update");
 
         var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-        var response = await _httpCLient.PutAsync(builder.Uri, content);
+        var response = await _axHttpCLient.PutAsync(builder.Uri, content);
 
         try
         {
@@ -183,7 +187,7 @@ public abstract class BaseServices<QR, D>
     private async Task<string> ApiGetByIdAsync(int idValue)
     {
         var builder = GetNewUriBuilder("GetById", $"&view=&id={idValue}");
-        var response = await _httpCLient.GetAsync(builder.Uri);
+        var response = await _axHttpCLient.GetAsync(builder.Uri);
         try
         {
             if (response.IsSuccessStatusCode)

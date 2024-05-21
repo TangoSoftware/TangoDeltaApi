@@ -23,11 +23,11 @@ foreach (var item in data)
 }
 
 // Crear un nuevo cliente
-ClienteData cliente = new ClienteData{ CodGva14  = "330006"};
+ClienteData cliente = new ClienteData{ CodGva14  = "330010"};
 
 cliente.RazonSoci = "Cliente Prueba";
 cliente.NomCom = "Api Fiendly S.A.";
-cliente.Cuit = "20330041999";
+cliente.Cuit = "20330042999";
 cliente.CupoCredi=0;
 cliente.Exporta=true;
 cliente.IiD="N";
