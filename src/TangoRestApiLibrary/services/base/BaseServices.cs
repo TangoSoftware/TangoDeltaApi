@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using TangoRestApiClient.Common.Config;
@@ -14,12 +15,23 @@ namespace TangoRestApiClient.services.baseServices;
 /// <typeparam name="QR">QueryRecord</typeparam>
 /// /// <typeparam name="D">Data</typeparam>
 /// <param name="config"></param>
-public abstract class BaseServices<QR, D>(ITangoConfig config)
+public abstract class BaseServices<QR, D>
     : IBaseServices<QR, D>
     where QR : BaseQueryRecord
     where D : BaseData
 {
-    protected readonly ITangoConfig _config = config;
+    private HttpClient _httpCLient;
+    protected readonly ITangoConfig _config;
+
+    protected BaseServices(ITangoConfig config)
+    {
+        _config = config;
+        _httpCLient = new HttpClient();
+        _httpCLient.DefaultRequestHeaders.Accept.Clear();
+        _httpCLient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        _httpCLient.DefaultRequestHeaders.Add("Company", _config.CompanyId);
+        _httpCLient.DefaultRequestHeaders.Add("ApiAuthorization", _config.ApiAuthorization);
+    }
 
     protected abstract string ProcessId { get; }
 
@@ -34,16 +46,6 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
         return builder;
     }
 
-    private HttpClient GetNewHttpClient()
-    {
-        var client = new HttpClient();
-        client.DefaultRequestHeaders.Accept.Clear();
-        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        client.DefaultRequestHeaders.Add("Company", _config.CompanyId);
-        client.DefaultRequestHeaders.Add("ApiAuthorization", _config.ApiAuthorization);
-        return client;
-    }
-
     /// <summary>
     /// DeleteAsync api/Delete
     /// </summary>
@@ -52,8 +54,7 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
     private async Task<string> ApiDeleteAsync(int id)
     {
         var builder = GetNewUriBuilder("Delete", $"&id={id}");
-        var client = GetNewHttpClient();
-        var response = await client.DeleteAsync(builder.Uri);
+        var response = await _httpCLient.DeleteAsync(builder.Uri);
         try
         {
             if (response.IsSuccessStatusCode)
@@ -79,8 +80,7 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
     private async Task<string> ApiGetAsync(int pageSize, int pageIndex)
     {
         var builder = GetNewUriBuilder("Get", $"&pageSize={pageSize}&pageIndex={pageIndex}&view=");
-        var client = GetNewHttpClient();
-        var response = await client.GetAsync(builder.Uri);
+        var response = await _httpCLient.GetAsync(builder.Uri);
         try
         {
             if (response.IsSuccessStatusCode)
@@ -106,8 +106,7 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
     {
         // revisar el where
         var builder = GetNewUriBuilder("GetByFilter", $"&view=&filtroSql=WHERE%20{System.Net.WebUtility.UrlEncode(filter)}");
-        var client = GetNewHttpClient();
-        var response = await client.GetAsync(builder.Uri);
+        var response = await _httpCLient.GetAsync(builder.Uri);
         try
         {
             if (response.IsSuccessStatusCode)
@@ -132,9 +131,8 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
     private async Task<string> ApiCreateAsync(string jsonData)
     {
         var builder = GetNewUriBuilder("Create");
-        var client = GetNewHttpClient();
         var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-        var response = await client.PostAsync(builder.Uri, content);
+        var response = await _httpCLient.PostAsync(builder.Uri, content);
 
         try
         {
@@ -160,10 +158,9 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
     private async Task<string> ApiUpdateAsync(string jsonData)
     {
         var builder = GetNewUriBuilder("Update");
-        var client = GetNewHttpClient();
 
         var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-        var response = await client.PutAsync(builder.Uri, content);
+        var response = await _httpCLient.PutAsync(builder.Uri, content);
 
         try
         {
@@ -189,8 +186,7 @@ public abstract class BaseServices<QR, D>(ITangoConfig config)
     private async Task<string> ApiGetByIdAsync(int idValue)
     {
         var builder = GetNewUriBuilder("GetById", $"&view=&id={idValue}");
-        var client = GetNewHttpClient();
-        var response = await client.GetAsync(builder.Uri);
+        var response = await _httpCLient.GetAsync(builder.Uri);
         try
         {
             if (response.IsSuccessStatusCode)
