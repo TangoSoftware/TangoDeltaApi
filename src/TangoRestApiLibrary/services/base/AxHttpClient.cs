@@ -1,6 +1,4 @@
-﻿using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Runtime.CompilerServices;
+﻿using System.Net.Http.Headers;
 using TangoRestApiClient.Common.Config;
 
 namespace TangoRestApiLibrary.servicesBase
