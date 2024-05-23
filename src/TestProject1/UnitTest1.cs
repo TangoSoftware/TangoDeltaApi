@@ -1,7 +1,10 @@
 using Moq;
 using Newtonsoft.Json;
 using System.Net;
+using System.Net.Http.Headers;
+using System.Reflection.PortableExecutable;
 using System.Text;
+using System.Timers;
 using TangoRestApiClient.Common.Config;
 using TangoRestApiClient.Common.Model;
 using TangoRestApiLibrary.servicesBase;
@@ -10,6 +13,16 @@ namespace TestProject1
 {
     public class UnitTest1
     {
+        private static ITangoConfig NewConfig()
+        {
+            return new TangoConfig()
+            {
+                TangoUrl = "http://localhost:17000/",
+                ApiAuthorization = "C98BEF0B-F23F-4D0B-BBF3-49F4AF8F65DC",
+                CompanyId = "4"
+            };
+        }
+
         private static Task<HttpResponseMessage> GetHttpResponseMessage(int savedId)
         {
             TransactionResultModel transactionResultModel = new()
@@ -24,13 +37,6 @@ namespace TestProject1
             Task<HttpResponseMessage> task = Task.FromResult(responseMessage);
             return task;
         }
-
-        private static ITangoConfig NewConfig() => new TangoConfig()
-        {
-            TangoUrl = "http://localhost:17000/",
-            ApiAuthorization = "C98BEF0B-F23F-4D0B-BBF3-49F4AF8F65DC",
-            CompanyId = "4"
-        };
 
         [Fact]
         public void CreateExitoso()
@@ -51,13 +57,28 @@ namespace TestProject1
 
             // mock del httpClient
             Mock<IAxHttpClient> axHttpClientMock = new();
+            HttpClient client = new();
+            HttpRequestHeaders httpRequestHeaders = client.DefaultRequestHeaders;
+            axHttpClientMock.Setup(m => m.DefaultRequestHeaders).Returns(httpRequestHeaders);
+
             axHttpClientMock
                 .Setup(m => m.PostAsync(It.IsAny<Uri>(), It.IsAny<HttpContent>()))
                 .Returns(GetHttpResponseMessage(expectedSavedId)) // seteo del response message con el "savedId" esperado
                 .Callback(async (Uri uri, HttpContent content) =>
-                {   // Se verifica que cuando se llama al PostAsync sea con los parámetros correctos
-                    Assert.Equal("http://localhost:17000/api/Create?process=1097", uri.AbsoluteUri); // URI es la url correcta según el config, action=Create, y process=1097
-                    Assert.Equal(JsonConvert.SerializeObject(paisData), await content.ReadAsStringAsync()); // content es el país que queremos dar dar de alta
+                {   
+                    var requestMessage = new HttpRequestMessage
+                    {
+                        RequestUri = uri,
+                        Content = content,
+                    };
+
+                    // Verifico que al momento de ejecutar el post los headers sean los correctos
+                    Assert.Equal(config.CompanyId, axHttpClientMock.Object.DefaultRequestHeaders.GetValues("Company").Single()); // El header contiene el CompanyId
+                    Assert.Equal(config.ApiAuthorization, axHttpClientMock.Object.DefaultRequestHeaders.GetValues("ApiAuthorization").Single()); // El header contiene el ApiAuth                                       
+
+                    // Se verifica que cuando se llama al PostAsync sea con los parámetros correctos
+                    Assert.Equal("http://localhost:17000/api/Create?process=1097", requestMessage.RequestUri.AbsoluteUri); // URI es la url correcta según el config, action=Create, y process=1097                    
+                    Assert.Equal(JsonConvert.SerializeObject(paisData), await requestMessage.Content.ReadAsStringAsync()); // Content contiene el país que queremos dar dar de alta
                 });
 
             // instanciamos un paisService

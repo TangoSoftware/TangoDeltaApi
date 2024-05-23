@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using TangoRestApiClient.Common.Config;
 using TangoRestApiClient.Common.Model;
@@ -25,13 +26,18 @@ public abstract class BaseServices<QR, D>
     protected BaseServices(ITangoConfig config, IAxHttpClient? axHttpClient = null)
     {
         _config = config;
+        
         if (axHttpClient == null)
-        {
-            _axHttpCLient = new AxHttpClient(config);
+        {   // Ejecución en contexto de producción instancia un HttpClient nativo
+            _axHttpCLient = new AxHttpClient();
         } else
-        {
+        {   // Contexto de tests utiliza el enviado por parámetro
             _axHttpCLient = axHttpClient;
-        }        
+        }
+        _axHttpCLient.DefaultRequestHeaders.Accept.Clear();
+        _axHttpCLient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        _axHttpCLient.DefaultRequestHeaders.Add("Company", config.CompanyId);
+        _axHttpCLient.DefaultRequestHeaders.Add("ApiAuthorization", config.ApiAuthorization);
     }
 
     protected abstract string ProcessId { get; }
