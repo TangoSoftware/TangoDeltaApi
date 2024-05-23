@@ -71,25 +71,42 @@ namespace TestProject1
                 .Returns(GetHttpResponseMessage(paisId)) // seteo del response message con el paisId esperado
                 .Callback(async (Uri uri, HttpContent content) =>
                 {
-                    var requestMessage = new HttpRequestMessage
-                    {
-                        RequestUri = uri,
-                        Content = content,
-                    };
+                    HttpRequestMessage requestMessage = GetHttpRequestMessage(uri, content);
                     HttpRequestHeaders headers = axHttpClientMock.Object.DefaultRequestHeaders;
-
-                    await CallbackAsserts(paisData, requestMessage, headers);
+                    await CallbackAsserts(paisData, requestMessage, headers, "Create");
                 });
         }
 
-        private static async Task CallbackAsserts(PaisData paisData, HttpRequestMessage requestMessage, HttpRequestHeaders headers)
+        private void SetUpPutAsync(PaisData paisData)
+        {
+            axHttpClientMock
+                .Setup(m => m.PutAsync(It.IsAny<Uri>(), It.IsAny<HttpContent>()))
+                .Returns(GetHttpResponseMessage(paisId)) // seteo del response message con el paisId esperado
+                .Callback(async (Uri uri, HttpContent content) =>
+                {
+                    HttpRequestMessage requestMessage = GetHttpRequestMessage(uri, content);
+                    HttpRequestHeaders headers = axHttpClientMock.Object.DefaultRequestHeaders;
+                    await CallbackAsserts(paisData, requestMessage, headers, "Update");
+                });
+        }
+
+        private static HttpRequestMessage GetHttpRequestMessage(Uri uri, HttpContent content)
+        {
+            return new HttpRequestMessage
+            {
+                RequestUri = uri,
+                Content = content,
+            };
+        }
+
+        private static async Task CallbackAsserts(PaisData paisData, HttpRequestMessage requestMessage, HttpRequestHeaders headers, string action)
         {
             // Verifico que al momento de ejecutar el post los headers sean los correctos
             Assert.Equal(companyId, headers.GetValues("Company").Single()); // El header contiene el CompanyId
             Assert.Equal(apiAuthorization, headers.GetValues("ApiAuthorization").Single()); // El header contiene el ApiAuth                                       
 
             // Se verifica que cuando se llama al PostAsync sea con los parámetros correctos
-            Assert.Equal($"{tangoUrl}/api/Create?process={processId}", requestMessage.RequestUri.AbsoluteUri); // URI es la url correcta según el config, action=Create, y process de paises
+            Assert.Equal($"{tangoUrl}/api/{action}?process={processId}", requestMessage.RequestUri.AbsoluteUri); // URI es la url correcta según el config, action y process
             Assert.Equal(JsonConvert.SerializeObject(paisData), await requestMessage.Content.ReadAsStringAsync()); // Content es un json del país que queremos dar dar de alta
         }
         #endregion
@@ -118,6 +135,22 @@ namespace TestProject1
 
             // Verificamos que llamamos sólo una vez al método PostAsync. La verificación de que los parámetros sean los correctos está en el callback del mock.
             axHttpClientMock.Verify(m => m.PostAsync(It.IsAny<Uri>(), It.IsAny<HttpContent>()), Times.Once);
+        }
+
+        [Fact]
+        public void UpdateExitoso()
+        {
+            PaisData paisData = new()
+            {
+                ID_PAIS = paisId,
+                PAIS1 = nombrePais,
+                COD_AREA = codigoDeArea,
+                COD_DGI = codigoDgi
+            };
+            SetUpPutAsync(paisData);
+            PaisService paisService = new(tangoConfig, axHttpClientMock.Object);
+            paisService.Update(paisData);
+            axHttpClientMock.Verify(m => m.PutAsync(It.IsAny<Uri>(), It.IsAny<HttpContent>()), Times.Once);
         }
     }
 }
