@@ -2,9 +2,7 @@ using Moq;
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Headers;
-using System.Reflection.PortableExecutable;
 using System.Text;
-using System.Timers;
 using TangoRestApiClient.Common.Config;
 using TangoRestApiClient.Common.Model;
 using TangoRestApiLibrary.servicesBase;
@@ -13,16 +11,44 @@ namespace TestProject1
 {
     public class UnitTest1
     {
-        private static ITangoConfig NewConfig()
+        #region constantes para los tests
+        const string tangoUrl = "http://localhost:17123";
+        const string apiAuthorization = "C98BEF0B-F23F-4D0B-BBF3-49F4AF8F65DB";
+        const string companyId = "7";
+        const int processId = 1097;
+        const int paisId = 456;
+        const string nombrePais = "nombre del pais";
+        const string codigoDeArea = "código de area";
+        const string codigoDgi = "codigoDgi";
+        #endregion
+
+        private readonly Mock<IAxHttpClient> axHttpClientMock;
+        private readonly ITangoConfig tangoConfig;
+
+        #region Ctor
+        public UnitTest1()
         {
-            return new TangoConfig()
+            // config
+            tangoConfig = new TangoConfig()
             {
-                TangoUrl = "http://localhost:17000/",
-                ApiAuthorization = "C98BEF0B-F23F-4D0B-BBF3-49F4AF8F65DC",
-                CompanyId = "4"
+                TangoUrl = tangoUrl,
+                ApiAuthorization = apiAuthorization,
+                CompanyId = companyId
             };
+
+            axHttpClientMock = new();
+            setupMock();
         }
 
+        private void setupMock()
+        {
+            // mock del httpClient
+            HttpRequestHeaders httpRequestHeaders = new HttpClient().DefaultRequestHeaders;
+            axHttpClientMock.Setup(m => m.DefaultRequestHeaders).Returns(httpRequestHeaders);
+        }
+        #endregion
+
+        #region testImplementations
         private static Task<HttpResponseMessage> GetHttpResponseMessage(int savedId)
         {
             TransactionResultModel transactionResultModel = new()
@@ -38,57 +64,57 @@ namespace TestProject1
             return task;
         }
 
-        [Fact]
-        public void CreateExitoso()
+        private void SetUpPostAsync(PaisData paisData)
         {
-            // "config" para tests
-            var config = NewConfig();
-
-            // entidad que vamos a dar de alta
-            PaisData paisData = new()
-            {
-                COD_AREA = "asd",
-                COD_DGI = "gdfgfd",
-                PAIS1 = "nombredelpais"
-            };
-
-            // id que esperamos que se genere
-            int expectedSavedId = 456;
-
-            // mock del httpClient
-            Mock<IAxHttpClient> axHttpClientMock = new();
-            HttpClient client = new();
-            HttpRequestHeaders httpRequestHeaders = client.DefaultRequestHeaders;
-            axHttpClientMock.Setup(m => m.DefaultRequestHeaders).Returns(httpRequestHeaders);
-
             axHttpClientMock
                 .Setup(m => m.PostAsync(It.IsAny<Uri>(), It.IsAny<HttpContent>()))
-                .Returns(GetHttpResponseMessage(expectedSavedId)) // seteo del response message con el "savedId" esperado
+                .Returns(GetHttpResponseMessage(paisId)) // seteo del response message con el paisId esperado
                 .Callback(async (Uri uri, HttpContent content) =>
-                {   
+                {
                     var requestMessage = new HttpRequestMessage
                     {
                         RequestUri = uri,
                         Content = content,
                     };
+                    HttpRequestHeaders headers = axHttpClientMock.Object.DefaultRequestHeaders;
 
-                    // Verifico que al momento de ejecutar el post los headers sean los correctos
-                    Assert.Equal(config.CompanyId, axHttpClientMock.Object.DefaultRequestHeaders.GetValues("Company").Single()); // El header contiene el CompanyId
-                    Assert.Equal(config.ApiAuthorization, axHttpClientMock.Object.DefaultRequestHeaders.GetValues("ApiAuthorization").Single()); // El header contiene el ApiAuth                                       
-
-                    // Se verifica que cuando se llama al PostAsync sea con los parámetros correctos
-                    Assert.Equal("http://localhost:17000/api/Create?process=1097", requestMessage.RequestUri.AbsoluteUri); // URI es la url correcta según el config, action=Create, y process=1097                    
-                    Assert.Equal(JsonConvert.SerializeObject(paisData), await requestMessage.Content.ReadAsStringAsync()); // Content contiene el país que queremos dar dar de alta
+                    await CallbackAsserts(paisData, requestMessage, headers);
                 });
+        }
 
-            // instanciamos un paisService
-            PaisService paisService = new(config, axHttpClientMock.Object);
+        private static async Task CallbackAsserts(PaisData paisData, HttpRequestMessage requestMessage, HttpRequestHeaders headers)
+        {
+            // Verifico que al momento de ejecutar el post los headers sean los correctos
+            Assert.Equal(companyId, headers.GetValues("Company").Single()); // El header contiene el CompanyId
+            Assert.Equal(apiAuthorization, headers.GetValues("ApiAuthorization").Single()); // El header contiene el ApiAuth                                       
+
+            // Se verifica que cuando se llama al PostAsync sea con los parámetros correctos
+            Assert.Equal($"{tangoUrl}/api/Create?process={processId}", requestMessage.RequestUri.AbsoluteUri); // URI es la url correcta según el config, action=Create, y process de paises
+            Assert.Equal(JsonConvert.SerializeObject(paisData), await requestMessage.Content.ReadAsStringAsync()); // Content es un json del país que queremos dar dar de alta
+        }
+        #endregion
+
+        [Fact]
+        public void CreateExitoso()
+        {
+            // entidad que vamos a dar de alta
+            PaisData paisData = new()
+            {
+                PAIS1 = nombrePais,
+                COD_AREA = codigoDeArea,
+                COD_DGI = codigoDgi
+            };
+
+            // setup del mock con el paisData que daremos de alta
+            // contiene un callback con los asserts del header, uri y content del ApiPost
+            SetUpPostAsync(paisData);
+
+            // instanciamos un paisService con el mock del axHttpClientMock
+            PaisService paisService = new(tangoConfig, axHttpClientMock.Object);
 
             // llamamos al método create del paisService con el país que queremos crear como parámetro
-            int savedId = paisService.Create(paisData);
-
             // Verificamos que el savedId que nos devuelve el Create sea el mismo que el SavedId dentro del TransactionResultModel del content del responseMessage
-            Assert.Equal(expectedSavedId, savedId);
+            Assert.Equal(paisId, paisService.Create(paisData));
 
             // Verificamos que llamamos sólo una vez al método PostAsync. La verificación de que los parámetros sean los correctos está en el callback del mock.
             axHttpClientMock.Verify(m => m.PostAsync(It.IsAny<Uri>(), It.IsAny<HttpContent>()), Times.Once);
