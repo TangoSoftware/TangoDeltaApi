@@ -198,7 +198,7 @@ namespace TestProject1
             axHttpClientMock.Verify(m => m.PutAsync(It.IsAny<Uri>(), It.IsAny<HttpContent>()), Times.Once);
         }
 
-        [Fact]
+        [Fact(Skip = "Aún no lo implementamos")]
         public void Update_ErrorNoEsperado_IdDelResponseNoCoincide()
         {
             throw new NotImplementedException("Implementame porfa");
