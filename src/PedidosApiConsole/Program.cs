@@ -5,12 +5,17 @@ using TangoRestApiClient.services.condicionVentas;
 using TangoRestApiClient.services.listadepreciosventas;
 using TangoRestApiClient.services.transporte;
 using TangoRestApiClient.services.vendedor;
+using TangoRestApiClient.services.cliente;
+using TangoRestApiClient.services.ClasificacionDeComprobantes;
+using TangoRestApiClient.services.Moneda;
+using TangoRestApiClient.services.Deposito;
+using TangoRestApiClient.services.Articulo;
 
 // Configuracion de conexión a Tango Delta.
 ITangoConfig config = new TangoConfig()
 {
-    TangoUrl = "http://euforia19.axoft.com:17000",
-    ApiAuthorization = "F61B1448-486D-4C20-964B-EB30157976FD",
+    TangoUrl = "http://euforia24.axoft.com:17000",
+    ApiAuthorization = "fa0d52d3-7f54-47a3-8327-4fc830fe82c4",
     CompanyId = "1"
 };
 
@@ -22,7 +27,11 @@ ICondicionVentaServices condicionVentaServices = new CondicionVentaServices(conf
 IListaDePreciosVentasServices listaDePreciosVentasServices = new ListaDePreciosVentasServices(config);
 ITransporteServices transporteServices = new TransporteServices(config);
 IVendedorServices vendedorServices = new VendedorServices(config);
-
+IClienteServices clienteServices = new ClienteServices(config);
+IClasificacionDeComprobantesServices clasificacionDeComprobantesServices = new ClasificacionDeComprobantesServices(config);
+IMonedaServices monedaServices = new MonedaServices(config);
+IDepositoServices depositoServices = new DepositoServices(config);
+IArticuloServices articuloServices = new ArticuloServices(config);
 // Obtengo los pedidos de la vista principal de pedidos.
 List<PedidoQueryRecord> data = pedidosServices.Get(1000, 0);
 
@@ -38,11 +47,11 @@ pedido.IdGva43TalonPed = 6; // Talonario = 5
 pedido.FechaPedido = DateTime.Now;
 pedido.FechaEntrega = DateTime.Now.AddDays(10);
 // condicion de venta
-pedido.IdGva01 =  condicionVentaServices.GetByFilter("GVA01.COND_VTA = 1").Single().IdGva01; 
+pedido.IdGva01 = condicionVentaServices.GetByFilter("GVA01.COND_VTA = 1").Single().IdGva01;
 // Lista de precios
-pedido.IdGva10 = listaDePreciosVentasServices.GetByFilter("gva10.NOMBRE_LIS = 'Venta Mayorista'").Single().IdGva10; 
-// Clientes
-pedido.IdGva14 = 1; // 1 = Lombardi , cod_client = 010001
+pedido.IdGva10 = listaDePreciosVentasServices.GetByFilter("gva10.NOMBRE_LIS = 'Venta Mayorista'").Single().IdGva10;
+// Clientes: F
+pedido.IdGva14 = clienteServices.GetByFilter("AXV_CLIENTE.COD_GVA14= '010001'").Single().IdGva14; // 1 = Lombardi , cod_client = 010001, 30-22641901-9
 pedido.EsClienteHabitual = true;
 pedido.IdDireccionEntrega = 1;
 // Vendedor
@@ -50,15 +59,25 @@ pedido.IdGva23 = vendedorServices.GetByFilter("cod_vended = 1").Single().IdGva23
 // transporte
 pedido.IdGva24 = transporteServices.GetByFilter("Gva24.cod_transp = '01'").Single().IdGva24;
 // clasificacion de comprobante
-pedido.IdGva81 = 1; // 1 = casa central. 
+int idClasificacionCoprobante = clasificacionDeComprobantesServices.GetByFilter("GVA81.COD_CLASIF = '1'").Single().IdGva81; // 1 = Campaña de TV. 
+pedido.IdGva81 = idClasificacionCoprobante;
 //moneda
-pedido.IdMoneda = 1; // 1 = Peso Argentino. Cod_moneda = 01
+pedido.IdMoneda = monedaServices.GetByFilter("MONEDA.COD_MONEDA = 'PES'").Single().IdMoneda; // 1 = Peso Argentino. Cod_moneda = 01
 //deposito
-pedido.IdSta22 = 1; // 1 = deposito principal. Cod_deposito = 01
+int idDeposito = depositoServices.GetByFilter("STA22.COD_STA22 = 1").Single().IdSta22; // 1 = deposito principal. Cod_deposito = 01
+pedido.IdSta22 = idDeposito;
 pedido.Estado = 2; // hay que poner una lista de estados posibles...
 // Cargamos los renglones del pedido
 pedido.RenglonDto = new List<RenglonDto>();
-pedido.RenglonDto.Add(new RenglonDto() { IdSta22 = 1,  IdSta11 = 33, IdGva81 = 1, ModuloUnidadMedida = "GV",  CantidadPedida = 10, Precio = 100 });
+pedido.RenglonDto.Add(new RenglonDto()
+{
+    IdSta22 = idDeposito,
+    IdSta11 = articuloServices.GetByFilter("AXV_ARTICULO.COD_STA11 = '0100100134'").Single().IdSta11,
+    IdGva81 = idClasificacionCoprobante,
+    ModuloUnidadMedida = "GV",
+    CantidadPedida = 10,
+    Precio = 100
+});
 
 // Enviamos a insertar el pedido cargado.
 try
@@ -69,5 +88,4 @@ try
 catch (Exception ex)
 {
     Console.WriteLine($"Error al crear el pedido {pedido.NroPedido}. ({ex.Message})");
-//    Console.WriteLine($"Title: ({transactionResult.ExceptionInfo.Title}), Messeges: {transactionResult.ExceptionInfo.Messages.FirstOrDefault()}");
 }
