@@ -60,5 +60,5 @@ public class VendedorQueryRecord: BaseQueryRecord
     public string? Observaciones { get; set; }
 
     [JsonProperty("COD_DESCRIP")]
-    public string CodDescrip { get; set; }
+    public string? CodDescrip { get; set; }
 }

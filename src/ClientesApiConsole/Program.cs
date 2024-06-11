@@ -6,8 +6,8 @@ using TangoRestApiClient.services.cliente.model;
 // Configuracion de conexión a Tango Delta.
 ITangoConfig config = new TangoConfig()
 {
-    TangoUrl = "http://euforia19.axoft.com:17000",
-    ApiAuthorization = "F61B1448-486D-4C20-964B-EB30157976FD",
+    TangoUrl = "http://euforia24.axoft.com:17000",
+    ApiAuthorization = "fa0d52d3-7f54-47a3-8327-4fc830fe82c4",
     CompanyId = "1"
 };
 

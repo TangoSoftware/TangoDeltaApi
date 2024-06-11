@@ -1,0 +1,8 @@
+using TangoRestApiClient.services.baseServices;
+using TangoRestApiClient.services.ClasificacionDeComprobantes.model;
+
+namespace TangoRestApiClient.services.ClasificacionDeComprobantes;
+
+public interface IClasificacionDeComprobantesServices: IBaseServices<ClasificacionDeComprobantesQueryRecord, ClasificacionDeComprobantesData>
+{
+}
