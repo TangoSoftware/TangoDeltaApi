@@ -749,7 +749,7 @@ Tené en cuenta que esta sección es de tipo array por lo que deberás
 repetirla para registrar las distintas fechas de entrega pactadas con tu
 cliente para cada RENGLON_DTO.
 
-+---------------+---+--------------+------+--------------------------+
+----------------+---+--------------+------+---------------------------
 | Campo         | R | Descripción  | Tipo | Consideraciones, valores |
 |               | e |              | de   | posibles y ejemplos      |
 |               | q |              | dato |                          |
