@@ -117,7 +117,7 @@ Producción / Testeo
 | OBSERVACIONES                | No   | Observaciones del pedido                                                                                              | string   |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
                                                     |
 
-
+</div>
 ##### Renglones del pedido.
 
 RENGLON_DTO: Tené en cuenta que esta sección es de tipo array, por lo que deberás repetirla para registrar los distintos renglones del pedido.
@@ -137,7 +137,7 @@ RENGLON_DTO: Tené en cuenta que esta sección es de tipo array, por lo que debe
 | PORCENTAJE_BONIFICACION        | No        | Porcentaje de bonificación del renglón                             | decimal      |
 | ID_GVA81                       | No        | Identificación de la clasificación de comprobantes a nivel renglón | int          |
 | OBSERVACIONES                  | No        | Observaciones asignadas al renglón                                 | string       |
-</div>
+
 
 ##### PLAN_DE_ENTREGA_DTO (No requerido)
 
