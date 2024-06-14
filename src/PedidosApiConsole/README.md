@@ -259,22 +259,10 @@ asociados al pedido.
 Si vas a completar esta sección es obligatorio que informes la propiedad
 MENSAJE.
 
-  ---------------------------------------------------------------------------------
-  Campo            Requerido   Descripción     Tipo de  Consideraciones, valores
-                                               dato     posibles y ejemplos
-  ---------------- ----------- --------------- -------- ---------------------------
-  MENSAJE          No          Comentario que  string   Además del mensaje
-                               se quiera                registraremos la fecha del
-                               incluir como             día y con el tipo de nota
-                               nota adjunta en          "Manual".
-                               el pedido                
-                               dentro de la             
-                               solapa de                
-                               "Información             
-                               adicional" del           
-                               pedido.                  
+| Campo   | Requerido | Descripción                                                                                                                | Tipo de dato | Consideraciones, valores posibles y ejemplos                                      |
+|---------|-----------|----------------------------------------------------------------------------------------------------------------------------|--------------|-----------------------------------------------------------------------------------|
+| MENSAJE | No        | Comentario que se quiera incluir como nota adjunta en el pedido dentro de la solapa de “Información adicional” del pedido. | string       | Además del mensaje registraremos la fecha del día y con el tipo de nota “Manual”. |
 
-  ---------------------------------------------------------------------------------
 
 #### Novedades sobre cambios en el JSON
 
