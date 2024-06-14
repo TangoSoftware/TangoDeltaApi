@@ -72,7 +72,7 @@ Producción / Testeo
 
 ##### Encabezado
 
-<div style="font-size:12px;">
+
 | Campo                        | Req. | Descripción                                                                                                           | Tipo     | Consideraciones                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 |------------------------------|------|-----------------------------------------------------------------------------------------------------------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | ID_GVA43_TALON_PED           | Si   | Identificación del talonario de pedidos                                                                               | int      | Validamos que corresponda a un talonario de pedidos. ID de la tabla GVA43 donde GVA43.COMPROB = “PED”.                                                                                                                                                                                                                                                                                                                                                                                                                                         |
@@ -117,7 +117,7 @@ Producción / Testeo
 | OBSERVACIONES                | No   | Observaciones del pedido                                                                                              | string   |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
                                                     |
 
-</div>
+
 ##### Renglones del pedido.
 
 RENGLON_DTO: Tené en cuenta que esta sección es de tipo array, por lo que deberás repetirla para registrar los distintos renglones del pedido.
