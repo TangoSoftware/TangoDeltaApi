@@ -72,673 +72,49 @@ Producción / Testeo
 
 ##### Encabezado
 
-+---------------+---+--------------+------+--------------------------+
-| Campo         | R | Descripción  | Tipo | Consideraciones, valores |
-|               | e |              | de   | posibles y ejemplos      |
-|               | q |              | dato |                          |
-|               | u |              |      |                          |
-|               | e |              |      |                          |
-|               | r |              |      |                          |
-|               | i |              |      |                          |
-|               | d |              |      |                          |
-|               | o |              |      |                          |
-+===============+===+==============+======+==========================+
-| ID_GV         | S | Id           | int  | Validamos que            |
-| A43_TALON_PED | i | entificación |      | corresponda a un         |
-|               |   | del          |      | talonario de pedidos. ID |
-|               |   | talonario de |      | de la tabla GVA43 donde  |
-|               |   | pedidos      |      | GVA43.COMPROB = "PED"    |
-+---------------+---+--------------+------+--------------------------+
-| NRO_PEDIDO    | N | Número del   | st   | Si lo ingresás           |
-|               | o | pedido       | ring | verificamos que sea      |
-|               |   |              |      | correlativo al último    |
-|               |   |              |      | (si no que tenés         |
-|               |   |              |      | habilitada la edición    |
-|               |   |              |      | del número de            |
-|               |   |              |      | talonario).              |
-|               |   |              |      |                          |
-|               |   |              |      | Si no lo ingresás, lo    |
-|               |   |              |      | asignaremos              |
-|               |   |              |      | automáticamente.         |
-+---------------+---+--------------+------+--------------------------+
-| ESTADO        | N | Estado del   | int  | Si no lo ingresás, lo    |
-|               | o | pedido       |      | asigna automáticamente   |
-|               |   |              |      | en función a lo          |
-|               |   |              |      | establecido en           |
-|               |   |              |      | [Parámetros de           |
-|               |   |              |      | Ventas]{.underline}      |
-|               |   |              |      | (Aprueba pedidos)        |
-|               |   |              |      |                          |
-|               |   |              |      | **Valores posibles:**    |
-|               |   |              |      |                          |
-|               |   |              |      | -   **1** (Ingresado)    |
-|               |   |              |      |                          |
-|               |   |              |      | -   **2** (Aprobado)     |
-|               |   |              |      |                          |
-|               |   |              |      | **Ejemplos:**            |
-|               |   |              |      |                          |
-|               |   |              |      | -   Si no lo ingresás, y |
-|               |   |              |      |     "No aprueba          |
-|               |   |              |      |     pedidos", ESTADO = 2 |
-|               |   |              |      |                          |
-|               |   |              |      | -   Si no lo ingresás, y |
-|               |   |              |      |     "Aprueba pedidos",   |
-|               |   |              |      |     ESTADO = 1           |
-|               |   |              |      |                          |
-|               |   |              |      | -   Si ingresás 2 y      |
-|               |   |              |      |     "Aprueba pedidos"    |
-|               |   |              |      |     ESTADO = 2           |
-|               |   |              |      |                          |
-|               |   |              |      | -   Si ingresás 1 y "No  |
-|               |   |              |      |     aprueba pedidos",    |
-|               |   |              |      |     rechazamos el        |
-|               |   |              |      |     registro.            |
-+---------------+---+--------------+------+--------------------------+
-| FECHA_PEDIDO  | N | Fecha del    | date | Si no lo indicás         |
-|               | o | pedido       | time | asumimos la fecha del    |
-|               |   |              |      | día                      |
-+---------------+---+--------------+------+--------------------------+
-| ID_GVA14      | N | Id           | int  | Es requerido cuando la   |
-|               | o | entificación |      | propiedad                |
-|               |   | del cliente  |      | ES_CLIENTE_HABITUAL es   |
-|               |   | habitual     |      | true                     |
-|               |   |              |      |                          |
-|               |   |              |      | Si esa propiedad es      |
-|               |   |              |      | false no lo debés        |
-|               |   |              |      | informar.                |
-+---------------+---+--------------+------+--------------------------+
-| ES_CLI        | S | Indica si el | bool | **Valores posibles:**    |
-| ENTE_HABITUAL | i | pedido       |      |                          |
-|               |   | corresponde  |      | -   true: cliente        |
-|               |   | a un cliente |      |     habitual             |
-|               |   | habitual o   |      |                          |
-|               |   | uno          |      | -   false: cliente       |
-|               |   | ocasional    |      |     ocasional            |
-|               |   |              |      |                          |
-|               |   |              |      | En caso de que quieras   |
-|               |   |              |      | registrar un pedido      |
-|               |   |              |      | correspondiente a un     |
-|               |   |              |      | cliente ocasional debés  |
-|               |   |              |      | completar las siguientes |
-|               |   |              |      | secciones del JSON:      |
-|               |   |              |      |                          |
-|               |   |              |      | -                        |
-|               |   |              |      |    CLIENTE_OCASIONAL_DTO |
-|               |   |              |      |                          |
-|               |   |              |      | -                        |
-|               |   |              |      |    CLIENTE_OCASIONAL_PER |
-|               |   |              |      | CEPCIONES_DEFINIBLES_DTO |
-+---------------+---+--------------+------+--------------------------+
-| ID_GVA01      | S | Id           | int  |                          |
-|               | i | entificación |      |                          |
-|               |   | de la        |      |                          |
-|               |   | condición de |      |                          |
-|               |   | venta        |      |                          |
-+---------------+---+--------------+------+--------------------------+
-| ID_GVA23      | S | Id           | int  |                          |
-|               | i | entificación |      |                          |
-|               |   | del vendedor |      |                          |
-+---------------+---+--------------+------+--------------------------+
-| ID_STA22      | S | Id           | int  |                          |
-|               | i | entificación |      |                          |
-|               |   | del depósito |      |                          |
-|               |   | de stock     |      |                          |
-+---------------+---+--------------+------+--------------------------+
-| ID_GVA24      | S | Id           | int  |                          |
-|               | i | entificación |      |                          |
-|               |   | del          |      |                          |
-|               |   | t            |      |                          |
-|               |   | ransportista |      |                          |
-+---------------+---+--------------+------+--------------------------+
-| ID_MONEDA     | S | Id           | int  | El ID debe corresponder  |
-|               | i | entificación |      | a una moneda donde       |
-|               |   | de la moneda |      |                          |
-|               |   | del          |      | MONEDA.TIPO_MONEDA =     |
-|               |   | comprobante  |      | "Corriente" o            |
-|               |   |              |      | "Extranjera contable"    |
-|               |   |              |      | (lo que habitualmente    |
-|               |   |              |      | representa pesos o       |
-|               |   |              |      | dólares).                |
-+---------------+---+--------------+------+--------------------------+
-| COTIZACION    | N | Cotización   | dec  | Si no lo ingresás, lo    |
-|               | o | de la moneda | imal | completaremos con la     |
-|               |   | extranjera   |      | cotización establecida   |
-|               |   | contable     |      | en [Parámetros de        |
-|               |   |              |      | Ventas]{.underline} (no  |
-|               |   |              |      | es un campo visible por  |
-|               |   |              |      | el usuario. Se alimenta  |
-|               |   |              |      | desde el proceso de      |
-|               |   |              |      | [C                       |
-|               |   |              |      | otizaciones]{.underline} |
-|               |   |              |      | del módulo Procesos      |
-|               |   |              |      | Generales y de las       |
-|               |   |              |      | cotizaciones ingresadas  |
-|               |   |              |      | por los usuarios en los  |
-|               |   |              |      | comprobantes de Ventas)  |
-+---------------+---+--------------+------+--------------------------+
-| ID_GVA10      | S | Id           | int  |                          |
-|               | i | entificación |      |                          |
-|               |   | de la lista  |      |                          |
-|               |   | de precios   |      |                          |
-+---------------+---+--------------+------+--------------------------+
-| ID_DIRE       | N | Id           | int  | Si no lo ingresás,       |
-| CCION_ENTREGA | o | entificación |      | asumimos que el pedido   |
-|               |   | de la        |      | se debe enviar a la      |
-|               |   | dirección de |      | dirección habitual de    |
-|               |   | entrega del  |      | entrega del cliente.     |
-|               |   | cliente      |      |                          |
-|               |   |              |      | Si lo ingresás validamos |
-|               |   |              |      | que exista, que          |
-|               |   |              |      | corresponda al cliente   |
-|               |   |              |      | informado y que esté     |
-|               |   |              |      | habilitada.              |
-|               |   |              |      |                          |
-|               |   |              |      | No debés completar esta  |
-|               |   |              |      | propiedad si             |
-|               |   |              |      | ES_CLIENTE_HABITUAL =    |
-|               |   |              |      | false                    |
-+---------------+---+--------------+------+--------------------------+
-| FECHA_ENTREGA | N | Fecha de     | date | Solo los podés informar  |
-|               | o | entrega      | time | si usa planes de entrega |
-|               |   |              |      | ([Parámetros de          |
-|               |   |              |      | Venta]{.underline}       |
-|               |   |              |      | \\Comprobantes\\Pedidos) |
-|               |   |              |      |                          |
-|               |   |              |      | Si no lo ingresás,       |
-|               |   |              |      | asumimos la              |
-|               |   |              |      | FECHA_PEDIDO + la        |
-|               |   |              |      | cantidad habitual de     |
-|               |   |              |      | días de entrega definida |
-|               |   |              |      | en Parámetros de Venta.  |
-+---------------+---+--------------+------+--------------------------+
-| ID_ASIE       | N | Id           | int  | Si lo ingresás           |
-| NTO_MODELO_GV | o | entificación |      | verificamos que          |
-|               |   | del modelo   |      | corresponda a un modelo  |
-|               |   | de asiento   |      | de asiento habilitado    |
-|               |   | que se debe  |      | para facturas.           |
-|               |   | aplicar a    |      |                          |
-|               |   | las facturas |      |                          |
-|               |   | relacionadas |      |                          |
-|               |   | con el       |      |                          |
-|               |   | pedido       |      |                          |
-+---------------+---+--------------+------+--------------------------+
-| ID_GVA81      | N | Id           | int  | Tené en cuenta que esta  |
-|               | o | entificación |      | propiedad es obligatoria |
-|               |   | de la        |      | si exigís la             |
-|               |   | c            |      | clasificación de         |
-|               |   | lasificación |      | comprobantes "Siempre"   |
-|               |   | de           |      | ([Parámetros de          |
-|               |   | comprobantes |      | Venta]{.u                |
-|               |   |              |      | nderline}\\Clasificación |
-|               |   |              |      | de                       |
-|               |   |              |      | comprobantes\\Clasifica  |
-|               |   |              |      | comprobantes)            |
-|               |   |              |      |                          |
-|               |   |              |      | Si no la informás, la    |
-|               |   |              |      | completamos con la       |
-|               |   |              |      | clasificación habitual   |
-|               |   |              |      | para pedidos definida en |
-|               |   |              |      | Parámetros de Ventas.    |
-|               |   |              |      | (solo para el caso en    |
-|               |   |              |      | que sea obligatorio su   |
-|               |   |              |      | ingreso de acuerdo con   |
-|               |   |              |      | lo explicado más arriba, |
-|               |   |              |      | de lo contrario quedará  |
-|               |   |              |      | sin clasificar)          |
-|               |   |              |      |                          |
-|               |   |              |      | Controlamos que se       |
-|               |   |              |      | encuentre vigente, que   |
-|               |   |              |      | esté habilitada para el  |
-|               |   |              |      | módulo de "Ventas" y     |
-|               |   |              |      | para "Pedidos".          |
-+---------------+---+--------------+------+--------------------------+
-| ID_GVA43_TALO | N | Id           | int  | Si lo ingresás           |
-| NARIO_FACTURA | o | entificación |      | verificamos que          |
-|               |   | del          |      | corresponda a un         |
-|               |   | talonario    |      | talonario de factura     |
-|               |   | con el que   |      | (GVA43.COMPROB = "FAC")  |
-|               |   | se debería   |      |                          |
-|               |   | facturar     |      |                          |
-+---------------+---+--------------+------+--------------------------+
-| NRO           | N | Número de    | st   |                          |
-| _ORDEN_COMPRA | o | orden de     | ring |                          |
-|               |   | compra del   |      |                          |
-|               |   | cliente      |      |                          |
-+---------------+---+--------------+------+--------------------------+
-| FECHA         | N | Fecha de la  | date | Esta propiedad es        |
-| _ORDEN_COMPRA | o | orden de     | time | obligatoria si completás |
-|               |   | compra del   |      | NRO_ORDEN_COMPRA         |
-|               |   | cliente      |      |                          |
-+---------------+---+--------------+------+--------------------------+
-| ID_SUC        | N | Id           | int  | Completá esta propiedad  |
-| URSAL_DESTINO | o | entificación |      | si el pedido debe        |
-|               |   | de la        |      | continuar circuito en    |
-|               |   | sucursal a   |      | otra sucursal, ya sea    |
-|               |   | la que debe  |      | para facturarse como     |
-|               |   | enviarse en  |      | para remitirse.          |
-|               |   | pedido.      |      |                          |
-|               |   |              |      | Si la completás,         |
-|               |   |              |      | verificamos que exista y |
-|               |   |              |      | que sea distinta a la    |
-|               |   |              |      | asignada en el proceso   |
-|               |   |              |      | Empresa.                 |
-+---------------+---+--------------+------+--------------------------+
-| COM           | N | Indica si el | bool | **Valores posibles:**    |
-| PROMETE_STOCK | o | pedido       |      |                          |
-|               |   | compromete   |      | -   true: compromete     |
-|               |   | stock        |      |     stock                |
-|               |   |              |      |                          |
-|               |   |              |      | -   false: no compromete |
-|               |   |              |      |     stock                |
-|               |   |              |      |                          |
-|               |   |              |      | Si no lo informás,       |
-|               |   |              |      | asumimos el valor "true" |
-+---------------+---+--------------+------+--------------------------+
-| ID_ACTIVIDAD  | N | Código de    | int  | Solo debés completar     |
-| _EMPRESA_AFIP | o | actividad de |      | esta información         |
-|               |   | la empresa   |      | (opcionalmente) si la    |
-|               |   | que debe     |      | empresa está obligada a  |
-|               |   | aplicar al   |      | cumplir con la RG 3749   |
-|               |   | facturar     |      | (régimen de información  |
-|               |   | según lo     |      | adicional de factura     |
-|               |   | especificado |      | electrónica). Este dato  |
-|               |   | por la RG    |      | se traslada luego a la   |
-|               |   | 3749         |      | factura.                 |
-|               |   |              |      |                          |
-|               |   |              |      | **Valores posibles:**    |
-|               |   |              |      | (debés informar el ID    |
-|               |   |              |      | correspondiente al       |
-|               |   |              |      | código)                  |
-|               |   |              |      |                          |
-|               |   |              |      | -   **10** - Educación   |
-|               |   |              |      |     pública de gestión   |
-|               |   |              |      |     privada              |
-|               |   |              |      |                          |
-|               |   |              |      | -   **11**- Locación de  |
-|               |   |              |      |     inmuebles rurales    |
-|               |   |              |      |                          |
-|               |   |              |      | -   **12** - Locación de |
-|               |   |              |      |     inmuebles turísticos |
-+---------------+---+--------------+------+--------------------------+
-| ACTIVIDAD_COM | N | Código de    | st   | Solo debés completar     |
-| PROBANTE_AFIP | o | actividad de | ring | esta información         |
-|               |   | la           |      | (opcionalmente) si la    |
-|               |   | transacción  |      | empresa está obligada a  |
-|               |   | que debe     |      | cumplir con la RG 3749   |
-|               |   | aplicar al   |      | (régimen de información  |
-|               |   | facturar     |      | adicional de factura     |
-|               |   | según lo     |      | electrónica). Este dato  |
-|               |   | especificado |      | se traslada luego a la   |
-|               |   | por la RG    |      | factura.                 |
-|               |   | 3749         |      |                          |
-|               |   |              |      | Valores posibles:        |
-|               |   |              |      |                          |
-|               |   |              |      | -   "C" comprendida      |
-|               |   |              |      |                          |
-|               |   |              |      | -   "N" no comprendida   |
-+---------------+---+--------------+------+--------------------------+
-| ID_TIPO       | N | Tipo de      | st   | Solo debés completar     |
-| _DOCUMENTO_GV | o | documento de | ring | esta información         |
-|               |   | la persona   |      | (opcionalmente) si la    |
-|               |   | responsable  |      | empresa está obligada a  |
-|               |   | del pago     |      | cumplir con la RG 3749   |
-|               |   | según lo     |      | (régimen de información  |
-|               |   | especificado |      | adicional de factura     |
-|               |   | por la RG    |      | electrónica). Este dato  |
-|               |   | 3749         |      | se traslada luego a la   |
-|               |   |              |      | factura.                 |
-+---------------+---+--------------+------+--------------------------+
-| NUMERO_DOCU   | N | Número de    | st   | Solo debés completar     |
-| MENTO_PAGADOR | o | documento de | ring | esta información         |
-|               |   | la persona   |      | (opcionalmente) si la    |
-|               |   | responsable  |      | empresa está obligada a  |
-|               |   | del pago     |      | cumplir con la RG 3749   |
-|               |   | según lo     |      | (régimen de información  |
-|               |   | especificado |      | adicional de factura     |
-|               |   | por la RG    |      | electrónica). Este dato  |
-|               |   | 3749         |      | se traslada luego a la   |
-|               |   |              |      | factura.                 |
-|               |   |              |      |                          |
-|               |   |              |      | En las facturas          |
-|               |   |              |      | correspondientes a       |
-|               |   |              |      | colegios                 |
-|               |   |              |      | (AC                      |
-|               |   |              |      | TIVIDAD_COMPROBANTE_AFIP |
-|               |   |              |      | = 10) habitualmente es   |
-|               |   |              |      | uno de los progenitores  |
-+---------------+---+--------------+------+--------------------------+
-| LEYENDA_1     | N | Leyenda 1    | st   |                          |
-|               | o | del pedido   | ring |                          |
-+---------------+---+--------------+------+--------------------------+
-| LEYENDA_2     | N | Leyenda 2    | st   |                          |
-|               | o | del pedido   | ring |                          |
-+---------------+---+--------------+------+--------------------------+
-| LEYENDA_3     | N | Leyenda 3    | st   |                          |
-|               | o | del pedido   | ring |                          |
-+---------------+---+--------------+------+--------------------------+
-| LEYENDA_4     | N | Leyenda 4    | st   |                          |
-|               | o | del pedido   | ring |                          |
-+---------------+---+--------------+------+--------------------------+
-| LEYENDA_5     | N | Leyenda 5    | st   |                          |
-|               | o | del pedido   | ring |                          |
-+---------------+---+--------------+------+--------------------------+
-| PO            | N | Porcentaje   | dec  | **Valores posibles:**    |
-| RCENTAJE_DESC | o | de descuento | imal | entre 0 y 100.           |
-| UENTO_GENERAL |   | del pedido   |      |                          |
-|               |   |              |      | Solo lo podés informar   |
-|               |   |              |      | si                       |
-|               |   |              |      | I                        |
-|               |   |              |      | MPORTE_DESCUENTO_GENERAL |
-|               |   |              |      | es null                  |
-|               |   |              |      |                          |
-|               |   |              |      | Tené en cuenta que este  |
-|               |   |              |      | valor se suma al         |
-|               |   |              |      | descuento del cliente si |
-|               |   |              |      | informás que             |
-|               |   |              |      | APLICA_DESCUENTO_CLIENTE |
-|               |   |              |      | = true                   |
-+---------------+---+--------------+------+--------------------------+
-| IMPORTE_DESC  | N | Importe de   | dec  | **Valores posibles:**    |
-| UENTO_GENERAL | o | descuento    | imal | mayor o igual a 0        |
-|               |   | del pedido   |      |                          |
-|               |   |              |      | Solo lo podés informar   |
-|               |   |              |      | si                       |
-|               |   |              |      | PORC                     |
-|               |   |              |      | ENTAJE_DESCUENTO_GENERAL |
-|               |   |              |      | es null                  |
-|               |   |              |      |                          |
-|               |   |              |      | Tené en cuenta que este  |
-|               |   |              |      | valor se suma al         |
-|               |   |              |      | descuento del cliente si |
-|               |   |              |      | informás que             |
-|               |   |              |      | APLICA_DESCUENTO_CLIENTE |
-|               |   |              |      | = true                   |
-+---------------+---+--------------+------+--------------------------+
-| PORCENTAJE_RE | N | Porcentaje   | dec  | **Valores posibles:**    |
-| CARGO_GENERAL | o | de recargo   | imal | entre 0 y 100.           |
-|               |   | del pedido   |      |                          |
-|               |   |              |      | Solo lo podés informar   |
-|               |   |              |      | si                       |
-|               |   |              |      | IMPORTE_RECARGO_GENERAL  |
-|               |   |              |      | es null                  |
-+---------------+---+--------------+------+--------------------------+
-| IMPORTE_RE    | N | Importe de   | dec  | **Valores posibles:**    |
-| CARGO_GENERAL | o | recargo del  | imal | mayor o igual a 0        |
-|               |   | pedido       |      |                          |
-|               |   |              |      | Solo lo podés informar   |
-|               |   |              |      | si                       |
-|               |   |              |      | PO                       |
-|               |   |              |      | RCENTAJE_RECARGO_GENERAL |
-|               |   |              |      | es null                  |
-+---------------+---+--------------+------+--------------------------+
-| APLICA_DESC   | N | Indica si se | bool | **Valores posibles:**    |
-| UENTO_CLIENTE | o | debe aplicar |      |                          |
-|               |   | el descuento |      | -   true: aplica el      |
-|               |   | habitual del |      |     descuento asignado   |
-|               |   | cliente      |      |     en el proceso de     |
-|               |   |              |      |     Clientes.            |
-|               |   |              |      |                          |
-|               |   |              |      | -   false: no aplica el  |
-|               |   |              |      |     descuento asignado   |
-|               |   |              |      |     en el proceso de     |
-|               |   |              |      |     Clientes.            |
-+---------------+---+--------------+------+--------------------------+
-| CALCUL        | N | Indica si se | bool | **Valores posibles:**    |
-| A_PROMOCIONES | o | deben        |      |                          |
-|               |   | aplicar      |      | -   true: aplica         |
-|               |   | promociones  |      |     automáticamente las  |
-|               |   | en el pedido |      |     promociones          |
-|               |   | o se debe    |      |     definidas en el      |
-|               |   | genera sin   |      |     sistema.             |
-|               |   | tenerlas en  |      |                          |
-|               |   | cuenta       |      | -   false: no se aplican |
-|               |   |              |      |     las promociones      |
-|               |   |              |      |     comerciales para el  |
-|               |   |              |      |     pedido (como si no   |
-|               |   |              |      |     existieran o no      |
-|               |   |              |      |     estuvieran vigentes) |
-|               |   |              |      |                          |
-|               |   |              |      | Tené en cuenta que en    |
-|               |   |              |      | caso de existir          |
-|               |   |              |      | promociones del tipo     |
-|               |   |              |      | "A+B" debés informar por |
-|               |   |              |      | tu cuenta los artículos  |
-|               |   |              |      | que se entregan como     |
-|               |   |              |      | "regalo" en este pedido  |
-|               |   |              |      | para que se aplique la   |
-|               |   |              |      | promoción.               |
-+---------------+---+--------------+------+--------------------------+
-| VALIDA_L      | N | Indica si se | bool | **Valores posibles:**    |
-| IMITE_CREDITO | o | debe validar |      |                          |
-|               |   | el límite de |      | -   true: control        |
-|               |   | crédito del  |      |     estricto de límite   |
-|               |   | cliente al   |      |     de crédito           |
-|               |   | grabar el    |      |                          |
-|               |   | pedido.      |      | -   false: no controla   |
-|               |   |              |      |     límite de crédito    |
-|               |   |              |      |                          |
-|               |   |              |      | En caso de que actives   |
-|               |   |              |      | esta opción y el pedido  |
-|               |   |              |      | superase el límite de    |
-|               |   |              |      | crédito no podrás grabar |
-|               |   |              |      | el comprobante.          |
-|               |   |              |      |                          |
-|               |   |              |      | Tené en cuenta que, si   |
-|               |   |              |      | el cliente pertenece a   |
-|               |   |              |      | un grupo empresario,     |
-|               |   |              |      | validaremos el límite de |
-|               |   |              |      | crédito de acuerdo con   |
-|               |   |              |      | lo especificado en la    |
-|               |   |              |      | configuración del grupo  |
-|               |   |              |      | empresario.              |
-+---------------+---+--------------+------+--------------------------+
-| ID_SBA01      | N | Id           | int  | Tené en cuenta que       |
-|               | o | entificación |      | trasladaremos la         |
-|               |   | de la cuenta |      | intención de pago a la   |
-|               |   | de Tesorería |      | factura en forma         |
-|               |   | que          |      | automática y por el      |
-|               |   | representa   |      | importe total del        |
-|               |   | la intención |      | pedido.                  |
-|               |   | de pago del  |      |                          |
-|               |   | cliente (Se  |      |                          |
-|               |   | traslada     |      |                          |
-|               |   | luego a      |      |                          |
-|               |   | factura)     |      |                          |
-+---------------+---+--------------+------+--------------------------+
-| OBSERVACIONES | N | O            | st   |                          |
-|               | o | bservaciones | ring |                          |
-|               |   | del pedido   |      |                          |
-+---------------+---+--------------+------+--------------------------+
+| Campo                        | Requerido | Descripción                                                                                                            | Tipo de dato |
+|------------------------------|-----------|------------------------------------------------------------------------------------------------------------------------|--------------|
+| ID_GVA43_TALON_PED           | Si        | Identificación del talonario de pedidos                                                                                | int          |
+| NRO_PEDIDO                   | No        | Número del pedido                                                                                                      | string       |
+| ESTADO                       | No        | Estado del pedido                                                                                                      | int          |
+| FECHA_PEDIDO                 | No        | Fecha del pedido                                                                                                       | datetime     |
+| ID_GVA14                     | No        | Identificación del cliente habitual                                                                                    | int          |
+| ES_CLIENTE_HABITUAL          | Si        | Indica si el pedido corresponde a un cliente habitual o uno ocasional                                                  | bool         |
+| ID_GVA01                     | Si        | Identificación de la condición de venta                                                                                | int          |
+| ID_GVA23                     | Si        | Identificación del vendedor                                                                                            | int          |
+| ID_STA22                     | Si        | Identificación del depósito de stock                                                                                   | int          |
+| ID_GVA24                     | Si        | Identificación del transportista                                                                                       | int          |
+| ID_MONEDA                    | Si        | Identificación de la moneda del comprobante                                                                            | int          |
+| COTIZACION                   | No        | Cotización de la moneda extranjera contable                                                                            | decimal      |
+| ID_GVA10                     | Si        | Identificación de la lista de precios                                                                                  | int          |
+| ID_DIRECCION_ENTREGA         | No        | Identificación de la dirección de entrega del cliente                                                                  | int          |
+| FECHA_ENTREGA                | No        | Fecha de entrega                                                                                                       | datetime     |
+| ID_ASIENTO_MODELO_GV         | No        | Identificación del modelo de asiento que se debe aplicar a las facturas relacionadas con el pedido                     | int          |
+| ID_GVA81                     | No        | Identificación de la clasificación de comprobantes                                                                     | int          |
+| ID_GVA43_TALONARIO_FACTURA   | No        | Identificación del talonario con el que se debería facturar                                                            | int          |
+| NRO_ORDEN_COMPRA             | No        | Número de orden de compra del cliente                                                                                  | string       |
+| FECHA_ORDEN_COMPRA           | No        | Fecha de la orden de compra del cliente                                                                                | datetime     |
+| ID_SUCURSAL_DESTINO          | No        | Identificación de la sucursal a la que debe enviarse en pedido.                                                        | int          |
+| COMPROMETE_STOCK             | No        | Indica si el pedido compromete stock                                                                                   | bool         |
+| ID_ACTIVIDAD_EMPRESA_AFIP    | No        | Código de actividad de la empresa que debe aplicar al facturar según lo especificado por la RG 3749                    | int          |
+| ACTIVIDAD_COMPROBANTE_AFIP   | No        | Código de actividad de la transacción que debe aplicar al facturar según lo especificado por la RG 3749                | string       |
+| ID_TIPO_DOCUMENTO_GV         | No        | Tipo de documento de la persona responsable del pago según lo especificado por la RG 3749                              | string       |
+| NUMERO_DOCUMENTO_PAGADOR     | No        | Número de documento de la persona responsable del pago según lo especificado por la RG 3749                            | string       |
+| LEYENDA_1                    | No        | Leyenda 1 del pedido                                                                                                   | string       |
+| LEYENDA_2                    | No        | Leyenda 2 del pedido                                                                                                   | string       |
+| LEYENDA_3                    | No        | Leyenda 3 del pedido                                                                                                   | string       |
+| LEYENDA_4                    | No        | Leyenda 4 del pedido                                                                                                   | string       |
+| LEYENDA_5                    | No        | Leyenda 5 del pedido                                                                                                   | string       |
+| PORCENTAJE_DESCUENTO_GENERAL | No        | Porcentaje de descuento del pedido                                                                                     | decimal      |
+| IMPORTE_DESCUENTO_GENERAL    | No        | Importe de descuento del pedido                                                                                        | decimal      |
+| PORCENTAJE_RECARGO_GENERAL   | No        | Porcentaje de recargo del pedido                                                                                       | decimal      |
+| IMPORTE_RECARGO_GENERAL      | No        | Importe de recargo del pedido                                                                                          | decimal      |
+| APLICA_DESCUENTO_CLIENTE     | No        | Indica si se debe aplicar el descuento habitual del cliente                                                            | bool         |
+| CALCULA_PROMOCIONES          | No        | Indica si se deben aplicar promociones en el pedido o se debe genera sin tenerlas en cuenta                            | bool         |
+| VALIDA_LIMITE_CREDITO        | No        | Indica si se debe validar el límite de crédito del cliente al grabar el pedido.                                        | bool         |
+| ID_SBA01                     | No        | Identificación de la cuenta de Tesorería que representa la intención de pago del cliente (Se traslada luego a factura) | int          |
+| OBSERVACIONES                | No        | Observaciones del pedido                                                                                               | string       |
 
-##### RENGLON_DTO
-
-Tené en cuenta que esta sección es de tipo array por lo que deberás
-repetirla para registrar los distintos renglones del pedido.
-
-+---------------+---+--------------+------+--------------------------+
-| Campo         | R | Descripción  | Tipo | Consideraciones, valores |
-|               | e |              | de   | posibles y ejemplos      |
-|               | q |              | dato |                          |
-|               | u |              |      |                          |
-|               | e |              |      |                          |
-|               | r |              |      |                          |
-|               | i |              |      |                          |
-|               | d |              |      |                          |
-|               | o |              |      |                          |
-+===============+===+==============+======+==========================+
-| ID_STA11      | S | Id           | int  |                          |
-|               | i | entificación |      |                          |
-|               |   | del artículo |      |                          |
-|               |   | pedido       |      |                          |
-+---------------+---+--------------+------+--------------------------+
-| DESCRIP       | N | Descripción  | st   | Solo lo debés informar   |
-| CION_ARTICULO | o | del artículo | ring | si necesitás alterar la  |
-|               |   |              |      | descripción habitual del |
-|               |   |              |      | artículo.                |
-|               |   |              |      |                          |
-|               |   |              |      | Tené en cuenta que lo    |
-|               |   |              |      | podrás ingresar          |
-|               |   |              |      | únicamente si está       |
-|               |   |              |      | activo el parámetro      |
-|               |   |              |      | "Permite agregar líneas  |
-|               |   |              |      | y editar las del         |
-|               |   |              |      | artículo" ([Parámetros   |
-|               |   |              |      | de                       |
-|               |   |              |      | Venta]{.underline}\      |
-|               |   |              |      | \Comprobantes\\General\\ |
-|               |   |              |      | Descripciones            |
-|               |   |              |      | adicionales en créditos, |
-|               |   |              |      | débitos y pedidos)       |
-+---------------+---+--------------+------+--------------------------+
-| DESC          | N | Descripción  | st   | Solo lo debés informar   |
-| RIPCION_ADICI | o | adicional    | ring | si necesitás alterar la  |
-| ONAL_ARTICULO |   | del artículo |      | descripción adicional    |
-|               |   |              |      | habitual del artículo.   |
-|               |   |              |      |                          |
-|               |   |              |      | Tené en cuenta que lo    |
-|               |   |              |      | podrás ingresar          |
-|               |   |              |      | únicamente si está       |
-|               |   |              |      | activo el parámetro      |
-|               |   |              |      | "Permite agregar líneas  |
-|               |   |              |      | y editar las del         |
-|               |   |              |      | artículo"                |
-|               |   |              |      | ([\|]{.underline}\       |
-|               |   |              |      | \Comprobantes\\General\\ |
-|               |   |              |      | Descripciones            |
-|               |   |              |      | adicionales en créditos, |
-|               |   |              |      | débitos y pedidos)       |
-+---------------+---+--------------+------+--------------------------+
-| ID_STA22      | N | Id           | int  | Si no lo informás,       |
-|               | o | entificación |      | asignaremos el valor     |
-|               |   | del depósito |      | definido en la sección   |
-|               |   | del renglón  |      | ENCABEZADO               |
-+---------------+---+--------------+------+--------------------------+
-| MODULO_       | N | Unidad de    | st   | **Valores posibles:**    |
-| UNIDAD_MEDIDA | o | medida en la | ring |                          |
-|               |   | que está     |      | -   "GV": presentación   |
-|               |   | expresa la   |      |     de ventas            |
-|               |   | CAN          |      |                          |
-|               |   | TIDAD_PEDIDA |      | -   "ST": unidad de      |
-|               |   |              |      |     medida de stock      |
-|               |   |              |      |                          |
-|               |   |              |      | En caso de no informar   |
-|               |   |              |      | un valor asumiremos      |
-|               |   |              |      | "GV".                    |
-+---------------+---+--------------+------+--------------------------+
-| CA            | S | Cantidad     | dec  | **Valores posibles:**    |
-| NTIDAD_PEDIDA | I | solicitada   | imal | distinto de 0.           |
-|               |   | por el       |      |                          |
-|               |   | cliente      |      | Puede ser un valor       |
-|               |   |              |      | negativo siempre y       |
-|               |   |              |      | cuando la propiedad      |
-|               |   |              |      | PRECIO tenga un valor    |
-|               |   |              |      | positivo o null. Podés   |
-|               |   |              |      | utilizar un valor        |
-|               |   |              |      | negativo para reflejar   |
-|               |   |              |      | una devolución del       |
-|               |   |              |      | producto.                |
-+---------------+---+--------------+------+--------------------------+
-| CANTID        | N | Cantidad     | dec  | **Valores posibles:**    |
-| AD_A_FACTURAR | o | habilitada   | imal | menor o igual que        |
-|               |   | para         |      | CANTIDAD_PEDIDA          |
-|               |   | facturar     |      |                          |
-|               |   |              |      | Si no lo informás, o lo  |
-|               |   |              |      | dejás en null,           |
-|               |   |              |      | asignaremos la misma     |
-|               |   |              |      | cantidad que             |
-|               |   |              |      | CANTIDAD_PEDIDA          |
-+---------------+---+--------------+------+--------------------------+
-| CANTID        | N | Cantidad     | dec  | **Valores posibles:**    |
-| AD_A_DESCARGA | o | habilitada   | imal | menor o igual que        |
-|               |   | para remitir |      | CANTIDAD_PEDIDA          |
-|               |   |              |      |                          |
-|               |   |              |      | Si no lo informás, o lo  |
-|               |   |              |      | dejás en null,           |
-|               |   |              |      | asignaremos la misma     |
-|               |   |              |      | cantidad que             |
-|               |   |              |      | CANTIDAD_PEDIDA          |
-+---------------+---+--------------+------+--------------------------+
-| CAN           | N | Cantidad     | dec  | **Valores posibles:**    |
-| TIDAD_PENDIEN | o | pendiente de | imal | igual que                |
-| TE_A_FACTURAR |   | facturar     |      | CANTIDAD_PEDIDA o 0      |
-|               |   |              |      | (cero)                   |
-|               |   |              |      |                          |
-|               |   |              |      | Si no lo informás, o lo  |
-|               |   |              |      | dejás en null,           |
-|               |   |              |      | asignaremos la misma     |
-|               |   |              |      | cantidad que             |
-|               |   |              |      | CANTIDAD_A_FACTURAR      |
-+---------------+---+--------------+------+--------------------------+
-| PRECIO        | N | Precio de    | dec  | **Valores posibles:**    |
-|               | o | venta        | imal | importes negativos, cero |
-|               |   |              |      | o positivos.             |
-|               |   |              |      |                          |
-|               |   |              |      | Tené en cuenta que el    |
-|               |   |              |      | valor puede ser negativo |
-|               |   |              |      | siempre y cuando la      |
-|               |   |              |      | propiedad                |
-|               |   |              |      | CANTIDAD_PEDIDA tenga un |
-|               |   |              |      | valor positivo. Un valor |
-|               |   |              |      | negativo se puede usar,  |
-|               |   |              |      | por ejemplo, para        |
-|               |   |              |      | representar un descuento |
-|               |   |              |      | en la factura por ese    |
-|               |   |              |      | artículo.                |
-|               |   |              |      |                          |
-|               |   |              |      | Si ingresás un valor     |
-|               |   |              |      | negativo no debés dejar  |
-|               |   |              |      | espacios entre el signo  |
-|               |   |              |      | y el importe; por        |
-|               |   |              |      | ejemplo -5000.           |
-|               |   |              |      |                          |
-|               |   |              |      | Tené en cuenta que el    |
-|               |   |              |      | valor ingresado debe     |
-|               |   |              |      | estar expresado en la    |
-|               |   |              |      | moneda de la lista de    |
-|               |   |              |      | precios (ID_GVA10)       |
-|               |   |              |      | informada en la sección  |
-|               |   |              |      | ENCABEZADO.              |
-|               |   |              |      |                          |
-|               |   |              |      | Si no lo ingresás,       |
-|               |   |              |      | asignaremos el precio de |
-|               |   |              |      | la lista informada en la |
-|               |   |              |      | sección ENCABEZADO. En   |
-|               |   |              |      | caso de que no exista    |
-|               |   |              |      | precio para el artículo  |
-|               |   |              |      | rechazaremos el pedido.  |
-+---------------+---+--------------+------+--------------------------+
-| PORCENTAJE    | N | Porcentaje   | dec  | **Valores posibles:**    |
-| _BONIFICACION | o | de           | imal | entre 0 y 100            |
-|               |   | bonificación |      |                          |
-|               |   | del renglón  |      |                          |
-+---------------+---+--------------+------+--------------------------+
-| ID_GVA81      | N | Id           | int  | Si no lo ingresás,       |
-|               | o | entificación |      | asignaremos la           |
-|               |   | de la        |      | clasificación indicada   |
-|               |   | c            |      | en la sección            |
-|               |   | lasificación |      | ENCABEZADO.              |
-|               |   | de           |      |                          |
-|               |   | comprobantes |      | Controlamos que se       |
-|               |   | a nivel      |      | encuentre vigente, que   |
-|               |   | renglón      |      | esté habilitada para el  |
-|               |   |              |      | módulo de "Ventas" y     |
-|               |   |              |      | para "Pedidos".          |
-+---------------+---+--------------+------+--------------------------+
-| OBSERVACIONES | N | O            | st   | Recomendamos utilizar    |
-|               | o | bservaciones | ring | esta nueva propiedad en  |
-|               |   | asignadas al |      | lugar de completar la    |
-|               |   | renglón      |      | sección                  |
-|               |   |              |      | D                        |
-|               |   |              |      | ESCRIPCION_ADICIONAL_DTO |
-|               |   |              |      | pero si utilizabas las   |
-|               |   |              |      | descripciones            |
-|               |   |              |      | adicionales para agregar |
-|               |   |              |      | información adicional    |
-|               |   |              |      | del artículo pedido      |
-|               |   |              |      | podés continuar          |
-|               |   |              |      | haciéndolo o incluso     |
-|               |   |              |      | combinar ambas opciones. |
-+---------------+---+--------------+------+--------------------------+
 
 ##### PLAN_DE_ENTREGA_DTO (No requerido)
 
@@ -777,10 +153,10 @@ cliente para cada RENGLON_DTO.
 |               |   |              |      | sección también deben    |
 |               |   |              |      | tener valores menores a  |
 |               |   |              |      | cero.                    |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | FEC           | N | Fecha de     | date | Es requerido si se       |
 | HA_DE_ENTREGA | o | entrega      | time | ingresa una cantidad.    |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 
 ##### DESCRIPCION_ADICIONAL_DTO (No requerido)
 
@@ -824,56 +200,48 @@ asociadas a cada RENGLON_DTO.
 Esta sección solo debe completarse (aunque es de forma opcional) si la
 propiedad (de la sección ENCABEZADO) ES_CLIENTE_HABITUAL es false.
 
-+---------------+---+--------------+------+--------------------------+
-| Campo         | R | Descripción  | Tipo | Consideraciones, valores |
-|               | e |              | de   | posibles y ejemplos      |
-|               | q |              | dato |                          |
-|               | u |              |      |                          |
-|               | e |              |      |                          |
-|               | r |              |      |                          |
-|               | i |              |      |                          |
-|               | d |              |      |                          |
-|               | o |              |      |                          |
-+===============+===+==============+======+==========================+
-| ID_TIPO       | S | Tipo de      | int  |                          |
-| _DOCUMENTO_GV | i | documento    |      |                          |
-|               |   | del cliente  |      |                          |
-|               |   | ocasional    |      |                          |
-+---------------+---+--------------+------+--------------------------+
+
+| **Campo**         | **Requerido** | **Descripción**  | **Tipo de dato** | **Consideraciones, valores posibles y ejemplos**  |
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
+| ID_TIPO           | Si            | Tipo de documento                   | int              |                                                   |
+| _DOCUMENTO_GV     | documento    |      |                          |
+|                   | del cliente  |      |                          |
+|                   | ocasional    |      |                          |
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | NRO_DOCUMENTO | N | Número de    | st   |                          |
 |               | o | documento    | ring |                          |
 |               |   | del cliente  |      |                          |
 |               |   | ocasional    |      |                          |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | RAZON_SOCIAL  | N | Razón social | st   |                          |
 |               | o | del cliente  | ring |                          |
 |               |   | ocasional    |      |                          |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | DOMICILIO     | N | Domicilio    | st   |                          |
 |               | o | del cliente  | ring |                          |
 |               |   | ocasional    |      |                          |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | LOCALIDAD     | N | Localidad    | st   |                          |
 |               | o | del cliente  | ring |                          |
 |               |   | ocasional    |      |                          |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | CODIGO_POSTAL | N | Código       | st   |                          |
 |               | o | postal del   | ring |                          |
 |               |   | cliente      |      |                          |
 |               |   | ocasional    |      |                          |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | ID_GV         | S | Id           | int  |                          |
 | A18_PROVINCIA | i | entificación |      |                          |
 |               |   | de la        |      |                          |
 |               |   | provincia    |      |                          |
 |               |   | del cliente  |      |                          |
 |               |   | ocasional    |      |                          |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | ACTIVIDAD     | N | Actividad    | st   |                          |
 |               | o | comercial    | ring |                          |
 |               |   | del cliente  |      |                          |
 |               |   | ocasional    |      |                          |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | IDENTIFICACI  | N | Id           | st   | Tené en cuenta solo      |
 | ON_TRIBUTARIA | o | entificación | ring | deberías completar este  |
 |               |   | tributaria   |      | campo si el pedido se va |
@@ -887,7 +255,7 @@ propiedad (de la sección ENCABEZADO) ES_CLIENTE_HABITUAL es false.
 |               |   | electrónico  |      |                          |
 |               |   | de           |      |                          |
 |               |   | exportación  |      |                          |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | REGIMEN_IN    | N | Régimen de   | st   | **Valores posibles:**    |
 | GRESOS_BRUTOS | o | ingresos     | ring |                          |
 |               |   | brutos del   |      | -   null: No liquida     |
@@ -899,29 +267,29 @@ propiedad (de la sección ENCABEZADO) ES_CLIENTE_HABITUAL es false.
 |               |   |              |      |                          |
 |               |   |              |      | -   "S": Régimen         |
 |               |   |              |      |     simplificado         |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | NRO_IN        | N | Número de    | st   |                          |
 | GRESOS_BRUTOS | o | inscripción  | ring |                          |
 |               |   | del cliente  |      |                          |
 |               |   | ocasional en |      |                          |
 |               |   | ingresos     |      |                          |
 |               |   | brutos       |      |                          |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | E_MAIL        | N | Correo       | st   |                          |
 |               | o | electrónico  | ring |                          |
 |               |   | del cliente  |      |                          |
 |               |   | ocasional    |      |                          |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | WEB_CLIENTE   | N | Página web   | st   |                          |
 |               | o | del cliente  | ring |                          |
 |               |   | ocasional    |      |                          |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | NUMERO_INSCR  | N | Número de    | st   |                          |
 | IPCION_RG1817 | o | constancia   | ring |                          |
 |               |   | de condición |      |                          |
 |               |   | tributaria   |      |                          |
 |               |   | (RG1817)     |      |                          |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | FECHA_VENC    | N | Fecha de     | date | Tené en cuenta que no    |
 | IMIENTO_INSCR | o | vencimiento  | time | validamos en forma       |
 | IPCION_RG1817 |   | de la        |      | estricta que la fecha    |
@@ -932,7 +300,7 @@ propiedad (de la sección ENCABEZADO) ES_CLIENTE_HABITUAL es false.
 |               |   |              |      | estricto de este valor   |
 |               |   |              |      | desde Parámetros         |
 |               |   |              |      | generales de Ventas.     |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | ID_           | S | Id           | int  |                          |
 | CATEGORIA_IVA | i | entificación |      |                          |
 |               |   | de la        |      |                          |
@@ -940,7 +308,7 @@ propiedad (de la sección ENCABEZADO) ES_CLIENTE_HABITUAL es false.
 |               |   | IVA del      |      |                          |
 |               |   | cliente      |      |                          |
 |               |   | ocasional    |      |                          |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | ID_GVA4       | N | Id           | int  | **Valores posibles:** ID |
 | 1_ALICUOTA_NO | o | entificación |      | correspondiente a la     |
 | _CATEGORIZADA |   | de la        |      | tabla GVA41 cuyo código  |
@@ -954,7 +322,7 @@ propiedad (de la sección ENCABEZADO) ES_CLIENTE_HABITUAL es false.
 |               |   | "Sujeto no   |      |                          |
 |               |   | c            |      |                          |
 |               |   | ategorizado" |      |                          |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | CALCULA_P     | N | Indica si se | bool | **Valores posibles:**    |
 | ERCEPCION_IVA | o | debe         |      |                          |
 |               |   | calcular     |      | -   true: calcula        |
@@ -968,14 +336,14 @@ propiedad (de la sección ENCABEZADO) ES_CLIENTE_HABITUAL es false.
 |               |   |              |      | "false" y por lo tanto   |
 |               |   |              |      | no calcularemos          |
 |               |   |              |      | percepciones de IVA.     |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | PORCENT       | N | Porcentaje   | dec  | **Valores posibles:**    |
 | AJE_EXCLUSION | o | de exclusión | imal | entre 0 y 100            |
 |               |   | a considerar |      |                          |
 |               |   | sobre la     |      |                          |
 |               |   | percepción   |      |                          |
 |               |   | de IVA       |      |                          |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | LIQUIDA_IMPUE | N | Indica si se | bool | **Valores posibles:**    |
 | STOS_INTERNOS | o | debe         |      |                          |
 |               |   | liquidar     |      | -   true: liquida        |
@@ -989,7 +357,7 @@ propiedad (de la sección ENCABEZADO) ES_CLIENTE_HABITUAL es false.
 |               |   |              |      | "false" y por lo tanto   |
 |               |   |              |      | no calcularemos          |
 |               |   |              |      | impuestos internos.      |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | DIS           | N | Indica si se | bool | **Valores posibles:**    |
 | CRIMINA_IMPUE | o | debe         |      |                          |
 | STOS_INTERNOS |   | discriminar  |      | -   true: discrimina     |
@@ -1003,7 +371,7 @@ propiedad (de la sección ENCABEZADO) ES_CLIENTE_HABITUAL es false.
 |               |   |              |      | "false" y por lo tanto   |
 |               |   |              |      | no discriminaremos       |
 |               |   |              |      | impuestos internos.      |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | CALCULA_PER   | N | Indica si se | bool | **Valores posibles:**    |
 | CEPCION_IMPUE | o | debe         |      |                          |
 | STOS_INTERNOS |   | liquidar     |      | -   true: calcula        |
@@ -1020,7 +388,7 @@ propiedad (de la sección ENCABEZADO) ES_CLIENTE_HABITUAL es false.
 |               |   |              |      | no calcularemos          |
 |               |   |              |      | percepciones de          |
 |               |   |              |      | impuestos internos.      |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | ID_GVA41_ALI  | N | Id           | int  | **Valores posibles:** ID |
 | CUOTA_FIJA_PE | o | entificación |      | correspondiente a la     |
 | RCEPCION_IIBB |   | de la        |      | tabla GVA41 cuyo código  |
@@ -1032,7 +400,7 @@ propiedad (de la sección ENCABEZADO) ES_CLIENTE_HABITUAL es false.
 |               |   |              |      | LIQUIDA_PE               |
 |               |   |              |      | RCEPCION_INGRESOS_BRUTOS |
 |               |   |              |      | = true.                  |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | LIQUIDA_      | N | Indica si se | bool | **Valores posibles:**    |
 | PERCEPCION_IN | o | debe         |      |                          |
 | GRESOS_BRUTOS |   | liquidar     |      | -   true: liquida        |
@@ -1047,7 +415,7 @@ propiedad (de la sección ENCABEZADO) ES_CLIENTE_HABITUAL es false.
 |               |   |              |      | no calcularemos          |
 |               |   |              |      | percepciones de ingresos |
 |               |   |              |      | brutos.                  |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | CONSI         | N | Indica si se | bool | **Valores posibles:**    |
 | DERA_IVA_BASE | o | debe         |      |                          |
 | _CALCULO_IIBB |   | considerar   |      | -   true: considera en   |
@@ -1069,7 +437,7 @@ propiedad (de la sección ENCABEZADO) ES_CLIENTE_HABITUAL es false.
 |               |   |              |      | LIQUIDA_PE               |
 |               |   |              |      | RCEPCION_INGRESOS_BRUTOS |
 |               |   |              |      | = true                   |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | ID_G          | N | Id           | int  | **Valores posibles:** ID |
 | VA41_ALICUOTA | o | entificación |      | correspondiente a la     |
 | _ADICIONAL_PE |   | de la        |      | tabla GVA41 cuyo código  |
@@ -1081,7 +449,7 @@ propiedad (de la sección ENCABEZADO) ES_CLIENTE_HABITUAL es false.
 |               |   |              |      | LIQUIDA_PE               |
 |               |   |              |      | RCEPCION_INGRESOS_BRUTOS |
 |               |   |              |      | = true                   |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | CONSIDERA_    | N | Indica si se | bool | **Valores posibles:**    |
 | IVA_BASE_CALC | o | debe         |      |                          |
 | ULO_IIBB_ADIC |   | considerar   |      | -   true: considera en   |
@@ -1103,7 +471,7 @@ propiedad (de la sección ENCABEZADO) ES_CLIENTE_HABITUAL es false.
 |               |   |              |      | LIQUIDA_PE               |
 |               |   |              |      | RCEPCION_INGRESOS_BRUTOS |
 |               |   |              |      | = true                   |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | L             | N | Indica si se | bool | **Valores posibles:**    |
 | IQUIDA_PERCEP | o | debe         |      |                          |
 | CION_INGRESOS |   | liquidar     |      | -   true: liquida        |
@@ -1125,7 +493,7 @@ propiedad (de la sección ENCABEZADO) ES_CLIENTE_HABITUAL es false.
 |               |   | mayorista de |      |                          |
 |               |   | dichos       |      |                          |
 |               |   | bienes       |      |                          |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | ID_GV         | N | Id           | int  | **Valores posibles:** ID |
 | A41_ALICUOTA_ | o | entificación |      | correspondiente a la     |
 | FIJA_PERCEPCI |   | de la        |      | tabla GVA41 cuyo código  |
@@ -1133,7 +501,7 @@ propiedad (de la sección ENCABEZADO) ES_CLIENTE_HABITUAL es false.
 |               |   | Ingresos     |      | el 51 y el 80.           |
 |               |   | brutos (RG   |      |                          |
 |               |   | 58/59)       |      |                          |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | INCLUYE_IMPUE | N | Indica si se | bool | **Valores posibles:**    |
 | STOS_INTERNOS | o | deben        |      |                          |
 |               |   | considerar   |      | -   true: incluye        |
@@ -1148,14 +516,14 @@ propiedad (de la sección ENCABEZADO) ES_CLIENTE_HABITUAL es false.
 |               |   |              |      | no incluiremos los       |
 |               |   |              |      | impuestos internos       |
 |               |   |              |      | []{.mark}                |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | ID_GVA151     | N | Id           | int  |                          |
 |               | o | entificación |      |                          |
 |               |   | del rubro    |      |                          |
 |               |   | comercial    |      |                          |
 |               |   | del cliente  |      |                          |
 |               |   | ocasional    |      |                          |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | ID_GVA150     | N | Id           | int  |                          |
 |               | o | entificación |      |                          |
 |               |   | de la        |      |                          |
@@ -1168,25 +536,25 @@ propiedad (de la sección ENCABEZADO) ES_CLIENTE_HABITUAL es false.
 |               |   | de           |      |                          |
 |               |   | percepciones |      |                          |
 |               |   | definibles   |      |                          |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | DIRE          | N | Dirección de | st   |                          |
 | CCION_ENTREGA | o | entrega del  | ring |                          |
 |               |   | cliente      |      |                          |
 |               |   | ocasional    |      |                          |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | LOCA          | N | Localidad de | st   |                          |
 | LIDAD_ENTREGA | o | la dirección | ring |                          |
 |               |   | de entrega   |      |                          |
 |               |   | del cliente  |      |                          |
 |               |   | ocasional    |      |                          |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | CODIGO_P      | N | Código       | st   |                          |
 | OSTAL_ENTREGA | o | postal de la | ring |                          |
 |               |   | dirección de |      |                          |
 |               |   | entrega del  |      |                          |
 |               |   | cliente      |      |                          |
 |               |   | ocasional    |      |                          |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | ID_GVA18_PROV | S | Id           | int  | Podés obtener el ID a    |
 | INCIA_ENTREGA | i | entificación |      | informar desde la tabla  |
 |               |   | de la        |      | GVA18.                   |
@@ -1195,21 +563,21 @@ propiedad (de la sección ENCABEZADO) ES_CLIENTE_HABITUAL es false.
 |               |   | de entrega   |      |                          |
 |               |   | del cliente  |      |                          |
 |               |   | ocasional    |      |                          |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | TELE          | N | Teléfono 1   | st   |                          |
 | FONO1_ENTREGA | o | de la        | ring |                          |
 |               |   | dirección de |      |                          |
 |               |   | entrega del  |      |                          |
 |               |   | cliente      |      |                          |
 |               |   | ocasional    |      |                          |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 | TELE          | N | Teléfono 2   | st   |                          |
 | FONO2_ENTREGA | o | de la        | ring |                          |
 |               |   | dirección de |      |                          |
 |               |   | entrega del  |      |                          |
 |               |   | cliente      |      |                          |
 |               |   | ocasional    |      |                          |
-+---------------+---+--------------+------+--------------------------+
+|-------------------|---------------|------------------|------------------|---------------------------------------------------|
 
 ##### CLIENTE_OCASIONAL_PERCEPCIONES_DEFINIBLES_DTO (No requerido)
 
