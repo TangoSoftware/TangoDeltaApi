@@ -243,12 +243,12 @@ Tené en cuenta que esta sección es de tipo array por lo que deberás
 repetirla para registrar las distintas precepciones definibles que se
 deben aplicar al CLIENTE_OCASIONAL.
 
-| Campo                         | Requerido | Descripción                                                                                               | Tipo de dato |
-|-------------------------------|-----------|-----------------------------------------------------------------------------------------------------------|--------------|
-| ID_PERCEPCION_VENTAS          | Si        | Identificación de la percepción definible que se debe aplicar al cliente ocasional                        | int          |
-| ID_PERCEPCION_VENTAS_ALICUOTA | Si        | Identificación de la alícuota asociada a la percepción definible que se debe aplicar al cliente ocasional | Int          |
-| LEYENDA                       | No        | Leyenda libre                                                                                             | string       |
-  
+| Campo                         | Requerido | Descripción                                                                                               | Tipo de dato | Consideraciones, valores posibles y ejemplos                                                                         |
+|-------------------------------|-----------|-----------------------------------------------------------------------------------------------------------|--------------|----------------------------------------------------------------------------------------------------------------------|
+| ID_PERCEPCION_VENTAS          | Si        | Identificación de la percepción definible que se debe aplicar al cliente ocasional                        | int          | Tené en cuenta que la información para completar esta propiedad surge de la tabla GVA141 (Percepciones)              |
+| ID_PERCEPCION_VENTAS_ALICUOTA | Si        | Identificación de la alícuota asociada a la percepción definible que se debe aplicar al cliente ocasional | Int          | Tené en cuenta que la información para completar esta propiedad surge de la tabla GVA141 (Alícuotas de percepciones) |
+| LEYENDA                       | No        | Leyenda libre                                                                                             | string       | NULL                                                                                                                 |
+
 
 ##### NOTA_PEDIDO_DTO (No requerido)
 
