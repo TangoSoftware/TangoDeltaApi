@@ -115,6 +115,26 @@ Producción / Testeo
 | ID_SBA01                     | No        | Identificación de la cuenta de Tesorería que representa la intención de pago del cliente (Se traslada luego a factura) | int          |
 | OBSERVACIONES                | No        | Observaciones del pedido                                                                                               | string       |
 
+##### Renglones del pedido.
+
+RENGLON_DTO: Tené en cuenta que esta sección es de tipo array, por lo que deberás repetirla para registrar los distintos renglones del pedido.
+
+| Campo                          | Requerido | Descripción                                                        | Tipo de dato |
+|--------------------------------|-----------|--------------------------------------------------------------------|--------------|
+| ID_STA11                       | Si        | Identificación del artículo pedido                                 | int          |
+| DESCRIPCION_ARTICULO           | No        | Descripción del artículo                                           | string       |
+| DESCRIPCION_ADICIONAL_ARTICULO | No        | Descripción adicional del artículo                                 | string       |
+| ID_STA22                       | No        | Identificación del depósito del renglón                            | int          |
+| MODULO_UNIDAD_MEDIDA           | No        | Unidad de medida en la que está expresa la CANTIDAD_PEDIDA         | string       |
+| CANTIDAD_PEDIDA                | SI        | Cantidad solicitada por el cliente                                 | decimal      |
+| CANTIDAD_A_FACTURAR            | No        | Cantidad habilitada para facturar                                  | decimal      |
+| CANTIDAD_A_DESCARGA            | No        | Cantidad habilitada para remitir                                   | decimal      |
+| CANTIDAD_PENDIENTE_A_FACTURAR  | No        | Cantidad pendiente de facturar                                     | decimal      |
+| PRECIO                         | No        | Precio de venta                                                    | decimal      |
+| PORCENTAJE_BONIFICACION        | No        | Porcentaje de bonificación del renglón                             | decimal      |
+| ID_GVA81                       | No        | Identificación de la clasificación de comprobantes a nivel renglón | int          |
+| OBSERVACIONES                  | No        | Observaciones asignadas al renglón                                 | string       |
+
 
 ##### PLAN_DE_ENTREGA_DTO (No requerido)
 
