@@ -4,7 +4,7 @@ Bienvenido al repositorio del Servicio de Ingreso de Pedidos de Tango Software. 
 
 Diseñado para adaptarse tanto a entornos de producción como de desarrollo, este servicio garantiza la flexibilidad necesaria para que puedas desarrollar, probar y desplegar tus aplicaciones con total confianza y eficiencia.
 
-[Descargar Documentación PDF](./Documentación%20de%20Pedidos.pdf)
+[Descargar Documentación PDF](./API%20Pedidos%20-%20TangoSoftware.pdf)
 
 
 #### Preguntas frecuentes
