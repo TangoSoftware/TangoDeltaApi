@@ -72,7 +72,7 @@ Producción / Testeo
 
 ##### Encabezado
 
-<p style="font-size:8px;">
+<div style="font-size:12px;">
 | Campo                        | Req. | Descripción                                                                                                           | Tipo     | Consideraciones                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 |------------------------------|------|-----------------------------------------------------------------------------------------------------------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | ID_GVA43_TALON_PED           | Si   | Identificación del talonario de pedidos                                                                               | int      | Validamos que corresponda a un talonario de pedidos. ID de la tabla GVA43 donde GVA43.COMPROB = “PED”.                                                                                                                                                                                                                                                                                                                                                                                                                                         |
@@ -116,7 +116,7 @@ Producción / Testeo
 | ID_SBA01                     | No   | Identificación de la cuenta de Tesorería que representa la intención de pago del cliente (Se traslada luego a factura | int      | Tené en cuenta que trasladaremos la intención de pago a la factura en forma automática y por el importe total del pedido.                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | OBSERVACIONES                | No   | Observaciones del pedido                                                                                              | string   |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
                                                     |
-</p>
+
 
 ##### Renglones del pedido.
 
@@ -137,7 +137,7 @@ RENGLON_DTO: Tené en cuenta que esta sección es de tipo array, por lo que debe
 | PORCENTAJE_BONIFICACION        | No        | Porcentaje de bonificación del renglón                             | decimal      |
 | ID_GVA81                       | No        | Identificación de la clasificación de comprobantes a nivel renglón | int          |
 | OBSERVACIONES                  | No        | Observaciones asignadas al renglón                                 | string       |
-
+</div>
 
 ##### PLAN_DE_ENTREGA_DTO (No requerido)
 
