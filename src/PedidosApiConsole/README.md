@@ -243,28 +243,12 @@ Tené en cuenta que esta sección es de tipo array por lo que deberás
 repetirla para registrar las distintas precepciones definibles que se
 deben aplicar al CLIENTE_OCASIONAL.
 
-  -------------------------------------------------------------------------------------------------
-  Campo                           Requerido   Descripción      Tipo de  Consideraciones, valores
-                                                               dato     posibles y ejemplos
-  ------------------------------- ----------- ---------------- -------- ---------------------------
-  ID_PERCEPCION_VENTAS            Si          Identificación   int      Tené en cuenta que la
-                                              de la percepción          información para completar
-                                              definible que se          esta propiedad surge de la
-                                              debe aplicar al           tabla GVA141 (Percepciones)
-                                              cliente                   
-                                              ocasional                 
-
-  ID_PERCEPCION_VENTAS_ALICUOTA   Si          Identificación   Int      Tené en cuenta que la
-                                              de la alícuota            información para completar
-                                              asociada a la             esta propiedad surge de la
-                                              percepción                tabla GVA141 (Alícuotas de
-                                              definible que se          percepciones)
-                                              debe aplicar al           
-                                              cliente                   
-                                              ocasional                 
-
-  LEYENDA                         No          Leyenda libre    string   
-  -------------------------------------------------------------------------------------------------
+| Campo                         | Requerido | Descripción                                                                                               | Tipo de dato |
+|-------------------------------|-----------|-----------------------------------------------------------------------------------------------------------|--------------|
+| ID_PERCEPCION_VENTAS          | Si        | Identificación de la percepción definible que se debe aplicar al cliente ocasional                        | int          |
+| ID_PERCEPCION_VENTAS_ALICUOTA | Si        | Identificación de la alícuota asociada a la percepción definible que se debe aplicar al cliente ocasional | Int          |
+| LEYENDA                       | No        | Leyenda libre                                                                                             | string       |
+  
 
 ##### NOTA_PEDIDO_DTO (No requerido)
 
