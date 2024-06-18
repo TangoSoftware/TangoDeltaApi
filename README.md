@@ -12,7 +12,7 @@ puede ser de ingreso obligatorio.
 
 Este servicio cuenta con los siguientes métodos:
 
--   Consulta: Get y GetById
+-   *Get y GetById:* Consulta
 
 -   Alta: Put
 
