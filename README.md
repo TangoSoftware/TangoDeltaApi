@@ -53,9 +53,9 @@ Por ejemplo, esto se da en los grandes procesos como:
 Estos procesos trabajan con una vista que se denominan **AXV_NombreProceso**; en el caso de pedidos trabaja con AXV_PEDIDO (en lugar de GVA21).
 Para obtener la *lista de tablas del sistema* consultá dicha sección en el *Manual de operación* en nuestro [portal de ayudas](https://ayudas.axoft.com/).
 
-Para más información sobre esta API tema consultá la sección [Readme]{.mark}
+Para más información sobre esta API tema consultá la sección [Readme]{https://github.com/TangoSoftware/TangoDeltaApi/blob/main/src/PedidosApiConsole/README.md}
 del servicio para acceder al detalle de cada uno de los campos de JSON o
-accedé a la sección [Program]{.mark} para consultar algunos ejemplos de
+accedé a la sección [Program]{https://github.com/TangoSoftware/TangoDeltaApi/blob/main/src/PedidosApiConsole/Program.cs} para consultar algunos ejemplos de
 implementación.
 <br>
 <br>
