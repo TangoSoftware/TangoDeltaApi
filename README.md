@@ -12,13 +12,13 @@ puede ser de ingreso obligatorio.
 
 Este servicio cuenta con los siguientes métodos:
 
--   *Get y GetById:* Consulta
+-   **Get y GetById:** Consulta
 
--   Alta: Put
+-   **Put:** Alta
 
--   Modificación: Post
+-   **Post:** Modificación
 
--   Baja: Delete
+-   **Delete:** Eliminación
 
 Para más información sobre este tema consulte la sección [Readme]{.mark}
 del servicio para acceder al detalle de cada uno de los campos de JSON o
