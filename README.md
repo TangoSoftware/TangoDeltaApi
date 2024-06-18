@@ -1,4 +1,5 @@
 ### Servicios
+<br>
 
 **Clientes**
 
@@ -14,40 +15,56 @@ Este servicio cuenta con los siguientes métodos:
 
 -   **Get y GetById:** Consulta
 
--   **Put:** Alta
+-   **Post:** Alta
 
--   **Post:** Modificación
+-   **Put:** Modificación
 
 -   **Delete:** Eliminación
-
+<br>
 Para más información sobre este tema consulte la sección [Readme]{.mark}
 del servicio para acceder al detalle de cada uno de los campos de JSON o
 acceda a la sección [Program]{.mark} para consultar algunos ejemplos de
 implementación.
+
+<br>
 
 **Pedidos**
 
 Este servicio permite obtener información sobre los pedidos existentes
-Get , GetbyID y GetByFilter o ingresar nuevos comprobantes Post.
+**Get , GetbyID y GetByFilter** o ingresar nuevos comprobantes **Post**.
+
 Adicionalmente incluimos ejemplos sobre cómo obtener la información
-necesaria para completar los ID de las tablas relacionadas; por ejemplo,
-cómo obtener el ID del vendedor en base su código o nombre para
-registrarlo en el pedido.
+necesaria para completar los **ID** de las tablas relacionadas; un caso de aplicación podría se
+cómo obtener el ID del vendedor en base su código o nombre para registrarlo en el pedido.
 
-[Los métodos PUT, DELETE no funcionan]{.mark}
 
-[Otros métodos disponibles CLOSE (cerrar) y CANCEL (anular)]{.mark}
+**Tené en cuenta que los métodos PUT, DELETE no funcionan por el momento. Otros métodos que incluiremos son CLOSE (cerrar) y CANCEL (anular)**
 
-[Get by filter usar AXV_PEDIDO (No GVA21) è grandes procesos normalmente
-usan AXV_NombreProceso y no la tabla maestra conocida è afecta solo a
-GetByFilter]{.mark}
+*Consideraciones*<br>
+Cuando utilices el método **Get by filter** tené en cuenta que en algunos procesos el sistema trabaja con una *vista* en lugar de hacerlo con tabla principal. 
+Por ejemplo, esto se da en los grandes procesos como:
+-   **Clientes**
+-   **Artiículos**
+-   **Proveedores**
+-   y ahora **Pedidos**
 
-Para más información sobre este tema consulte la sección [Readme]{.mark}
+Estos procesos trabajan con una vista que se denominan **AXV_NombreProceso**; en el caso de pedidos trabaja con AXV_PEDIDO (en lugar de GVA21).
+Para obtener la *lista de tablas del sistema* consultá dicha sección en el *Manual de operación* en nuestro [portal de ayudas](https://ayudas.axoft.com/).
+
+<br>
+Para más información sobre esta API tema consultá la sección [Readme]{.mark}
 del servicio para acceder al detalle de cada uno de los campos de JSON o
-acceda a la sección [Program]{.mark} para consultar algunos ejemplos de
+accedé a la sección [Program]{.mark} para consultar algunos ejemplos de
 implementación.
+<br>
+<br>
 
-**[FacturaciónVentas]{.mark}**
+**Facturación de Ventas**
+
+Próximamente encontarás en esta sección toda la documentación necesaria para registrar facturas de ventas. 
+En versiones anteriores esta documentación se encontraba en la ayuda del sistema .
+
+<br>
 
 ## ¿Cómo contribuir?
 
