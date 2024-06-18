@@ -1,0 +1,49 @@
+using Newtonsoft.Json;
+using TangoDeltaApi.Core.Service;
+
+namespace TangoDeltaApi.CommonServices.listadepreciosventas.model;
+
+public partial class ListaDePreciosVentasData: BaseData
+{
+    [JsonProperty("GVA10_PARAMETROS_AUTOMATIZACION")]
+    public string? Gva10ParametrosAutomatizacion { get; set; }
+
+    [JsonProperty("CTA_LISTA_VENTA_POR_SUCURSAL")]
+    public string? CtaListaVentaPorSucursal { get; set; }
+
+    [JsonProperty("ID_GVA10")]
+    public int IdGva10 { get; set; }
+
+    [JsonProperty("NRO_DE_LIS")]
+    public int NroDeLis { get; set; }
+
+    [JsonProperty("NOMBRE_LIS")]
+    public string? NombreLis { get; set; }
+
+    [JsonProperty("HABILITADA")]
+    public bool Habilitada { get; set; }
+
+    [JsonProperty("MON_CTE")]
+    public bool MonCte { get; set; }
+
+    [JsonProperty("DECIMALES")]
+    public long Decimales { get; set; }
+
+    [JsonProperty("INCLUY_IVA")]
+    public bool IncluyIva { get; set; }
+
+    [JsonProperty("INCLUY_IMP")]
+    public bool IncluyImp { get; set; }
+
+    [JsonProperty("FEC_DESDE")]
+    public DateTime? FecDesde { get; set; }
+
+    [JsonProperty("FEC_HASTA")]
+    public DateTime? FecHasta { get; set; }
+
+    [JsonProperty("OBSERVACIONES")]
+    public string? Observaciones { get; set; }
+
+    [JsonProperty("COD_DESCRIP")]
+    public string? CodDescrip { get; set; }
+}

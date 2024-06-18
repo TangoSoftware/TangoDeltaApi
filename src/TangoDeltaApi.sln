@@ -3,13 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PedidosApiConsole", "PedidosApiConsole\PedidosApiConsole.csproj", "{6D974442-F862-4D8B-B9A6-BCF57BA47312}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{626B4459-485D-4952-8E05-F9D4F2C7348B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TangoRestApiLibrary", "TangoRestApiLibrary\TangoRestApiLibrary.csproj", "{18B0692D-F450-4BD2-ABF8-1FADECB238AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TangoDeltaApiCore", "Core\TangoDeltaApiCore.csproj", "{2DE3C109-E0C7-4E50-987E-0A2B683A8971}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientesApiConsole", "ClientesApiConsole\ClientesApiConsole.csproj", "{825A2540-6138-49DE-8C83-38074142F057}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{5146EA1E-CDBB-42D8-AAEE-E0848436A5E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject1", "TestProject1\TestProject1.csproj", "{5A0C6AE6-1076-42FF-A758-709D505FE785}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TangoDeltaApiCoreTest", "Tests\TangoDeltaApiCoreTest\TangoDeltaApiCoreTest.csproj", "{CCE25546-DD49-442D-B8DA-9A8E8538F6D6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CommonServices", "CommonServices", "{00B96442-2F31-48DA-9D17-B5C5732A4CF8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TangoDeltaApiCommonServices", "CommonServices\TangoDeltaApiCommonServices.csproj", "{393E3F1A-E5C0-4CE0-A74E-473A18B9032C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Implementations", "Implementations", "{903AB981-DF79-4909-A2E3-A77F00C7854E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientesApiConsole", "Implementations\ClientesApiConsole\ClientesApiConsole.csproj", "{8A1ECC8A-FAD1-4ED4-850F-8A0B84EC06D3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PedidosApiConsole", "Implementations\PedidosApiConsole\PedidosApiConsole.csproj", "{DF3A69EB-27A1-4F1A-B1FA-93087ADE0D4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,25 +27,36 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6D974442-F862-4D8B-B9A6-BCF57BA47312}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6D974442-F862-4D8B-B9A6-BCF57BA47312}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6D974442-F862-4D8B-B9A6-BCF57BA47312}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6D974442-F862-4D8B-B9A6-BCF57BA47312}.Release|Any CPU.Build.0 = Release|Any CPU
-		{18B0692D-F450-4BD2-ABF8-1FADECB238AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{18B0692D-F450-4BD2-ABF8-1FADECB238AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{18B0692D-F450-4BD2-ABF8-1FADECB238AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{18B0692D-F450-4BD2-ABF8-1FADECB238AD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{825A2540-6138-49DE-8C83-38074142F057}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{825A2540-6138-49DE-8C83-38074142F057}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{825A2540-6138-49DE-8C83-38074142F057}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{825A2540-6138-49DE-8C83-38074142F057}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5A0C6AE6-1076-42FF-A758-709D505FE785}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5A0C6AE6-1076-42FF-A758-709D505FE785}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5A0C6AE6-1076-42FF-A758-709D505FE785}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5A0C6AE6-1076-42FF-A758-709D505FE785}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DE3C109-E0C7-4E50-987E-0A2B683A8971}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DE3C109-E0C7-4E50-987E-0A2B683A8971}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DE3C109-E0C7-4E50-987E-0A2B683A8971}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DE3C109-E0C7-4E50-987E-0A2B683A8971}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCE25546-DD49-442D-B8DA-9A8E8538F6D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCE25546-DD49-442D-B8DA-9A8E8538F6D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCE25546-DD49-442D-B8DA-9A8E8538F6D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCE25546-DD49-442D-B8DA-9A8E8538F6D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{393E3F1A-E5C0-4CE0-A74E-473A18B9032C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{393E3F1A-E5C0-4CE0-A74E-473A18B9032C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{393E3F1A-E5C0-4CE0-A74E-473A18B9032C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{393E3F1A-E5C0-4CE0-A74E-473A18B9032C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A1ECC8A-FAD1-4ED4-850F-8A0B84EC06D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A1ECC8A-FAD1-4ED4-850F-8A0B84EC06D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A1ECC8A-FAD1-4ED4-850F-8A0B84EC06D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A1ECC8A-FAD1-4ED4-850F-8A0B84EC06D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF3A69EB-27A1-4F1A-B1FA-93087ADE0D4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF3A69EB-27A1-4F1A-B1FA-93087ADE0D4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF3A69EB-27A1-4F1A-B1FA-93087ADE0D4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF3A69EB-27A1-4F1A-B1FA-93087ADE0D4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2DE3C109-E0C7-4E50-987E-0A2B683A8971} = {626B4459-485D-4952-8E05-F9D4F2C7348B}
+		{CCE25546-DD49-442D-B8DA-9A8E8538F6D6} = {5146EA1E-CDBB-42D8-AAEE-E0848436A5E0}
+		{393E3F1A-E5C0-4CE0-A74E-473A18B9032C} = {00B96442-2F31-48DA-9D17-B5C5732A4CF8}
+		{8A1ECC8A-FAD1-4ED4-850F-8A0B84EC06D3} = {903AB981-DF79-4909-A2E3-A77F00C7854E}
+		{DF3A69EB-27A1-4F1A-B1FA-93087ADE0D4E} = {903AB981-DF79-4909-A2E3-A77F00C7854E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2978CE5F-AC41-4124-9806-64C4F9128DCC}
