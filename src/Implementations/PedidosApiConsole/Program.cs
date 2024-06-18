@@ -43,40 +43,40 @@ foreach (var item in data)
 // Alta de nuevo pedido.
 PedidoData pedido = new PedidoData();
 // talonario pedido. 
-pedido.IdGva43TalonPed = 6; // Talonario = 5
-pedido.FechaPedido = DateTime.Now;
-pedido.FechaEntrega = DateTime.Now.AddDays(10);
+pedido.ID_GVA43_TALON_PED = 6; // Talonario = 5
+pedido.FECHA_PEDIDO = DateTime.Now;
+pedido.FECHA_ENTREGA = DateTime.Now.AddDays(10);
 // condicion de venta
-pedido.IdGva01 = condicionVentaServices.GetByFilter("GVA01.COND_VTA = 1").Single().IdGva01;
+pedido.ID_GVA01 = condicionVentaServices.GetByFilter("GVA01.COND_VTA = 1").Single().IdGva01;
 // Lista de precios
-pedido.IdGva10 = listaDePreciosVentasServices.GetByFilter("gva10.NOMBRE_LIS = 'Venta Mayorista'").Single().IdGva10;
+pedido.ID_GVA10 = listaDePreciosVentasServices.GetByFilter("gva10.NOMBRE_LIS = 'Venta Mayorista'").Single().IdGva10;
 // Clientes: F
-pedido.IdGva14 = clienteServices.GetByFilter("AXV_CLIENTE.COD_GVA14= '010001'").Single().IdGva14; // 1 = Lombardi , cod_client = 010001, 30-22641901-9
-pedido.EsClienteHabitual = true;
-pedido.IdDireccionEntrega = 1;
+pedido.ID_GVA14 = clienteServices.GetByFilter("AXV_CLIENTE.COD_GVA14= '010001'").Single().IdGva14; // 1 = Lombardi , cod_client = 010001, 30-22641901-9
+pedido.ES_CLIENTE_HABITUAL = true;
+pedido.ID_DIRECCION_ENTREGA = 1;
 // Vendedor
-pedido.IdGva23 = vendedorServices.GetByFilter("cod_vended = 1").Single().IdGva23;
+pedido.ID_GVA23 = vendedorServices.GetByFilter("cod_vended = 1").Single().IdGva23;
 // transporte
-pedido.IdGva24 = transporteServices.GetByFilter("Gva24.cod_transp = '01'").Single().IdGva24;
+pedido.ID_GVA24 = transporteServices.GetByFilter("Gva24.cod_transp = '01'").Single().IdGva24;
 // clasificacion de comprobante
 int idClasificacionCoprobante = clasificacionDeComprobantesServices.GetByFilter("GVA81.COD_CLASIF = '1'").Single().IdGva81; // 1 = Campaña de TV. 
-pedido.IdGva81 = idClasificacionCoprobante;
+pedido.ID_GVA81 = idClasificacionCoprobante;
 //moneda
-pedido.IdMoneda = monedaServices.GetByFilter("MONEDA.COD_MONEDA = 'PES'").Single().IdMoneda; // 1 = Peso Argentino. Cod_moneda = 01
+pedido.ID_MONEDA = monedaServices.GetByFilter("MONEDA.COD_MONEDA = 'PES'").Single().IdMoneda; // 1 = Peso Argentino. Cod_moneda = 01
 //deposito
 int idDeposito = depositoServices.GetByFilter("STA22.COD_STA22 = 1").Single().IdSta22; // 1 = deposito principal. Cod_deposito = 01
-pedido.IdSta22 = idDeposito;
-pedido.Estado = 2; // hay que poner una lista de estados posibles...
+pedido.ID_STA22 = idDeposito;
+pedido.ESTADO = 2; // hay que poner una lista de estados posibles...
 // Cargamos los renglones del pedido
-pedido.RenglonDto = new List<RenglonDto>();
-pedido.RenglonDto.Add(new RenglonDto()
+pedido.RENGLON_DTO = new List<RenglonDto>();
+pedido.RENGLON_DTO.Add(new RenglonDto()
 {
-    IdSta22 = idDeposito,
-    IdSta11 = articuloServices.GetByFilter("AXV_ARTICULO.COD_STA11 = '0100100134'").Single().IdSta11,
-    IdGva81 = idClasificacionCoprobante,
-    ModuloUnidadMedida = "GV",
-    CantidadPedida = 10,
-    Precio = 100
+    //ID_STA22 = idDeposito,
+    ID_STA11 = articuloServices.GetByFilter("AXV_ARTICULO.COD_STA11 = '0100100134'").Single().IdSta11,
+    //IdGva81 = idClasificacionCoprobante,
+    MODULO_UNIDAD_MEDIDA = "GV",
+    CANTIDAD_PEDIDA = 10,
+    PRECIO = 100
 });
 
 // Enviamos a insertar el pedido cargado.
@@ -87,5 +87,5 @@ try
 }
 catch (Exception ex)
 {
-    Console.WriteLine($"Error al crear el pedido {pedido.NroPedido}. ({ex.Message})");
+    Console.WriteLine($"Error al crear el pedido {pedido.NRO_PEDIDO}. ({ex.Message})");
 }
