@@ -7,4 +7,3 @@ Diseñado para adaptarse tanto a entornos de producción como de desarrollo, est
 [Descargar Documentación PDF](./API%20Pedidos%20-%20TangoSoftware.pdf)
 
 
-#### Preguntas frecuentes
