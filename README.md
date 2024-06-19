@@ -1,7 +1,7 @@
-### Servicios
+### Servicios disponibles
 <br>
 
-**Clientes**
+**1) Clientes**
 
 Este servicio permite realizar las operaciones CRUD (Create, Read,
 Update, Delete) relacionadas con el proceso de
@@ -30,7 +30,7 @@ implementación.
 <br>
 <br>
 
-**Pedidos**
+**2) Pedidos**
 
 Este servicio permite obtener información sobre los pedidos existentes
 **Get , GetbyID y GetByFilter** o ingresar nuevos comprobantes **Post**.
@@ -41,6 +41,8 @@ cómo obtener el ID del vendedor en base su código o nombre para registrarlo en
 
 
 **Tené en cuenta que los métodos PUT, DELETE no funcionan por el momento. Otros métodos que incluiremos son CLOSE (cerrar) y CANCEL (anular)**
+<br>
+<br>
 <br>
 **Consideraciones**<br>
 Cuando utilices el método **Get by filter** tené en cuenta que en algunos procesos el sistema trabaja con una *vista* en lugar de hacerlo con tabla principal. 
@@ -60,7 +62,7 @@ implementación.
 <br>
 <br>
 
-**Facturación de Ventas**
+**3) Facturación de Ventas**
 
 Próximamente encontarás en esta sección toda la documentación necesaria para registrar facturas de ventas. 
 En versiones anteriores esta documentación se encontraba en la ayuda del sistema .
