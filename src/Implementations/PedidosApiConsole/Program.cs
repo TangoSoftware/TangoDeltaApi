@@ -1,14 +1,14 @@
-﻿using TangoDeltaApi.CommonServices.Articulo;
-using TangoDeltaApi.CommonServices.ClasificacionDeComprobantes;
-using TangoDeltaApi.CommonServices.cliente;
-using TangoDeltaApi.CommonServices.condicionVentas;
-using TangoDeltaApi.CommonServices.Deposito;
-using TangoDeltaApi.CommonServices.listadepreciosventas;
-using TangoDeltaApi.CommonServices.Moneda;
-using TangoDeltaApi.CommonServices.pedidos;
-using TangoDeltaApi.CommonServices.Pedidos.Model;
-using TangoDeltaApi.CommonServices.transporte;
-using TangoDeltaApi.CommonServices.vendedor;
+﻿using TangoDeltaApi.CommonServices.stock.Articulo;
+using TangoDeltaApi.CommonServices.procesosgenerales.ClasificacionDeComprobantes;
+using TangoDeltaApi.CommonServices.ventas.cliente;
+using TangoDeltaApi.CommonServices.ventas.condicionVentas;
+using TangoDeltaApi.CommonServices.stock.Deposito;
+using TangoDeltaApi.CommonServices.ventas.listadepreciosventas;
+using TangoDeltaApi.CommonServices.procesosgenerales.Moneda;
+using TangoDeltaApi.CommonServices.ventas.pedidos;
+using TangoDeltaApi.CommonServices.ventas.pedidos.Model;
+using TangoDeltaApi.CommonServices.ventas.transporte;
+using TangoDeltaApi.CommonServices.ventas.vendedor;
 using TangoDeltaApi.Core.Config;
 
 // Configuracion de conexión a Tango Delta.
