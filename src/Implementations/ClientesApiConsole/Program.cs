@@ -1,5 +1,5 @@
-﻿using TangoDeltaApi.CommonServices.cliente;
-using TangoDeltaApi.CommonServices.cliente.model;
+﻿using TangoDeltaApi.CommonServices.ventas.cliente;
+using TangoDeltaApi.CommonServices.ventas.cliente.model;
 using TangoDeltaApi.Core.Config;
 using TangoDeltaApi.Core.Service;
 

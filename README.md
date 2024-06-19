@@ -41,12 +41,12 @@ cómo obtener el ID del vendedor en base su código o nombre para registrarlo en
 
 
 **Tené en cuenta que los métodos PUT, DELETE no funcionan por el momento. Otros métodos que incluiremos son CLOSE (cerrar) y CANCEL (anular)**
-
-*Consideraciones*<br>
+<br>
+**Consideraciones**<br>
 Cuando utilices el método **Get by filter** tené en cuenta que en algunos procesos el sistema trabaja con una *vista* en lugar de hacerlo con tabla principal. 
 Por ejemplo, esto se da en los grandes procesos como:
 -   **Clientes**
--   **Artiículos**
+-   **Artículos**
 -   **Proveedores**
 -   y ahora **Pedidos**
 
@@ -67,12 +67,3 @@ En versiones anteriores esta documentación se encontraba en la ayuda del sistem
 
 <br>
 
-## ¿Cómo contribuir?
-
-Si desea contribuir a este proyecto, puede clonar este repositorio y
-enviar un pull request con sus cambios. Asegúrese de seguir las
-convenciones de código existentes y de escribir pruebas para cualquier
-nuevo código.
-
-Si encuentra un problema o tiene una sugerencia, puede abrir un nuevo
-issue en este repositorio.

@@ -1,8 +1,0 @@
-using TangoDeltaApi.CommonServices.ClasificacionDeComprobantes.model;
-using TangoDeltaApi.Core.Service;
-
-namespace TangoDeltaApi.CommonServices.ClasificacionDeComprobantes;
-
-public interface IClasificacionDeComprobantesServices : IBaseServices<ClasificacionDeComprobantesQueryRecord, ClasificacionDeComprobantesData>
-{
-}

@@ -2,9 +2,9 @@
 using TangoDeltaApi.CommonServices.procesosgenerales.ClasificacionDeComprobantes;
 using TangoDeltaApi.CommonServices.ventas.cliente;
 using TangoDeltaApi.CommonServices.ventas.condicionVentas;
-using TangoDeltaApi.CommonServices.stock.Deposito;
+using TangoDeltaApi.CommonServices.stock.deposito;
 using TangoDeltaApi.CommonServices.ventas.listadepreciosventas;
-using TangoDeltaApi.CommonServices.procesosgenerales.Moneda;
+using TangoDeltaApi.CommonServices.procesosgenerales.moneda;
 using TangoDeltaApi.CommonServices.ventas.pedidos;
 using TangoDeltaApi.CommonServices.ventas.pedidos.Model;
 using TangoDeltaApi.CommonServices.ventas.transporte;
