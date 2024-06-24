@@ -17,7 +17,7 @@ public abstract class BaseServices<QR, D>
     where QR : BaseQueryRecord
     where D : BaseData
 {
-    private IAxHttpClient _axHttpCLient;
+    private IAxHttpClient _axHttpClient;
     protected readonly ITangoConfig _config;
 
     protected BaseServices(ITangoConfig config, IAxHttpClient? axHttpClient = null)
@@ -26,16 +26,16 @@ public abstract class BaseServices<QR, D>
 
         if (axHttpClient == null)
         {   // Ejecución en contexto de producción instancia un HttpClient nativo
-            _axHttpCLient = new AxHttpClient();
+            _axHttpClient = new AxHttpClient();
         }
         else
         {   // Contexto de tests utiliza el enviado por parámetro
-            _axHttpCLient = axHttpClient;
+            _axHttpClient = axHttpClient;
         }
-        _axHttpCLient.DefaultRequestHeaders.Accept.Clear();
-        _axHttpCLient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        _axHttpCLient.DefaultRequestHeaders.Add("Company", config.CompanyId);
-        _axHttpCLient.DefaultRequestHeaders.Add("ApiAuthorization", config.ApiAuthorization);
+        _axHttpClient.DefaultRequestHeaders.Accept.Clear();
+        _axHttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        _axHttpClient.DefaultRequestHeaders.Add("Company", config.CompanyId);
+        _axHttpClient.DefaultRequestHeaders.Add("ApiAuthorization", config.ApiAuthorization);
     }
 
     protected abstract string ProcessId { get; }
@@ -59,7 +59,7 @@ public abstract class BaseServices<QR, D>
     private async Task<string> ApiDeleteAsync(int id)
     {
         var builder = GetNewUriBuilder("Delete", $"&id={id}");
-        var response = await _axHttpCLient.DeleteAsync(builder.Uri);
+        var response = await _axHttpClient.DeleteAsync(builder.Uri);
         try
         {
             if (response.IsSuccessStatusCode)
@@ -85,7 +85,7 @@ public abstract class BaseServices<QR, D>
     private async Task<string> ApiGetAsync(int pageSize, int pageIndex)
     {
         var builder = GetNewUriBuilder("Get", $"&pageSize={pageSize}&pageIndex={pageIndex}&view=");
-        var response = await _axHttpCLient.GetAsync(builder.Uri);
+        var response = await _axHttpClient.GetAsync(builder.Uri);
         try
         {
             if (response.IsSuccessStatusCode)
@@ -111,7 +111,7 @@ public abstract class BaseServices<QR, D>
     {
         // revisar el where
         var builder = GetNewUriBuilder("GetByFilter", $"&view=&filtroSql=WHERE%20{System.Net.WebUtility.UrlEncode(filter)}");
-        var response = await _axHttpCLient.GetAsync(builder.Uri);
+        var response = await _axHttpClient.GetAsync(builder.Uri);
         try
         {
             if (response.IsSuccessStatusCode)
@@ -137,7 +137,7 @@ public abstract class BaseServices<QR, D>
     {
         var builder = GetNewUriBuilder("Create");
         var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-        var response = await _axHttpCLient.PostAsync(builder.Uri, content);
+        var response = await _axHttpClient.PostAsync(builder.Uri, content);
 
         try
         {
@@ -165,7 +165,7 @@ public abstract class BaseServices<QR, D>
         var builder = GetNewUriBuilder("Update");
 
         var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-        var response = await _axHttpCLient.PutAsync(builder.Uri, content);
+        var response = await _axHttpClient.PutAsync(builder.Uri, content);
 
         try
         {
@@ -191,7 +191,7 @@ public abstract class BaseServices<QR, D>
     private async Task<string> ApiGetByIdAsync(int idValue)
     {
         var builder = GetNewUriBuilder("GetById", $"&view=&id={idValue}");
-        var response = await _axHttpCLient.GetAsync(builder.Uri);
+        var response = await _axHttpClient.GetAsync(builder.Uri);
         try
         {
             if (response.IsSuccessStatusCode)
