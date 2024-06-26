@@ -48,33 +48,33 @@ PedidoData pedido = new PedidoData();
 pedido.ID_GVA43_TALON_PED = 6; // Talonario = 5
 pedido.FECHA_PEDIDO = DateTime.Now;
 pedido.FECHA_ENTREGA = DateTime.Now.AddDays(10);
-// condicion de venta: Busco el ID de la condicion de venta que tenga el campo COND_VTA = 1
-pedido.ID_GVA01 = condicionVentaServices.GetByFilter("GVA01.COND_VTA = 1").Single().IdGva01;
-// Lista de precios: Busco el ID de la lista de precios que tenga el campo NOMBRE_LIS = 'Venta Mayorista'
-pedido.ID_GVA10 = listaDePreciosVentasServices.GetByFilter("gva10.NOMBRE_LIS = 'Venta Mayorista'").Single().IdGva10;
-// Clientes: Busco el ID del cliente que tenga el campo COD_GVA14 = '010001'
-pedido.ID_GVA14 = clienteServices.GetByFilter("AXV_CLIENTE.COD_GVA14= '010001'").Single().IdGva14; 
+// condicion de venta: Busco el ID de la condicion de venta que tenga Código = 1
+pedido.ID_GVA01 = condicionVentaServices.GetIdByCode(1);
+// Lista de precios: Busco el ID de la lista de precios que tenga Número de Lista = 1  
+pedido.ID_GVA10 = listaDePreciosVentasServices.GetIdByCode(1);
+// Clientes: Busco el ID del cliente que tenga Código = '010001'
+pedido.ID_GVA14 = clienteServices.GetIdByCode("010001"); 
 pedido.ES_CLIENTE_HABITUAL = true;
 pedido.ID_DIRECCION_ENTREGA = 1;
-// Vendedor: Busco el ID del vendedor que tenga el campo cod_vended = 1
-pedido.ID_GVA23 = vendedorServices.GetByFilter("cod_vended = 1").Single().IdGva23;
-// Transporte: Busco el ID del transporte que tenga el campo cod_transp = '01'
-pedido.ID_GVA24 = transporteServices.GetByFilter("Gva24.cod_transp = '01'").Single().IdGva24;
-// Clasificacion de comprobante: Busco el ID de la clasificacion de comprobante que tenga el campo COD_CLASIF = '1' (Campaña de TV.)
-int idClasificacionCoprobante = clasificacionDeComprobantesServices.GetByFilter("GVA81.COD_CLASIF = '1'").Single().IdGva81;  
+// Vendedor: Busco el ID del vendedor que tenga el Código = 1
+pedido.ID_GVA23 = vendedorServices.GetIdByCode("1");
+// Transporte: Busco el ID del transporte que tenga Código = '01'
+pedido.ID_GVA24 = transporteServices.GetIdByCode("01");
+// Clasificacion de comprobante: Busco el ID de la clasificacion de comprobante que tenga el Código = '1' (Campaña de TV.)
+int idClasificacionCoprobante = clasificacionDeComprobantesServices.GetIdByCode("1");  
 pedido.ID_GVA81 = idClasificacionCoprobante;
-// Moneda: Busco el ID de la moneda que tenga el campo COD_MONEDA = 'PES'
-pedido.ID_MONEDA = monedaServices.GetByFilter("MONEDA.COD_MONEDA = 'PES'").Single().IdMoneda; 
-// Depósito: Busco el ID del depósito que tenga el campo COD_STA22 = 1
-int idDeposito = depositoServices.GetByFilter("STA22.COD_STA22 = 1").Single().IdSta22; 
+// Moneda: Busco el ID de la moneda que tenga el el Código = 'PES'
+pedido.ID_MONEDA = monedaServices.GetIdByCode("PES");
+// Depósito: Busco el ID del depósito que tenga el el Código = 1
+int idDeposito = depositoServices.GetIdByCode("1"); 
 pedido.ID_STA22 = idDeposito;
 pedido.ESTADO = 2; 
 // Cargamos los renglones del pedido
 pedido.RENGLON_DTO = new List<RenglonDto>();
 pedido.RENGLON_DTO.Add(new RenglonDto()
 {
-    // Artículo: Busco el ID del artículo que tenga el campo COD_STA11 = '0100100134'
-    ID_STA11 = articuloServices.GetByFilter("AXV_ARTICULO.COD_STA11 = '0100100134'").Single().IdSta11,
+    // Artículo: Busco el ID del artículo que tenga el el Código = '0100100134'
+    ID_STA11 = articuloServices.GetIdByCode("0100100134"),
     MODULO_UNIDAD_MEDIDA = "GV",
     CANTIDAD_PEDIDA = 10,
     // Precio: en este ejemplo pongo un precio especifico. En caso de no tenerlo, se puede buscar el precio por lista de precios automáticamente
