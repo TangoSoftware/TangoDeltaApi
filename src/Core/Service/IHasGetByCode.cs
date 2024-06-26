@@ -7,14 +7,25 @@ using TangoDeltaApi.Core.Service;
 
 namespace TangoDeltaApiCore.Service
 {
-    public interface IHasGetByCode<in T, out QR>
-        where T : IConvertible
+    /// <summary>
+    /// Representa una servicios con capacidad de
+    /// obtener la Instancia o el Id de un registro, 
+    /// a partir de su código de Identificador Alternativo UniqueKey.
+    /// </summary>
+    /// <typeparam name="C">
+    /// Tipo de dato del código de Identificador Alternativo UniqueKey.
+    /// </typeparam>
+    /// <typeparam name="QR">
+    /// Tipo de dato del QueryRecord a obtener.
+    /// </typeparam>
+    public interface IHasGetByCode<in C, out QR>
+        where C : IConvertible
         where QR : BaseQueryRecord
     {
 
         /// <summary>
         /// Permite obtener un registro a partir de su código
-        /// de Identificador alternativo UniqueKey.
+        /// de Identificador Alternativo UniqueKey.
         /// </summary>
         /// <param name="code">
         /// código de la entidad a utilizar como filtro.
@@ -22,11 +33,11 @@ namespace TangoDeltaApiCore.Service
         /// <returns>
         /// Instancia de la entidad.
         /// </returns>
-        QR GetByCode(T code);
+        QR GetByCode(C code);
 
         /// <summary>
         /// Permite obtener el Id de un registro a partir de su código
-        /// de Identificador alternativo UniqueKey.
+        /// de Identificador Alternativo UniqueKey.
         /// </summary>
         /// <param name="code">
         /// Código de la entidad a utilizar como filtro.
@@ -34,7 +45,7 @@ namespace TangoDeltaApiCore.Service
         /// <returns>
         /// Id de la entidad.
         /// </returns>
-        int GetIdByCode(T code);
+        int GetIdByCode(C code);
 
     }
 }
