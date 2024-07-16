@@ -114,10 +114,10 @@ public partial class ClienteData : BaseData
     public DateTime? FechaAnt { get; set; }
 
     [JsonProperty("NRO_LEGAL")]
-    public long NroLegal { get; set; }
+    public long? NroLegal { get; set; }
 
     [JsonProperty("PISO_LEGAL")]
-    public long PisoLegal { get; set; }
+    public long? PisoLegal { get; set; }
 
     [JsonProperty("SALDO_ANT")]
     public decimal SaldoAnt { get; set; }

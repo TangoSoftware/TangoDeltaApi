@@ -78,7 +78,7 @@ public partial class ClienteQueryRecord : BaseQueryRecord
     public string? CmVigenciaCoeficiente { get; set; }
 
     [JsonProperty("N_PAGOELEC")]
-    public int? NPagoelec { get; set; }
+    public string? NPagoelec { get; set; }
 
     [JsonProperty("CBU")]
     public string? Cbu { get; set; }

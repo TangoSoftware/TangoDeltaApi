@@ -10,6 +10,7 @@ using TangoDeltaApi.CommonServices.ventas.pedidos.Model;
 using TangoDeltaApi.CommonServices.ventas.transporte;
 using TangoDeltaApi.CommonServices.ventas.vendedor;
 using TangoDeltaApi.Core.Config;
+using System.Runtime.InteropServices;
 
 // Configuracion de conexión a Tango Delta.
 ITangoConfig config = new TangoConfig()
@@ -43,59 +44,66 @@ foreach (var item in data)
 /* ******************************************************************************************************************** 
    Crear un pedido con un cliente habitual.
    ********************************************************************************************************************/
-PedidoData pedido = new PedidoData();
-// talonario pedido. 
-pedido.ID_GVA43_TALON_PED = 6; // Talonario = 5
-pedido.FECHA_PEDIDO = DateTime.Now;
-pedido.FECHA_ENTREGA = DateTime.Now.AddDays(10);
-// condicion de venta: Busco el ID de la condicion de venta que tenga el campo COND_VTA = 1
-pedido.ID_GVA01 = condicionVentaServices.GetByFilter("GVA01.COND_VTA = 1").Single().IdGva01;
-// Lista de precios: Busco el ID de la lista de precios que tenga el campo NOMBRE_LIS = 'Venta Mayorista'
-pedido.ID_GVA10 = listaDePreciosVentasServices.GetByFilter("gva10.NOMBRE_LIS = 'Venta Mayorista'").Single().IdGva10;
-// Clientes: Busco el ID del cliente que tenga el campo COD_GVA14 = '010001'
-pedido.ID_GVA14 = clienteServices.GetByFilter("AXV_CLIENTE.COD_GVA14= '010001'").Single().IdGva14; 
-pedido.ES_CLIENTE_HABITUAL = true;
-pedido.ID_DIRECCION_ENTREGA = 1;
-// Vendedor: Busco el ID del vendedor que tenga el campo cod_vended = 1
-pedido.ID_GVA23 = vendedorServices.GetByFilter("cod_vended = 1").Single().IdGva23;
-// Transporte: Busco el ID del transporte que tenga el campo cod_transp = '01'
-pedido.ID_GVA24 = transporteServices.GetByFilter("Gva24.cod_transp = '01'").Single().IdGva24;
-// Clasificacion de comprobante: Busco el ID de la clasificacion de comprobante que tenga el campo COD_CLASIF = '1' (Campaña de TV.)
-int idClasificacionCoprobante = clasificacionDeComprobantesServices.GetByFilter("GVA81.COD_CLASIF = '1'").Single().IdGva81;  
-pedido.ID_GVA81 = idClasificacionCoprobante;
-// Moneda: Busco el ID de la moneda que tenga el campo COD_MONEDA = 'PES'
-pedido.ID_MONEDA = monedaServices.GetByFilter("MONEDA.COD_MONEDA = 'PES'").Single().IdMoneda; 
-// Depósito: Busco el ID del depósito que tenga el campo COD_STA22 = 1
-int idDeposito = depositoServices.GetByFilter("STA22.COD_STA22 = 1").Single().IdSta22; 
-pedido.ID_STA22 = idDeposito;
-pedido.ESTADO = 2; 
-// Cargamos los renglones del pedido
-pedido.RENGLON_DTO = new List<RenglonDto>();
-pedido.RENGLON_DTO.Add(new RenglonDto()
-{
-    // Artículo: Busco el ID del artículo que tenga el campo COD_STA11 = '0100100134'
-    ID_STA11 = articuloServices.GetByFilter("AXV_ARTICULO.COD_STA11 = '0100100134'").Single().IdSta11,
-    MODULO_UNIDAD_MEDIDA = "GV",
-    CANTIDAD_PEDIDA = 10,
-    // Precio: en este ejemplo pongo un precio especifico. En caso de no tenerlo, se puede buscar el precio por lista de precios automáticamente
-    PRECIO = 100
-});
 
-// Enviamos a insertar el pedido cargado.
-try
-{
-    int savedId = pedidosServices.Create(pedido);
-    Console.WriteLine($"Id Pedido {savedId} creado con exito!");
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"Error al crear el pedido {pedido.NRO_PEDIDO}. ({ex.Message})");
-}
+    PedidoData pedido = new PedidoData();
+    // talonario pedido. 
+    pedido.ID_GVA43_TALON_PED = 6; // Talonario = 5
+    pedido.FECHA_PEDIDO = DateTime.Now;
+    pedido.FECHA_ENTREGA = DateTime.Now.AddDays(10);
+    // condicion de venta: Busco el ID de la condicion de venta que tenga el campo COND_VTA = 1
+    pedido.ID_GVA01 = condicionVentaServices.GetByFilter("GVA01.COND_VTA = 1").Single().IdGva01;
+    // Lista de precios: Busco el ID de la lista de precios que tenga el campo NOMBRE_LIS = 'Venta Mayorista'
+    //pedido.ID_GVA10 = listaDePreciosVentasServices.GetByFilter("gva10.NOMBRE_LIS = 'Venta Mayorista'").Single().IdGva10;
+    pedido.ID_GVA10 = 1;
+    // Clientes: Busco el ID del cliente que tenga el campo COD_GVA14 = '010001'
+    pedido.ID_GVA14 = clienteServices.GetByFilter("AXV_CLIENTE.COD_GVA14= '040001'").Single().IdGva14;
+    var clienteDataset = clienteServices.GetById(pedido.ID_GVA14.Value);
+    pedido.ES_CLIENTE_HABITUAL = true;
+    if ((clienteDataset != null) && (clienteDataset.DireccionEntrega != null)
+         && (clienteDataset.DireccionEntrega.Any()))
+    {
+        pedido.ID_DIRECCION_ENTREGA = clienteDataset.DireccionEntrega.First().IdDireccionEntrega;
+    }
+    // Vendedor: Busco el ID del vendedor que tenga el campo cod_vended = 1
+    pedido.ID_GVA23 = vendedorServices.GetByFilter("cod_vended = 1").Single().IdGva23;
+    // Transporte: Busco el ID del transporte que tenga el campo cod_transp = '01'
+    pedido.ID_GVA24 = transporteServices.GetByFilter("Gva24.cod_transp = '01'").Single().IdGva24;
+    // Clasificacion de comprobante: Busco el ID de la clasificacion de comprobante que tenga el campo COD_CLASIF = '1' (Campaña de TV.)
+    int idClasificacionCoprobante = clasificacionDeComprobantesServices.GetByFilter("GVA81.COD_CLASIF = '1'").Single().IdGva81;
+    pedido.ID_GVA81 = idClasificacionCoprobante;
+    // Moneda: Busco el ID de la moneda que tenga el campo COD_MONEDA = 'PES'
+    pedido.ID_MONEDA = monedaServices.GetByFilter("MONEDA.COD_MONEDA = 'PES'").Single().IdMoneda;
+    // Depósito: Busco el ID del depósito que tenga el campo COD_STA22 = 1
+    int idDeposito = depositoServices.GetByFilter("STA22.COD_STA22 = 1").Single().IdSta22;
+    pedido.ID_STA22 = idDeposito;
+    pedido.ESTADO = 1;
+    // Cargamos los renglones del pedido
+    pedido.RENGLON_DTO = new List<RenglonDto>();
+    pedido.RENGLON_DTO.Add(new RenglonDto()
+    {
+        // Artículo: Busco el ID del artículo que tenga el campo COD_STA11 = '0100100134'
+        ID_STA11 = articuloServices.GetByFilter("AXV_ARTICULO.COD_STA11 = '05000 T23VTA'").Single().IdSta11,
+        MODULO_UNIDAD_MEDIDA = "GV",
+        CANTIDAD_PEDIDA = 10,
+        // Precio: en este ejemplo pongo un precio especifico. En caso de no tenerlo, se puede buscar el precio por lista de precios automáticamente
+        PRECIO = 10000
+    });
+
+    // Enviamos a insertar el pedido cargado.
+    try
+    {
+        int savedId = pedidosServices.Create(pedido);
+        Console.WriteLine($"Id Pedido {savedId} creado con exito!");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error al crear el pedido {pedido.NRO_PEDIDO}. ({ex.Message})");
+    }
 
 /* ******************************************************************************************************************** 
    Crear un pedido con un cliente Ocasional con artículos con descripciones adicionales
    ********************************************************************************************************************/
-
+ 
 PedidoData pedidoClienteOcasional = new PedidoData();
 // talonario pedido. 
 pedidoClienteOcasional.ID_GVA43_TALON_PED = 6; // Talonario = 5
@@ -156,4 +164,4 @@ try
 catch (Exception ex)
 {
     Console.WriteLine($"Error al crear el pedido {pedidoClienteOcasional.NRO_PEDIDO}. ({ex.Message})");
-}
+} 
