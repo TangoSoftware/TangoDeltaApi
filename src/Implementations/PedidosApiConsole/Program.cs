@@ -10,7 +10,6 @@ using TangoDeltaApi.CommonServices.ventas.pedidos.Model;
 using TangoDeltaApi.CommonServices.ventas.transporte;
 using TangoDeltaApi.CommonServices.ventas.vendedor;
 using TangoDeltaApi.Core.Config;
-using System.Runtime.InteropServices;
 
 // Configuracion de conexión a Tango Delta.
 ITangoConfig config = new TangoConfig()
