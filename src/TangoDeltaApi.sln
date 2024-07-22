@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientesApiConsole", "Imple
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PedidosApiConsole", "Implementations\PedidosApiConsole\PedidosApiConsole.csproj", "{DF3A69EB-27A1-4F1A-B1FA-93087ADE0D4E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComprobantesVentasApiConsole", "Implementations\ComprobantesVentasApiConsole\ComprobantesVentasApiConsole.csproj", "{C0A4DD02-77DB-4C8B-96BA-6463ACE06509}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{DF3A69EB-27A1-4F1A-B1FA-93087ADE0D4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF3A69EB-27A1-4F1A-B1FA-93087ADE0D4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF3A69EB-27A1-4F1A-B1FA-93087ADE0D4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0A4DD02-77DB-4C8B-96BA-6463ACE06509}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0A4DD02-77DB-4C8B-96BA-6463ACE06509}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0A4DD02-77DB-4C8B-96BA-6463ACE06509}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0A4DD02-77DB-4C8B-96BA-6463ACE06509}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +63,7 @@ Global
 		{393E3F1A-E5C0-4CE0-A74E-473A18B9032C} = {00B96442-2F31-48DA-9D17-B5C5732A4CF8}
 		{8A1ECC8A-FAD1-4ED4-850F-8A0B84EC06D3} = {903AB981-DF79-4909-A2E3-A77F00C7854E}
 		{DF3A69EB-27A1-4F1A-B1FA-93087ADE0D4E} = {903AB981-DF79-4909-A2E3-A77F00C7854E}
+		{C0A4DD02-77DB-4C8B-96BA-6463ACE06509} = {903AB981-DF79-4909-A2E3-A77F00C7854E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2978CE5F-AC41-4124-9806-64C4F9128DCC}
