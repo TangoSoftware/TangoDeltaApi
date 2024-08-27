@@ -3,7 +3,7 @@ using TangoDeltaApi.Core.Service;
 
 namespace TangoDeltaApi.CommonServices.contabilidad.asientos.model;
           
-public class AsientosQueryRecord : BaseQueryRecord
+public class AsientoAnaliticoQueryRecord : BaseQueryRecord
 {
 
     [JsonProperty("ID_ASIENTO_ANALITICO_CN")]

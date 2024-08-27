@@ -13,7 +13,7 @@ ITangoConfig config = new TangoConfig()
 
 
 // Instanciar el servicio de asientos contables.
-IAsientosServices asientosServices = new AsientosServices(config);
+IAsientoAnaliticoServices asientosServices = new AsientoAnaliticoServices(config);
 
 
 // Obtener todos los asientos contables (como si fuese la VISTA del ABM)

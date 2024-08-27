@@ -5,7 +5,6 @@ namespace TangoDeltaApi.CommonServices.procesosgenerales.tiposdeauxiliarescontab
 
 public class TiposDeAuxiliaresContablesQueryRecord : BaseQueryRecord
 {
-
     [JsonProperty("AUXILIAR")]
     public string? Auxiliar { get; set; }
 

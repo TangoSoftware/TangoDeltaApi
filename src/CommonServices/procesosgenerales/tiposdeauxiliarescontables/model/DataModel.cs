@@ -5,7 +5,7 @@ namespace TangoDeltaApi.CommonServices.procesosgenerales.tiposdeauxiliarescontab
 
 
 [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
-public partial class AUXILIAR
+public class AUXILIAR
 {
     public int ID_AUXILIAR { get; set; }
 
@@ -37,7 +37,7 @@ public partial class AUXILIAR
 }
 
 [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
-public partial class SUBAUXILIAR
+public class SUBAUXILIAR
 {
     public int ID_SUBAUXILIAR { get; set; }
     [Newtonsoft.Json.JsonProperty("COD_SUBAUXILIAR", Required = Newtonsoft.Json.Required.Always)]
@@ -65,7 +65,7 @@ public partial class SUBAUXILIAR
 }
 
 [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
-public partial class TiposDeAuxiliaresContablesData : BaseData
+public class TiposDeAuxiliaresContablesData : BaseData
 {
     public int ID_TIPO_AUXILIAR { get; set; }
 

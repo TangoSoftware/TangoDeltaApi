@@ -3,6 +3,6 @@ using TangoDeltaApi.Core.Service;
 
 namespace TangoDeltaApi.CommonServices.contabilidad.asientos;
 
-public interface IAsientosServices : IBaseServices<AsientosQueryRecord, AsientosData>
+public interface IAsientoAnaliticoServices : IBaseServices<AsientoAnaliticoQueryRecord, AsientoAnaliticoData>
 {
 }
