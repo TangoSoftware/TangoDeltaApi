@@ -1,0 +1,8 @@
+using TangoDeltaApi.CommonServices.procesosgenerales.tiposdeauxiliarescontables.model;
+using TangoDeltaApi.Core.Service;
+
+namespace TangoDeltaApi.CommonServices.procesosgenerales.tiposdeauxiliarescontables;
+
+public interface ITiposDeAuxiliaresContablesServices: IBaseServices<TiposDeAuxiliaresContablesQueryRecord, TiposDeAuxiliaresContablesData>
+{
+}
