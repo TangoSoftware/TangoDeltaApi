@@ -12,6 +12,7 @@ ITangoConfig config = new TangoConfig()
 };
 
 
+// Instanciar el servicio de asientos contables.
 IAsientosServices asientosServices = new AsientosServices(config);
 
 
@@ -22,4 +23,10 @@ foreach (var item in data)
 {
     Console.WriteLine($"Id: {item.IdAsientoAnaliticoCn} - Fecha Asiento: {item.FechaAsiento} - Nro Ejercicio: {item.NroEjercicio} - Nro Asiento: {item.NroAsientoAnalitico} - Desc: {item.DescAsientoAnalitico}");
 }
+
+/* ******************************************************************************************************************** 
+   creando un asiento de ejemplo de alquileres. En moneda de ingreso Pesos Argentinos, sin auxiliares, sin unidades adicionales
+   ********************************************************************************************************************/
+
+AsientosData asiento = new AsientosData();
 

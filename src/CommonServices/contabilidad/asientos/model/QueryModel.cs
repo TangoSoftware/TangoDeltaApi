@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 using TangoDeltaApi.Core.Service;
 
 namespace TangoDeltaApi.CommonServices.contabilidad.asientos.model;
-
+          
 public class AsientosQueryRecord : BaseQueryRecord
 {
 

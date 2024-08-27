@@ -57,7 +57,7 @@ Para obtener la *lista de tablas del sistema* consultá dicha sección en el *Ma
 
 Para más información sobre esta API tema consultá la sección [Readme](https://github.com/TangoSoftware/TangoDeltaApi/blob/main/src/PedidosApiConsole/README.md)
 del servicio para acceder al detalle de cada uno de los campos de JSON o
-accedé a la sección [Program](https://github.com/TangoSoftware/TangoDeltaApi/blob/main/src/PedidosApiConsole/Program.cs) para consultar algunos ejemplos de
+accedé a la sección [Program](https://github.com/TangoSoftware/TangoDeltaApi/blob/main/src/Implementations/PedidosApiConsole/Program.cs) para consultar algunos ejemplos de
 implementación.
 <br>
 <br>
