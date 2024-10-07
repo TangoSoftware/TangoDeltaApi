@@ -15,9 +15,8 @@ ITangoConfig config = new TangoConfig()
 // Instanciar el servicio de asientos contables.
 IAsientoAnaliticoServices asientosServices = new AsientoAnaliticoServices(config);
 
-
 // Obtener todos los asientos contables (como si fuese la VISTA del ABM)
-List<AsientosQueryRecord> data = asientosServices.Get(1000, 0);
+List<AsientoAnaliticoQueryRecord> data = asientosServices.Get(1000, 0);
 
 foreach (var item in data)
 {
@@ -28,5 +27,5 @@ foreach (var item in data)
    creando un asiento de ejemplo de alquileres. En moneda de ingreso Pesos Argentinos, sin auxiliares, sin unidades adicionales
    ********************************************************************************************************************/
 
-AsientosData asiento = new AsientosData();
+AsientoAnaliticoData asiento = new AsientoAnaliticoData();
 
