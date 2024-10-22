@@ -18,8 +18,8 @@ public partial class ASIENTO_COTIZACION_ANALITICO_CN
 [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
 public partial class RENGLON_ANALITICO_DTO
 {
-    [Newtonsoft.Json.JsonProperty("NRO_RENGLON_ANALITICO", Required = Newtonsoft.Json.Required.Always)]
-    public int NRO_RENGLON_ANALITICO { get; set; }
+   // [Newtonsoft.Json.JsonProperty("NRO_RENGLON_ANALITICO", Required = Newtonsoft.Json.Required.Always)]
+   // public int NRO_RENGLON_ANALITICO { get; set; }
 
     [Newtonsoft.Json.JsonProperty("ID_CUENTA", Required = Newtonsoft.Json.Required.Always)]
     public int ID_CUENTA { get; set; }
@@ -136,13 +136,19 @@ public partial class SUBAUXILIAR_DTO
 [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
 public partial class AsientoAnaliticoData : BaseData
 {
+    [Newtonsoft.Json.JsonProperty("ID_ASIENTO_ANALITICO_CN", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+    public int ID_ASIENTO_ANALITICO_CN { get; set; }
+
     [Newtonsoft.Json.JsonProperty("FECHA_ASIENTO", Required = Newtonsoft.Json.Required.Always)]
     [System.ComponentModel.DataAnnotations.Required]
     public System.DateTimeOffset FECHA_ASIENTO { get; set; }
 
-    [Newtonsoft.Json.JsonProperty("NRO_ASIENTO_ANALITICO", Required = Newtonsoft.Json.Required.Always)]
-    public decimal NRO_ASIENTO_ANALITICO { get; set; }
+    [Newtonsoft.Json.JsonProperty("NRO_ASIENTO_ANALITICO")]
+    public decimal? NRO_ASIENTO_ANALITICO { get; set; }
 
+    [Newtonsoft.Json.JsonProperty("ORIGEN_ASIENTO", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+    public string ORIGEN_ASIENTO { get; set; }
+    
     [Newtonsoft.Json.JsonProperty("CLASE_ASIENTO", Required = Newtonsoft.Json.Required.Always)]
     [System.ComponentModel.DataAnnotations.Required]
     public string? CLASE_ASIENTO { get; set; }
@@ -153,10 +159,6 @@ public partial class AsientoAnaliticoData : BaseData
     [Newtonsoft.Json.JsonProperty("ESTADO_ASIENTO_ANALITICO", Required = Newtonsoft.Json.Required.Always)]
     [System.ComponentModel.DataAnnotations.Required]
     public string? ESTADO_ASIENTO_ANALITICO { get; set; }
-
-    [Newtonsoft.Json.JsonProperty("ORIGEN_ASIENTO_1", Required = Newtonsoft.Json.Required.Always)]
-    [System.ComponentModel.DataAnnotations.Required]
-    public string? ORIGEN_ASIENTO_1 { get; set; }
 
     [Newtonsoft.Json.JsonProperty("ID_MONEDA_ASIENTO", Required = Newtonsoft.Json.Required.Always)]
     public int ID_MONEDA_ASIENTO { get; set; }

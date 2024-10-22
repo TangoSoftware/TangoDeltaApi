@@ -7,10 +7,10 @@ namespace TangoDeltaApi.CommonServices.procesosgenerales.cuentascontables.model;
 public class CuentasContablesQueryRecord : BaseQueryRecord
 {
     [JsonProperty("ID_CUENTA")]
-    public long IdCuenta { get; set; }
+    public int IdCuenta { get; set; }
 
     [JsonProperty("COD_CUENTA")]
-    public long CodCuenta { get; set; }
+    public string? CodCuenta { get; set; }
 
     [JsonProperty("DESC_CUENTA")]
     public string? DescCuenta { get; set; }
