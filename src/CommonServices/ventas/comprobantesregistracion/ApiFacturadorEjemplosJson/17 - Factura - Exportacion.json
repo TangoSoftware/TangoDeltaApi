@@ -1,0 +1,61 @@
+[
+    {
+        "codigoTipoComprobante": "FAC",
+        "numeroComprobante": "E0555500000010",
+        "codigoTalonario": "25",
+        "cAE" : "69214744756356",
+        "codigoCliente": "EXTER",
+        "codigoCondicionDeVenta": 1,
+        "numeroDeProyecto": "",
+        "codigoOperacionRG3685": "",
+        "codigoClasificacion": "",
+        "fechaComprobante": "2022-10-18",
+        "fechaCierreTesoreria": "2019-06-07",
+        "codigoListaPrecio": "1",
+        "cotizacionVentas": null,
+        "leyendaCotizacion": "",
+        "codigoContracuenta": "20",
+        "codigoDeposito": "2",
+        "codigoVendedor": "3",
+        "codigoAsiento": "",
+        "codigoFlete": "01",
+        "leyenda1": "",
+        "leyenda2": "",
+        "leyenda3": "",
+        "leyenda4": "",
+        "leyenda5": "",
+        "total": 100.00,
+        "totalSinImpuestos": 0,
+        "totalExento": 100.00,
+        "totalIva": 0,
+        "subtotal": 100.00,
+        "subtotalSinImpuestos": 0,
+        "rg3668TipoIdentificacionFirmante": null,
+        "rg3668CaracterDelFirmante": null,
+        "rg3668CodigoIdentificacionFirmante": "",
+        "rg3668MotivoDeExcepcion": null,
+        "rg3668CodigoWeb": "666",
+        "items": [
+            {
+                "codigo": "ART_EXPORTAC.",
+                "codigoDeposito": "1",
+                "codigoTasaIva": "1",
+                "cantidad": 1,
+                "precio": 100,
+                "importe": 100
+            }
+        ],
+        "pagos": [
+            {
+                "tipo" : "Efectivo",
+                "codigoDeCuenta": "1",
+                "monto": 100.00
+            }
+        ],
+        "CuitDestino": "J",
+        "TipoExpo": "1",
+        "PaisAfip": "200",
+        "CodigoIncoterms": "FCA",
+        "DescripcionIncoterms": ""        
+    }
+]

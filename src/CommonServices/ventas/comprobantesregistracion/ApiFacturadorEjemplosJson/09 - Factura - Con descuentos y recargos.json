@@ -1,0 +1,68 @@
+[
+	{
+		"codigoTipoComprobante": "FAC",
+		"numeroComprobante": "A0000100001110",
+		"codigoTalonario": "1",
+		"codigoCliente": "020025",
+		"codigoCondicionDeVenta": 1,
+		"numeroDeProyecto": "",
+		"codigoOperacionRG3685": "",
+		"codigoClasificacion": "",
+		"fechaComprobante": "2021-08-12",
+		"fechaCierreTesoreria": "2021-07-12",
+		"codigoListaPrecio": "2",
+		"cotizacionVentas": null,
+		"leyendaCotizacion": "",
+		"codigoContracuenta": "20",
+		"codigoDeposito": "2",
+		"codigoVendedor": "3",
+		"codigoAsiento": "",
+		"codigoFlete": "01",
+		"leyenda1": "",
+		"leyenda2": "",
+		"leyenda3": "",
+		"leyenda4": "",
+		"leyenda5": "",
+		"total": 121.00,
+		"totalSinImpuestos": 100.00,
+		"totalExento": 0.00,
+		"totalIva": 21.00,
+		"subtotal": 242.00,
+		"subtotalSinImpuestos": 200.00,
+		"descuentoPorcentaje" : 75.00,
+		"descuentoMonto": 181.50,
+		"descuentoMontoSinIva": 150.00,
+		"recargoPorcentaje" : 15.00,
+		"recargoMonto" : 36.30,
+		"recargoMontoSinIva" : 30.00,
+		"recargoFletePorcentaje" : 10.00,
+		"recargoFleteMonto" : 24.20,
+		"recargoFleteMontoSinIva" : 20.00,
+		"rg3668TipoIdentificacionFirmante": null,
+		"rg3668CaracterDelFirmante": null,
+		"rg3668CodigoIdentificacionFirmante": "",
+		"rg3668MotivoDeExcepcion": null,
+		"rg3668CodigoWeb": "666",
+		"items": [
+			{
+				"codigo": "0200200033",
+				"codigoDeposito": "2",
+				"codigoTasaIva": "1",
+				"cantidad": 2,
+				"precio": 121.00,
+				"importe": 242.00,
+				"importeSinImpuestos": 200.00,
+				"importeIva": 42.00
+			}
+		],
+		"pagos": [
+			{
+				"tipo" : "Efectivo",
+				"codigoDeCuenta": "1",
+				"descuentoPorcentaje" : 0.00,
+				"recargoPorcentaje" : 0.00,
+				"monto": 121.00
+			}
+		]
+	}
+]

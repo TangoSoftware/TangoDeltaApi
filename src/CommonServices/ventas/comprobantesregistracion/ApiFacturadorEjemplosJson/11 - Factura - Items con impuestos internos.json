@@ -1,0 +1,88 @@
+[
+	{
+		"codigoTipoComprobante": "FAC",
+		"numeroComprobante": "A0000100000112",
+		"codigoTalonario": "1",
+		"codigoCliente": "020031",
+		"codigoCondicionDeVenta": 1,
+		"numeroDeProyecto": "",
+		"codigoOperacionRG3685": "",
+		"codigoClasificacion": "",
+		"fechaComprobante": "2021-07-10",
+		"fechaCierreTesoreria": "2021-06-07",
+		"codigoListaPrecio": "2",
+		"cotizacionVentas": null,
+		"leyendaCotizacion": "",
+		"codigoContracuenta": "20",
+		"codigoDeposito": "2",
+		"codigoVendedor": "3",
+		"idMotivo": "3",
+		"codigoAsiento": "",
+		"codigoFlete": "01",
+		"leyenda1": "Leyenda 1",
+		"leyenda2": "Leyenda 2",
+		"leyenda3": "Leyenda 3",
+		"leyenda4": "Leyenda 4",
+		"leyenda5": "Leyenda 5",
+		"esMonedaExtranjera": false,
+		"total" : 272.00,
+		"totalSinImpuestos": 200.00,
+		"totalExento": 0.00,
+		"totalIva": 42.00,
+		"subtotal": 272.00,
+		"subtotalSinImpuestos": 200.00,
+		"descuentoPorcentaje": 0,
+		"descuentoMonto": 0,
+		"descuentoMontoSinIva": 0,
+		"recargoPorcentaje": 0,
+		"recargoMonto": 0,
+		"recargoMontoSinIva": 0,
+		"recargoFletePorcentaje": 0,
+		"recargoFleteMonto": 0,
+		"recargoFleteMontoSinIva": 0,
+		"interesesPorcentaje": 0.00,
+		"interesesMontoSinIva": 0.00,
+		"observaciones": "",
+		"rg3668TipoIdentificacionFirmante": null,
+		"rg3668CaracterDelFirmante": null,
+		"rg3668CodigoIdentificacionFirmante": "",
+		"rg3668MotivoDeExcepcion": null,
+		"rg3668CodigoWeb": "666",
+		"items": [
+			{
+				"codigo": "0200103855",
+				"descargaStock" : true,
+				"codigoTasaIva": "1",
+				"cantidad": 2,
+				"codigoDeposito": "2",
+				"codigoUM": "UNI",
+				"precio": 136.00,
+				"importe": 272.00,
+				"importeSinImpuestos": 200.00,
+				"importeIva": 42.00,
+				"impuestoInterno":
+				{
+					"codigo": 22,
+					"porcentaje": 10,
+					"importe": 20
+				},
+				"impuestoInternoAdicional":
+				{
+					"codigo": 82,
+					"porcentaje": 0,
+					"importe": 10
+				}
+			}
+		],
+		"pagos": 
+		[
+			{
+				"tipo" : "Efectivo",
+				"codigoDeCuenta": "1",
+				"descuentoPorcentaje" : 0.00,
+				"recargoPorcentaje" : 0.00,
+				"monto": 272.00
+			}
+		],
+	}
+]

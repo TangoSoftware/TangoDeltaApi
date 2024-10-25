@@ -1,0 +1,61 @@
+[
+	{
+		"codigoTipoComprobante": "FAC",
+		"numeroComprobante": "A0000100001116",
+		"codigoTalonario": "1",
+		"codigoCliente": "020025",
+		"codigoCondicionDeVenta": 1,
+		"numeroDeProyecto": "",
+		"codigoOperacionRG3685": "",
+		"codigoClasificacion": "",
+		"fechaComprobante": "2021-08-12",
+		"fechaCierreTesoreria": "2021-07-12",
+		"codigoListaPrecio": "2",
+		"cotizacionVentas": null,
+		"leyendaCotizacion": "",
+		"codigoContracuenta": "20",
+		"codigoDeposito": "2",
+		"codigoVendedor": "3",
+		"codigoAsiento": "",
+		"codigoFlete": "01",
+		"leyenda1": "",
+		"leyenda2": "",
+		"leyenda3": "",
+		"leyenda4": "",
+		"leyenda5": "",
+		"esMonedaExtranjera" : true,
+		"cotizacion" : 62.56,
+		"total": 242,
+		"totalMonedaExtranjera": 3.87,
+		"totalSinImpuestos": 3.20,
+		"totalExento": 0,
+		"totalIva": 0.67,
+		"subtotal": 242,
+		"subtotalSinImpuestos": 200,
+		"rg3668TipoIdentificacionFirmante": null,
+		"rg3668CaracterDelFirmante": null,
+		"rg3668CodigoIdentificacionFirmante": "",
+		"rg3668MotivoDeExcepcion": null,
+		"rg3668CodigoWeb": "666",
+		"items": [
+			{
+				"codigo": "0200200033",
+				"codigoDeposito": "2",
+				"codigoTasaIva": "1",
+				"cantidad": 2,
+				"precio": 121,
+				"bonificacion" : 0.00,
+				"importe": 3.86,
+				"importeSinImpuestos": 3.19,
+				"importeIva": 0.67
+			}
+		],
+		"pagos": [
+			{
+				"tipo" : "Efectivo",
+				"codigoDeCuenta": "1",
+				"monto": 3.87
+			}
+		]
+	}
+]

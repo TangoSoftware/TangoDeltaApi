@@ -1,0 +1,78 @@
+[
+	{
+		"codigoTipoComprobante": "FAC",
+		"numeroComprobante": "A0000100000103",
+		"codigoTalonario": "1",
+		"codigoCliente": "020031",
+		"codigoCondicionDeVenta": 2,
+		"numeroDeProyecto": "",
+		"codigoOperacionRG3685": "",
+		"codigoClasificacion": "",
+		"fechaComprobante": "2021-06-10",
+		"fechaCierreTesoreria": "2021-06-07",
+		"codigoListaPrecio": "2",
+		"cotizacionVentas": null,
+		"leyendaCotizacion": "",
+		"codigoContracuenta": "20",
+		"codigoDeposito": "2",
+		"codigoVendedor": "3",
+		"idMotivo": "3",
+		"codigoAsiento": "",
+		"codigoFlete": "01",
+		"leyenda1": "Leyenda 1",
+		"leyenda2": "Leyenda 2",
+		"leyenda3": "Leyenda 3",
+		"leyenda4": "Leyenda 4",
+		"leyenda5": "Leyenda 5",
+		"esMonedaExtranjera": false,
+		"total" : 266.20,
+		"totalSinImpuestos": 220.00,
+		"totalExento": 0.00,
+		"totalIva": 46.20,
+		"subtotal": 242.00,
+		"subtotalSinImpuestos": 200.00,
+		"descuentoPorcentaje": 0,
+		"descuentoMonto": 0,
+		"descuentoMontoSinIva": 0,
+		"recargoPorcentaje": 0,
+		"recargoMonto": 0,
+		"recargoMontoSinIva": 0,
+		"recargoFletePorcentaje": 0,
+		"recargoFleteMonto": 0,
+		"recargoFleteMontoSinIva": 0,
+		"interesesPorcentaje": 10.00,
+		"interesesMontoSinIva": 20.00,
+		"observaciones": "",
+		"rg3668TipoIdentificacionFirmante": null,
+		"rg3668CaracterDelFirmante": null,
+		"rg3668CodigoIdentificacionFirmante": "",
+		"rg3668MotivoDeExcepcion": null,
+		"rg3668CodigoWeb": "666",
+		"items": [
+			{
+				"codigo": "0200200033",
+				"descripcion": "POLEA 30cm DE LAS OTRAS",
+				"descargaStock" : true,
+				"codigoTasaIva": "1",
+				"cantidad": 2,
+				"codigoDeposito": "2",
+				"codigoUM": "UNI",
+				"precio": 121.00,
+				"importe": 242.00,
+				"importeSinImpuestos": 200.00,
+				"importeIva": 42.00
+			}
+		],
+		"cuotasCuentaCorriente" :
+		[
+			{
+				"fechaVencimiento": "2019-07-10",
+				"importe" : 66.55
+			},
+			{
+				"fechaVencimiento": "2019-08-10",
+				"importe" : 199.65
+			}
+		]
+	}
+]

@@ -1,0 +1,59 @@
+[
+	{
+		"codigoTipoComprobante": "FAC",
+		"numeroComprobante": "A7010500000015",
+		"codigoTalonario": "20",
+		"CAE" : "69214744756356",
+		"fechaVtoCAE": "2024-03-06",
+		"codigoCliente": "020031",
+		"codigoCondicionDeVenta": 1,
+		"numeroDeProyecto": "",
+		"codigoOperacionRG3685": "",
+		"codigoClasificacion": "",
+		"fechaComprobante": "2024-01-28",
+		"fechaCierreTesoreria": "2024-01-01",
+		"codigoListaPrecio": "2",
+		"cotizacionVentas": null,
+		"leyendaCotizacion": "",
+		"codigoContracuenta": "20",
+		"codigoDeposito": "2",
+		"codigoVendedor": "3",
+		"codigoAsiento": "",
+		"codigoFlete": "01",
+		"leyenda1": "",
+		"leyenda2": "",
+		"leyenda3": "",
+		"leyenda4": "",
+		"leyenda5": "",
+		"total": 121.00,
+		"totalSinImpuestos": 100.00,
+		"totalExento": 0.00,
+		"totalIva": 21.00,
+		"subtotal": 121.00,
+		"subtotalSinImpuestos": 100.00,
+		"rg3668TipoIdentificacionFirmante": null,
+		"rg3668CaracterDelFirmante": null,
+		"rg3668CodigoIdentificacionFirmante": "",
+		"rg3668MotivoDeExcepcion": null,
+		"rg3668CodigoWeb": "666",
+		"items": [
+			{
+				"codigo": "0200200033",
+				"codigoDeposito": "1",
+				"codigoTasaIva": "1",
+				"cantidad": 1,
+				"precio": 121,
+				"importe": 121,
+				"importeSinImpuestos": 100,
+				"importeIva": 21
+			}
+		],
+		"pagos": [
+			{
+				"tipo" : "Efectivo",
+				"codigoDeCuenta": "1",
+				"monto": 121.00
+			}
+		]
+	}
+]
