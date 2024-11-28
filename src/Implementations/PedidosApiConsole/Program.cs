@@ -14,8 +14,8 @@ using TangoDeltaApi.Core.Config;
 // Configuracion de conexión a Tango Delta.
 ITangoConfig config = new TangoConfig()
 {
-    TangoUrl = "http://euforia24.axoft.com:17000",
-    ApiAuthorization = "fa0d52d3-7f54-47a3-8327-4fc830fe82c4",
+    TangoUrl = "http://192.168.113.160:17000",
+    ApiAuthorization = "C5E06B23-0A58-43B3-9B1A-7C8A507E8DA4",
     CompanyId = "1"
 };
 
@@ -52,7 +52,7 @@ foreach (var item in data)
     // condicion de venta: Busco el ID de la condicion de venta que tenga el campo COND_VTA = 1
     pedido.ID_GVA01 = condicionVentaServices.GetByFilter("GVA01.COND_VTA = 1").Single().IdGva01;
     // Lista de precios: Busco el ID de la lista de precios que tenga el campo NOMBRE_LIS = 'Venta Mayorista'
-    pedido.ID_GVA10 = listaDePreciosVentasServices.GetByFilter("gva10.NOMBRE_LIS = 'Venta Mayorista'").Single().IdGva10;
+    pedido.ID_GVA10 = listaDePreciosVentasServices.GetByFilter("gva10.NOMBRE_LIS = 'Venta Mayorista'").Single().NroDeLis;
     // Clientes: Busco el ID del cliente que tenga el campo COD_GVA14 = '010001'
     pedido.ID_GVA14 = clienteServices.GetByFilter("AXV_CLIENTE.COD_GVA14= '040001'").Single().IdGva14;
     var clienteDataset = clienteServices.GetById(pedido.ID_GVA14.Value);

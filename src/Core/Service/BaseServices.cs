@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 using TangoDeltaApi.Core.Config;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TangoDeltaApi.Core.Service;
 
@@ -41,7 +42,7 @@ public abstract class BaseServices<QR, D>
     protected abstract string ProcessId { get; }
 
     #region private
-    private UriBuilder GetNewUriBuilder(string actionPath, string queryParams = "")
+    protected virtual UriBuilder GetNewUriBuilder(string actionPath, string queryParams = "")
     {
         var builder = new UriBuilder(_config.TangoUrl)
         {
@@ -133,7 +134,7 @@ public abstract class BaseServices<QR, D>
     /// </summary>
     /// <param name="jsonData"></param>
     /// <returns></returns>
-    private async Task<string> ApiCreateAsync(string jsonData)
+    protected async Task<string> ApiCreateAsync(string jsonData)
     {
         var builder = GetNewUriBuilder("Create");
         var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
@@ -254,6 +255,29 @@ public abstract class BaseServices<QR, D>
     }
 
     public int Create(D data)
+    {
+        string jsonData = JsonConvert.SerializeObject(data);
+        string resultJson = ApiCreateAsync(jsonData).Result;
+        try
+        {
+            TransactionResultModel result = JsonConvert.DeserializeObject<TransactionResultModel>(resultJson);
+            if (result.Succeeded)
+            {
+                return result.SavedId;
+            }
+            else
+            {
+                throw new TransactionException(result.Message, result.ExceptionInfo);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al deserializar el resultado de la transacci�n: {ex.Message}");
+            throw ex;
+        }
+    }
+
+    public int Create(IEnumerable<BaseData> data)
     {
         string jsonData = JsonConvert.SerializeObject(data);
         string resultJson = ApiCreateAsync(jsonData).Result;
