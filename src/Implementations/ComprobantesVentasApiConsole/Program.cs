@@ -10,8 +10,8 @@ using TangoDeltaApi.Core.Service;
 // Configuracion de conexión a Tango Delta.
 ITangoConfig config = new TangoConfig()
 {
-    TangoUrl = "http://192.168.113.160:17000",
-    ApiAuthorization = "C5E06B23-0A58-43B3-9B1A-7C8A507E8DA4",
+    TangoUrl = "http://miServerTango.com:17000",
+    ApiAuthorization = "00000000-0000-0000-0000-000000000000",
     CompanyId = "1"
 };
 
