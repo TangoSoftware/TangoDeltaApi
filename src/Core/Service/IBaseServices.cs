@@ -32,6 +32,8 @@ public interface IBaseServices<QR, D>
     /// <param name="data"></param>
     /// <returns></returns>
     int Create(D data);
+
+    int Create(IEnumerable<BaseData> data);
     /// <summary>
     ///
     /// </summary>
