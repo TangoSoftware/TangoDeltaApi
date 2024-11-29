@@ -36,11 +36,7 @@ facturaEfectivo.LeyendaCotizacion = "";
 facturaEfectivo.CodigoContracuenta = 20;
 facturaEfectivo.CodigoDeposito = "2";
 facturaEfectivo.CodigoVendedor = "3";
-
-// ?
-//data.IdMotivo = "3";
 facturaEfectivo.CodigoMotivo = "3";
-
 facturaEfectivo.CodigoAsiento = "";
 facturaEfectivo.CodigoFlete = "01";
 facturaEfectivo.Leyenda1 = "Leyenda 1";
@@ -68,9 +64,6 @@ facturaEfectivo.InteresesPorcentaje = 0;
 facturaEfectivo.InteresesMontoSinIva = 0;
 facturaEfectivo.Observaciones = "";
 facturaEfectivo.Rg3668TipoIdentificacionFirmante = null;
-//?
-//data.Rg3668CaracterDelFirmante = "Titular";
-
 facturaEfectivo.Rg3668CodigoIdentificacionFirmante = "DNI";
 facturaEfectivo.Rg3668MotivoDeExcepcion = null;
 facturaEfectivo.Rg3668CodigoWeb = "666";
@@ -137,7 +130,6 @@ facturaCuentaCorriente.LeyendaCotizacion = "";
 facturaCuentaCorriente.CodigoContracuenta = 20;
 facturaCuentaCorriente.CodigoDeposito = "2";
 facturaCuentaCorriente.CodigoVendedor = "3";
-//facturaCuentaCorriente.idMotivo = "3";
 facturaCuentaCorriente.CodigoAsiento = "";
 facturaCuentaCorriente.CodigoFlete = "01";
 facturaCuentaCorriente.Leyenda1 = "Leyenda 1";
@@ -208,7 +200,6 @@ facturaCuentaCorriente.CuotasCuentaCorriente.Add(cuota2);
 
 #region Factura Cliente Ocacional
 ComprobantesRegistracionData facturaClienteOcacional = new ComprobantesRegistracionData();
-
 facturaClienteOcacional.CodigoTipoComprobante = "FAC";
 facturaClienteOcacional.NumeroComprobante = "A0000100000109";
 facturaClienteOcacional.CodigoTalonario = "1";
@@ -245,7 +236,6 @@ facturaClienteOcacional.CodigoClasificacion = "";
 facturaClienteOcacional.FechaComprobante = new DateTime(2021, 7, 19);
 facturaClienteOcacional.FechaCierreTesoreria = new DateTime(2021, 6, 7);
 facturaClienteOcacional.CodigoListaPrecio = "2";
-//facturaClienteOcacional.CotizacionVentas = null;
 facturaClienteOcacional.LeyendaCotizacion = "";
 facturaClienteOcacional.CodigoContracuenta = 20;
 facturaClienteOcacional.CodigoDeposito = "2";
@@ -374,9 +364,7 @@ NcConReferencia.CuotasCuentaCorriente = new List<CuotasCuentaCorriente>();
 
 CuotasCuentaCorriente cuotaNcConRef = new CuotasCuentaCorriente()
 {
-    //FechaVencimiento = new DateTime(2021, 7, 11),
     FechaVencimiento = new DateTimeOffset(2024, 11, 14, 0, 0, 0, TimeSpan.FromHours(-3)),
-
     Importe = 242.00M
 };
 

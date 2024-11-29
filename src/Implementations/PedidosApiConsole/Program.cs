@@ -14,8 +14,8 @@ using TangoDeltaApi.Core.Config;
 // Configuracion de conexión a Tango Delta.
 ITangoConfig config = new TangoConfig()
 {
-    TangoUrl = "http://192.168.113.160:17000",
-    ApiAuthorization = "C5E06B23-0A58-43B3-9B1A-7C8A507E8DA4",
+    TangoUrl = "http://euforia24.axoft.com:17000",
+    ApiAuthorization = "fa0d52d3-7f54-47a3-8327-4fc830fe82c4",
     CompanyId = "1"
 };
 
