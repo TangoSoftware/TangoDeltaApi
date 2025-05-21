@@ -40,7 +40,7 @@ necesaria para completar los **ID** de las tablas relacionadas; un caso de aplic
 cómo obtener el ID del vendedor en base su código o nombre para registrarlo en el pedido.
 
 
-**Tené en cuenta que los métodos PUT, DELETE no funcionan por el momento. Otros métodos que incluiremos son CLOSE (cerrar) y CANCEL (anular)**
+**Tené en cuenta que los métodos PUT, DELETE no funcionan por el momento. Otros métodos que incluimos en el servicio son CLOSE (cerrar) y CANCEL (anular)**
 <br>
 <br>
 <br>
