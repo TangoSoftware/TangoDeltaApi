@@ -144,7 +144,7 @@ public class PedidoQueryRecord : BaseQueryRecord
     public string? NombreVen { get; set; }
 
     [JsonProperty("COD_STA22")]
-    public long CodSta22 { get; set; }
+    public string CodSta22 { get; set; }
 
     [JsonProperty("NOMBRE_SUC")]
     public string? NombreSuc { get; set; }
