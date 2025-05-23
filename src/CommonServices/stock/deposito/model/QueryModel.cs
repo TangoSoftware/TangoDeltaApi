@@ -10,7 +10,7 @@ public class DepositoQueryRecord : BaseQueryRecord
     public int IdSta22 { get; set; }
 
     [JsonProperty("COD_STA22")]
-    public int CodSta22 { get; set; }
+    public string CodSta22 { get; set; }
 
     [JsonProperty("NOMBRE_SUC")]
     public string? NombreSuc { get; set; }
