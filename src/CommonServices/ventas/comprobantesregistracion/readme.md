@@ -7,6 +7,7 @@ Tango Software - API Facturador
   - [Generalidades](#generalidades)
 - [Recepción de comprobantes API](#comprobantes)
   - [Datos del JSON](#djson)
+  - [Novedades del JSON](#novedadesjson)
   - [Tablas de Referencia](#tablasref)
   - [Ejemplos de JSON de un comprobante](#ejemplosjson)
 	- [01 - Factura - Efectivo](#ej1)
@@ -208,6 +209,14 @@ A continuación, se detalla a modo orientativo, el contenido de cada uno de los 
 |importe|No|Importe total de venta del artículo|Numérico con 22 dígitos con hasta 7 decimales. Usando el punto como separador de decimales.|>=0|
 |importeSinImpuestos|No|Importe total de venta del artículo sin impuestos|Numérico con 22 dígitos con hasta 7 decimales. Usando el punto como separador de decimales.|>=0|
 |importeIva|No|Importe total de IVA|Numérico con 22 dígitos con hasta 7 decimales. Usando el punto como separador de decimales.|>=0|
+
+<a name="novedadesjson"></a>
+
+### Novedades del JSON
+
+ - Actualización por RG 5616/2024
+
+ A partir de los hotfix 4499 de delta 3 y 4098 de delta 4 y por la implementación de la RG 5616/2024 para la emisión de comprobantes en moneda extranjera se agregó la nueva propiedad "pagoMismaMonedaExtranjera" para indicar si el comprobante se abona o no en la misma moneda extranjera de emisión. En [15 - Factura - Moneda extranjera](#ej15) podrá encontrar una descripción de la nueva propiedad y un json ejemplo con la misma.
 
 <a name="tablasref"></a>
 
@@ -586,7 +595,7 @@ A continuación, se detalla a modo orientativo, el contenido de cada uno de los 
 
 **01 - Factura - Efectivo**
 
-Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, mientras que a continuación se explican los campos de la sección "Pagos" correspondientes para la modalidad efectivo.
+Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, mientras que a continuación se explican las propiedades de la sección "Pagos" correspondientes para la modalidad efectivo.
 
 | Campo | Requerido | Descripción | Tipo de dato | Valores posibles/Ejemplos |
 |--- |--- |--- |--- |--- |
@@ -778,7 +787,7 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 
 **03 - Factura - Cheque**
 
-Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, mientras que a continuación se explican los campos de la sección "Pagos" correspondientes para la modalidad cheque.
+Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, mientras que a continuación se explican las propiedades de la sección "Pagos" correspondientes para la modalidad cheque.
 
 | Campo | Requerido | Descripción | Tipo de dato | Valores posibles/Ejemplos |
 |--- |--- |--- |--- |--- |
@@ -895,7 +904,7 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 
 **04 - Factura - Tarjeta**
 
-Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, mientras que a continuación se explican los campos de la sección "Pagos" correspondientes para la modalidad tarjeta.
+Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, mientras que a continuación se explican las propiedades de la sección "Pagos" correspondientes para la modalidad tarjeta.
 
 | Campo | Requerido | Descripción | Tipo de dato | Valores posibles/Ejemplos |
 |--- |--- |--- |--- |--- |
@@ -1027,9 +1036,9 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 
 **05 - Factura - Comprobante Electronico**
 
-Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, la única diferencia es que en el encabezado se agrega el campo cAE que se explica a continuación. Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
+Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, la única diferencia es que en el encabezado se agrega la propiedad cAE que se explica a continuación. Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
 
-El campo "fechaVtoCAE" se agregó a partir de la versión **T21 hotfix 4996** y en **T23** a partir del **hotfix 2975**.
+La propiedad "fechaVtoCAE" se agregó a partir de la versión **T21 hotfix 4996** y en **T23** a partir del **hotfix 2975**.
 
 
 | Campo | Requerido | Descripción | Tipo de dato | Valores posibles/Ejemplos |
@@ -1106,7 +1115,7 @@ El campo "fechaVtoCAE" se agregó a partir de la versión **T21 hotfix 4996** y 
 
 **06 - Nota de débito-crédito - Con comprobante de referencia**
 
-Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, la única diferencia es que en el encabezado se agregan tres campos vinculados al comprobante de referencia que se explican a continuación. Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
+Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, la única diferencia es que en el encabezado se agregan tres propiedades vinculadas al comprobante de referencia que se explican a continuación. Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
 
 | Campo | Requerido | Descripción | Tipo de dato | Valores posibles/Ejemplos |
 |--- |--- |--- |--- |--- |
@@ -1179,7 +1188,7 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 
 **07 - Nota de débito-crédito - Sin comprobante de referencia**
 
-Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, la única diferencia es que en el encabezado se encuentran los dos campos vinculados al comprobante de referencia que se explican a continuación y que para este caso el nro. de comprobante puede ser vacío y el campo comprobanteCanceladoCompletamente debe tener el valor "false" . Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
+Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, la única diferencia es que en el encabezado se encuentran dos propiedades vinculadas al comprobante de referencia que se explican a continuación. Para este caso el nro. de comprobante puede ser vacío y la propiedad comprobanteCanceladoCompletamente debe tener el valor "false" . Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
 
 | Campo | Requerido | Descripción | Tipo de dato | Valores posibles/Ejemplos |
 |--- |--- |--- |--- |--- |
@@ -1257,7 +1266,7 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 
 **08 - Factura - Con cliente ocasional**
 
-Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, pero existen las siguientes diferencias: en el encabezado se agrega un campo "mailDestinatario" y existe una nueva sección llamada "clienteOcasional", ambas diferencias se describen a continuación. Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
+Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, pero existen las siguientes diferencias: en el encabezado se agrega la propiedad "mailDestinatario" y existe una nueva sección llamada "clienteOcasional", ambas diferencias se describen a continuación. Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
 
 | Campo | Requerido | Descripción | Tipo de dato | Valores posibles/Ejemplos |
 |--- |--- |--- |--- |--- |
@@ -1458,7 +1467,7 @@ Los datos de encabezado e ítems son los explicados en los Tópicos Principal e 
 
 **10 - Factura - Items con descuento**
 
-Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, la única diferencia es que en la sección Ítems se agrega un campo de bonificación que se explica a continuación. Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
+Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, la única diferencia es que en la sección Ítems se agrega una propiedad de bonificación que se explica a continuación. Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
 
 | Campo | Requerido | Descripción | Tipo de dato | Valores posibles/Ejemplos |
 |--- |--- |--- |--- |--- |
@@ -1981,14 +1990,19 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 
 **15 - Factura - Moneda extranjera**
 
-Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, la única diferencia con respecto a los mismos es que en el encabezado se agregan dos campos vinculados a la moneda extranjera que se describen a continuación. Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
+Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, la única diferencia con respecto a los mismos es que en el encabezado se agregan dos propiedades vinculadas a la moneda extranjera que se describen a continuación. Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
 
-En este caso el campo "esMonedaExtranjera" debe tener el valor "true".
+En este caso la propiedad "esMonedaExtranjera" debe tener el valor "true".
+
+**Actualización por RG 5616/2024**
+
+Conforme a lo indicado en la sección "Novedades del JSON", a partir de los hotfix 4499 de delta 3 y 4098 de delta 4 y como consecuencia de la implementación de la RG 5616/2024 para la emisión de comprobantes en moneda extranjera se agregó la nueva propiedad "pagoMismaMonedaExtranjera" para indicar si el comprobante se abona o no en la misma moneda extranjera de emisión.
 
 | Campo | Requerido | Descripción | Tipo de dato | Valores posibles/Ejemplos |
 |--- |--- |--- |--- |--- |
 |cotizacion|No|Cotización de la moneda extranjera|Numérico de 22 dígitos con hasta 7 decimales. Usando el punto como separador de decimales.|En caso de que no se ingrese un valor o sea igual a cero entonces se utilizará el valor de parámetros de venta.|
 |totalMonedaExtranjera|Si|Total en moneda extranjera|Numérico de 22 dígitos con hasta 7 decimales. Usando el punto como separador de decimales.|>=0|
+|pagoMismaMonedaExtranjera|No|Indica si el comprobante se abona o no en la misma moneda extranjera de emisión.|De tipo lógico|True / false. Valor por defecto: false|
 
 **Json ejemplo**
 
@@ -1996,16 +2010,16 @@ En este caso el campo "esMonedaExtranjera" debe tener el valor "true".
 [
 	{
 		"codigoTipoComprobante": "FAC",
-		"numeroComprobante": "A0000100001116",
-		"codigoTalonario": "1",
-		"codigoCliente": "020025",
+		"numeroComprobante": "A7655700000055",
+		"codigoTalonario": "31",
+		"codigoCliente": "010001",
 		"codigoCondicionDeVenta": 1,
 		"numeroDeProyecto": "",
 		"codigoOperacionRG3685": "",
 		"codigoClasificacion": "",
-		"fechaComprobante": "2021-08-12",
-		"fechaCierreTesoreria": "2021-07-12",
-		"codigoListaPrecio": "2",
+		"fechaComprobante": "2025-05-28",
+		"fechaCierreTesoreria": "2025-05-01",
+		"codigoListaPrecio": "1",
 		"cotizacionVentas": null,
 		"leyendaCotizacion": "",
 		"codigoContracuenta": "20",
@@ -2019,14 +2033,15 @@ En este caso el campo "esMonedaExtranjera" debe tener el valor "true".
 		"leyenda4": "",
 		"leyenda5": "",
 		"esMonedaExtranjera" : true,
-		"cotizacion" : 62.56,
-		"total": 242,
-		"totalMonedaExtranjera": 3.87,
-		"totalSinImpuestos": 3.20,
+		"pagoMismaMonedaExtranjera":true,
+		"cotizacion" : 1072.78,
+		"total": 5320.99,
+		"totalMonedaExtranjera": 4.96,
+		"totalSinImpuestos": 4.10,
 		"totalExento": 0,
-		"totalIva": 0.67,
-		"subtotal": 242,
-		"subtotalSinImpuestos": 200,
+		"totalIva": 0.86,
+		"subtotal": 5320.99,
+		"subtotalSinImpuestos": 4400,
 		"rg3668TipoIdentificacionFirmante": null,
 		"rg3668CaracterDelFirmante": null,
 		"rg3668CodigoIdentificacionFirmante": "",
@@ -2034,22 +2049,22 @@ En este caso el campo "esMonedaExtranjera" debe tener el valor "true".
 		"rg3668CodigoWeb": "666",
 		"items": [
 			{
-				"codigo": "0200200033",
+				"codigo": "0200103852",
 				"codigoDeposito": "2",
 				"codigoTasaIva": "1",
-				"cantidad": 2,
-				"precio": 121,
+				"cantidad": 1,
+				"precio": 4400,
 				"bonificacion" : 0.00,
-				"importe": 3.86,
-				"importeSinImpuestos": 3.19,
-				"importeIva": 0.67
+				"importe": 4.96,
+				"importeSinImpuestos": 4.10,
+				"importeIva": 0.86
 			}
 		],
 		"pagos": [
 			{
 				"tipo" : "Efectivo",
-				"codigoDeCuenta": "1",
-				"monto": 3.87
+				"codigoDeCuenta": "4",
+				"monto": 4.96
 			}
 		]
 	}
@@ -2137,9 +2152,9 @@ Cabe aclarar que este caso es aplicable siempre y cuando se cuente con una licen
 
 **17 - Factura - Exportacion**
 
-Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, la diferencia con respecto a los mismos es que en el encabezado se agregan campos vinculados a la exportación que se describen a continuación. Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
+Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, la diferencia con respecto a los mismos es que en el encabezado se agregan propiedades vinculadas a la exportación que se describen a continuación. Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
 
-El campo cAE debe ser utilizado en el caso de que el comprobante sea electrónico.
+La propiedad cAE debe ser utilizada en el caso de que el comprobante sea electrónico.
 
 | Campo | Requerido | Descripción | Tipo de dato | Valores posibles/Ejemplos |
 |--- |--- |--- |--- |--- |
@@ -2220,9 +2235,9 @@ El campo cAE debe ser utilizado en el caso de que el comprobante sea electrónic
 
 **18 - Factura - Exportacion con permisos de embarco**
 
-Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, la única diferencia con respecto a los mismos es que en el encabezado se agregan campos vinculados a la exportación y una sección "PermisosEmbarque" que se describen a continuación. Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
+Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, la única diferencia con respecto a los mismos es que en el encabezado se agregan propiedades vinculadas a la exportación y una sección "PermisosEmbarque" que se describen a continuación. Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
 
-El campo cAE debe ser utilizado en el caso de que el comprobante sea electrónico.
+La propiedad cAE debe ser utilizada en el caso de que el comprobante sea electrónico.
 
 | Campo | Requerido | Descripción | Tipo de dato | Valores posibles/Ejemplos |
 |--- |--- |--- |--- |--- |
@@ -2313,9 +2328,9 @@ El campo cAE debe ser utilizado en el caso de que el comprobante sea electrónic
 
 **19 - Factura - Exportacion con remito tabaco**
 
-Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, la única diferencia con respecto a los mismos es que en el encabezado se agregan campos vinculados a la exportación y dos secciones "PermisosEmbarque" y "RemitosTabaco" que se describen a continuación. Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
+Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, la única diferencia con respecto a los mismos es que en el encabezado se agregan propiedades vinculadas a la exportación y dos secciones "PermisosEmbarque" y "RemitosTabaco" que se describen a continuación. Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
 
-El campo cAE debe ser utilizado en el caso de que el comprobante sea electrónico.
+La propiedad cAE debe ser utilizada en el caso de que el comprobante sea electrónico.
 
 | Campo | Requerido | Descripción | Tipo de dato | Valores posibles/Ejemplos |
 |--- |--- |--- |--- |--- |
