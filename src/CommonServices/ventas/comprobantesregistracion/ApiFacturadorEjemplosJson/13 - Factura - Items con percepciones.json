@@ -8,8 +8,8 @@
 		"numeroDeProyecto": "",
 		"codigoOperacionRG3685": "",
 		"codigoClasificacion": "",
-		"fechaComprobante": "2021-07-10",
-		"fechaCierreTesoreria": "2021-06-07",
+		"fechaComprobante": "2023-07-10",
+		"fechaCierreTesoreria": "2023-06-07",
 		"codigoListaPrecio": "2",
 		"cotizacionVentas": null,
 		"leyendaCotizacion": "",
@@ -25,11 +25,11 @@
 		"leyenda4": "ley4",
 		"leyenda5": "ley5",
 		"esMonedaExtranjera": false,
-		"total" : 126.79,
+		"total" : 129.79,
 		"totalSinImpuestos": 100.00,
 		"totalExento": 0.00,
-		"totalIva": 21.00,
-		"subtotal": 121.00,
+		"totalIva": 24.00,
+		"subtotal": 124.00,
 		"subtotalSinImpuestos": 100.00,
 		"descuentoPorcentaje": 0,
 		"descuentoMonto": 0,
@@ -63,6 +63,13 @@
 				"percepciones":
 				[
 					{
+						"codigoAlicuota": 12,
+						"codigoPercepcion": "",
+						"porcentaje": 3,
+						"base": 100.00,
+						"importe": 3
+					},
+					{
 						"codigoAlicuota": 51,
 						"codigoPercepcion": "",
 						"porcentaje": 1.5,
@@ -85,7 +92,7 @@
 				"codigoDeCuenta": "1",
 				"descuentoPorcentaje" : 0.00,
 				"recargoPorcentaje" : 0.00,
-				"monto": 126.79
+				"monto": 129.79
 			}
 		]
 	}
