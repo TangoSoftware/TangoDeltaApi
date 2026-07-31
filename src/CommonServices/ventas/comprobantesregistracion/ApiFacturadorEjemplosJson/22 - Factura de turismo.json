@@ -1,0 +1,86 @@
+[
+	{
+			"codigoTipoComprobante": "FAC",
+			"numeroComprobante": "T0000900000010",
+			"codigoTalonario": "12",
+			"codigoCliente": "HOLB",
+			"codigoCondicionDeVenta": 2,
+			"numeroDeProyecto": "",
+			"codigoOperacionRG3685": "0",
+			"codigoClasificacion": "",
+			"fechaComprobante": "2026-07-20",
+			"fechaCierreTesoreria": "2024-01-01",
+			"codigoListaPrecio": "2",
+			"cotizacionVentas": null,
+			"leyendaCotizacion": "",
+			"codigoContracuenta": "20",
+			"codigoDeposito": "01",
+			"codigoVendedor": "01",
+			"codigoAsiento": "",
+			"codigoFlete": "01",
+			"leyenda1": "",
+			"total": 100.00,
+			"totalSinImpuestos": 100.00,
+			"totalExento": 0.00,
+			"totalIva": 21.00,
+			"totalreintegroIVA": 10.00,
+			"subtotal": 121.00,
+			"subtotalSinImpuestos": 100.00,
+			"rg3668TipoIdentificacionFirmante": null,
+			"rg3668CaracterDelFirmante": null,
+			"rg3668CodigoIdentificacionFirmante": "",
+			"rg3668MotivoDeExcepcion": null,
+			"rg3668CodigoWeb": "666",
+			"rg3971IdPaisReceptor": "102",
+			"rg3971IdRelacionEmisorReceptor": "5",
+			"rg3971CuitHotel": "27-95696407-0",
+			"rg3971IdTipoFormaPagoTurismo":"3" ,
+			"rg3971CodigoSwift":"BBUBUS33XXX",
+			"rg3971NumeroCuenta":"11621270000000000000",
+			"rg3971NumeroTarjeta":"",
+			"rg3971IdTipoCuentaPagoTurismo": "1",
+			"datoturista": [
+				{
+					"nombreTurista": "Alejandro",
+					"codigoTipoIdentificacion": 96,
+					"numeroIdentificacion": "55555555",
+					"codigoPaisEmisor": "200",
+					"codigoPaisNacionalidad": "200",
+					"codigoPaisResidencia": "200"
+				}
+			],
+			"items": [
+			{
+				"codigo": "T02",
+				"codigoDeposito": "01",
+				"codigoTasaIva": "1",
+				"cantidad": 1,
+				"precio": 100,
+				"importe": 100,
+				"importeSinImpuestos": 100,
+				"importeIva": 21,
+				"fechaIngreso": "2026-07-14",
+				"unidad": 1,
+				"cantidadNoches": 1,
+				"cantidadPersonas": 1,
+				"impuestoInterno":
+				{
+					"codigo": 91,
+					"porcentaje": 0,
+					"importe": -21
+				}
+			}
+			],
+			"cuotasCuentaCorriente" :
+			[
+			{
+				"fechaVencimiento": "2026-07-01",
+				"importe" : 50
+			},
+			{
+				"fechaVencimiento": "2026-08-01",
+				"importe" : 50
+			}
+			]
+	}
+]

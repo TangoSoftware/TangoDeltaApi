@@ -29,6 +29,8 @@ Tango Software - API Facturador
 	- [18 - Factura - Exportacion con permisos de embarco](#ej18)
 	- [19 - Factura - Exportacion con remito tabaco](#ej19)
 	- [20 - Factura - Artículo con más de una descripción adicional](#ej20)
+	- [21 - Nota de débito-crédito - Solo impuestos](#ej21)
+	- [22 - Factura Turismo](#ej22)
 		
 <a name="instalacion"></a>
 
@@ -84,8 +86,33 @@ En el archivo PreferenciasPOS.xml también se encuentra el parámetro << ApiRequ
 
 ## Registración de comprobantes API
 
+La URL para invocar el servicio depende de la forma de acceso.
+
+### Acceso mediante la red local
+
+Si el servicio se utiliza desde la red local, la URL debe formarse de la siguiente manera:
+
+```
+http://[Servidor o IP]:[Puerto]/FacturadorVenta/registrar
+```
+
 **Ejemplo de URL del servicio de API para comprobantes:**
+```
 http://tango:17000/FacturadorVenta/registrar
+```
+
+### Acceso mediante Tango Connect
+
+Si el servicio se utiliza a través de Tango Connect, la URL debe formarse de la siguiente manera:
+
+```
+http://[Número de llave].connect.axoft.com/Api/FacturadorVenta/registrar
+```
+
+**Ejemplo de URL del servicio para Tango Connect:**
+```
+http://00000X-XXX.connect.axoft.com/Api/FacturadorVenta/registrar
+```
 
 ### Notificaciones
 
@@ -125,7 +152,7 @@ Ejemplo 2
 **Aclaración**
 - La propiedad "Message" muestra un mensaje generico informando si el comprobante fue registrado correctamente o no.
 - La propiedad "Comprobantes" contiene a las siguientes propiedades:
-	+ "numeroComprobante": Indica el tipo y nro. de comprobante leído del json.
+	+ "numeroComprobante": Indica el tipo y nro. de comprobante leído del JSON.
 	+ "estado": Indica "Ok" si el comprobante se registro correctamente o "Error" en caso contrario.
 	+ "exceptionMessage": Muestra algún mensaje de excepción al registrar el comprobante.
 	+ "mensaje": Vacío en caso de que el comprobante se registre correctamente y en el caso de que haya ocurrido un error se mostrará la descripción del mismo.
@@ -139,7 +166,7 @@ A continuación, se detalla a modo orientativo, el contenido de cada uno de los 
 
 **Tópico principal - Encabezado**
 
-| Campo | Requerido | Descripción | Tipo de dato | Valores posibles/Ejemplos |
+| Propiedad | Requerido | Descripción | Tipo | Observaciones |
 |--- |--- |--- |--- |--- |
 |codigoTipoComprobante|Si|Código de tipo de comprobante|Alfanumérico de 3 carácteres|FAC, CDE, CIN, DIN, N/D, CDC, DDC, CDP, NDM, AJD, AJC|
 |numeroComprobante|Si|Número de comprobante|Alfanumérico de hasta 14 carácteres|El número es único y no debe repetirse, con lo cual el nro. a registrar no debe estar registrado para otro comprobante.|
@@ -194,7 +221,7 @@ A continuación, se detalla a modo orientativo, el contenido de cada uno de los 
 
 **Tópico ítems**
 
-| Campo | Requerido | Descripción | Tipo de dato | Valores posibles/Ejemplos |
+| Propiedad | Requerido | Descripción | Tipo | Observaciones |
 |--- |--- |--- |--- |--- |
 |Codigo|Si|Código del artículo|Alfanumérico de hasta 15 carácteres||
 |descargaStock|No|Indica si el item descarga stock o no|De tipo lógico|True/false. Si no se ingresa ningún valor para esta propiedad entonces se toma el valor que ya se encuentre registrado en la base de datos para el artículo en cuestión.|
@@ -228,9 +255,54 @@ A continuación, se detalla a modo orientativo, el contenido de cada uno de los 
 |Z| Exportaciones a zona franca|
 |T| Reintegro decreto 1043/2016|
 
+<a name="RG3971"></a>
+
+**Relación Emisor - Receptor RG3971**
+
+| ID |Código | Descripción |
+|--- |---|---|
+| 1  |0001|Alojamiento directo a turista no residente (Persona física o jurídica)|
+| 2  |0002|Alojamiento a agencia de viaje residente|
+| 3  |0003|Alojamiento a agencia de viaje no residente|
+| 4  |0004|Agencia de viaje residente a agencia de viaje no residente|
+| 5  |0005|Agencia de viaje residente a turista no residente (Persona física o jurídica)|
+| 6  |0006|Agencia de viaje residente a agencia de viaje residente|
+
+<a name="IdentificacionTurista"></a>
+
+**Tipo de identificacion turista**
+
+| Código | Descripción |
+|---|---|
+|80| CUIT|
+|91| C.I. Extranjera|
+|94| Pasaporte|
+|96| DNI|
+
+<a name="FormaPagoTurismo"></a>
+
+**Tipo forma de pago turismo**
+
+| Código | Descripción |
+|---|---|
+|1| Tarjeta de crédito|
+|2| Tarjeta de débito|
+|3| Transferencia bancaria|
+
+<a name="TipoCuenta"></a>
+
+**Tipo Cuenta turismo**
+
+| Código | Descripción |
+|---|---|
+|1| Caja de ahorro|
+|2| Cuenta corriente|
+|3| Cuenta única|
+
 <a name="motivosnc"></a>
 
 **Motivos NC**
+
 | Código | Descripción |
 |---|---|
 |1| Devolución de mercadería|
@@ -241,19 +313,25 @@ A continuación, se detalla a modo orientativo, el contenido de cada uno de los 
 <a name="responsabilidadiva"></a>
 
 **Responsabilidad ante IVA**
+
 | Código | Descripción |
 |---|---|
-|0| Responsable Inscripto|
-|1| Consumidor Final|
-|2| Monotributo|
+|1| Responsable Inscripto|
+|2| Consumidor Final|			
 |3| Inscripto No Responsable|
-|4|IVA Exento Operacion De Exportacion|
-|5|Exento|
-|6|Sujeto No Categorizado|
+|4| Monotributo|
+|5| Exento|
+|9| IVA Exento Operacion De Exportacion|
+|10| Sujeto No Categorizado|
+|11| IVA No Alcanzado|
+
+>**Aclaración:** 
+Si se informa un código distinto de los contemplados en la tabla, será considerado como **Consumidor Final**.
 
 <a name="codigosincoterms"></a>
 
 **Códigos Incoterms**
+
 | Código | Descripción |
 |---|---|
 |EXW| Ex Works / en fábrica|
@@ -580,15 +658,19 @@ A continuación, se detalla a modo orientativo, el contenido de cada uno de los 
 
 <a name="ejemplosjson"></a>
 
-### Ejemplos de JSON de un comprobante
+## Ejemplos de JSON de un comprobante
 
 <a name="ej1"></a>
 
-**01 - Factura - Efectivo**
+### 01 - Factura - Efectivo
+
+**Descripción**
 
 Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, mientras que a continuación se explican los campos de la sección "Pagos" correspondientes para la modalidad efectivo.
 
-| Campo | Requerido | Descripción | Tipo de dato | Valores posibles/Ejemplos |
+**Propiedades nuevas o modificadas**
+
+| Propiedad | Requerido | Descripción | Tipo | Observaciones |
 |--- |--- |--- |--- |--- |
 |Tipo|Si|Modalidad de pago|Alfanúmerico||
 |codigoDeCuenta|Si|Código de cuenta|Numérico de tipo entero||
@@ -596,7 +678,7 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 |recargoPorcentaje|No|Porcentaje de recargo|Numérico con 22 dígitos con hasta 7 decimales. Usando el punto como separador de decimales.|>=0|
 |monto|Si|Monto pagado|Numérico con 22 dígitos con hasta 7 decimales. Usando el punto como separador de decimales.|>=0|
 
-**Json ejemplo**
+**JSON ejemplo**
 
 ```json
 [
@@ -681,17 +763,21 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 
 <a name="ej2"></a>
 
-**02 - Factura - Cuenta corriente**
+### 02 - Factura - Cuenta corriente**
+
+**Descripción**
 
 Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, en este caso no hay una sección de "Pagos" pero si existe una sección de cuotasCuentaCorriente que se describe a continuación.
 
-| Campo | Requerido | Descripción | Tipo de dato | Valores posibles/Ejemplos |
+**Propiedades nuevas o modificadas**
+
+| Propiedad | Requerido | Descripción | Tipo | Observaciones |
 |--- |--- |--- |--- |--- |
 |**Cuotas cuenta corriente**|||||
 |Fecha de vencimiento|Si|Fecha de vencimiento de la cuota|Date|yyyy-mm-dd|
 |Importe|Si|Importe de cuota|Numérico con 22 dígitos con hasta 7 decimales. Usando el punto como separador de decimales.||
 
-**Json ejemplo**
+**JSON ejemplo**
 
 ```json
 [
@@ -776,11 +862,15 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 
 <a name="ej3"></a>
 
-**03 - Factura - Cheque**
+### 03 - Factura - Cheque
+
+**Descripción**
 
 Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, mientras que a continuación se explican los campos de la sección "Pagos" correspondientes para la modalidad cheque.
 
-| Campo | Requerido | Descripción | Tipo de dato | Valores posibles/Ejemplos |
+**Propiedades nuevas o modificadas**
+
+| Propiedad | Requerido | Descripción | Tipo | Observaciones |
 |--- |--- |--- |--- |--- |
 |**pagos**|||||
 |Tipo|Si|Modalidad de pago|Alfanúmerico||
@@ -800,7 +890,7 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 |recargoPorcentaje|No|Porcentaje de recargo|Numérico con 22 dígitos con hasta 7 decimales. Usando el punto como separador de decimales.|>=0|
 |Monto|Si|Monto pagado|Numérico con 22 dígitos con hasta 7 decimales. Usando el punto como separador de decimales.|>=0|
 
-**Json ejemplo**
+**JSON ejemplo**
 
 ```json
 [
@@ -893,11 +983,15 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 
 <a name="ej4"></a>
 
-**04 - Factura - Tarjeta**
+### 04 - Factura - Tarjeta
+
+**Descripción**
 
 Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, mientras que a continuación se explican los campos de la sección "Pagos" correspondientes para la modalidad tarjeta.
 
-| Campo | Requerido | Descripción | Tipo de dato | Valores posibles/Ejemplos |
+**Propiedades nuevas o modificadas**
+
+| Propiedad | Requerido | Descripción | Tipo | Observaciones |
 |--- |--- |--- |--- |--- |
 |pagos|||||
 |tipo|Si|Modalidad de pago|Alfanúmerico||
@@ -925,7 +1019,7 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 |leyendaOperacion|No|Leyenda de la operación|Alfanumérico de hasta 60 carácteres||
 |monto|Si|Monto de la operación|Numérico con 22 dígitos con hasta 7 decimales. Usando el punto como separador de decimales.|>=0|
 
-**Json ejemplo**
+**JSON ejemplo**
 
 ```json
 [
@@ -1025,20 +1119,21 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 
 <a name="ej5"></a>
 
-**05 - Factura - Comprobante Electronico**
+### 05 - Factura - Comprobante Electronico
+
+**Descripción**
 
 Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, la única diferencia es que en el encabezado se agrega el campo cAE que se explica a continuación. Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
 
-El campo "fechaVtoCAE" se agregó a partir de la versión **T21 hotfix 4996** y en **T23** a partir del **hotfix 2975**.
+**Propiedades nuevas o modificadas**
 
-
-| Campo | Requerido | Descripción | Tipo de dato | Valores posibles/Ejemplos |
+| Propiedad | Requerido | Descripción | Tipo | Observaciones |
 |--- |--- |--- |--- |--- |
 |**Encabezado**|||||
 |cAE|Si|Código de Autorización Electrónico otorgado por AFIP|Alfanumérico de 14 carácteres||
 |fechaVtoCAE|No|Fecha de vencimiento del CAE|Date|Yyyy-mm-dd|
 
-**Json ejemplo**
+**JSON ejemplo**
 
 ```json
 [
@@ -1104,18 +1199,22 @@ El campo "fechaVtoCAE" se agregó a partir de la versión **T21 hotfix 4996** y 
 
 <a name="ej6"></a>
 
-**06 - Nota de débito-crédito - Con comprobante de referencia**
+### 06 - Nota de débito-crédito - Con comprobante de referencia
+
+**Descripción**
 
 Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, la única diferencia es que en el encabezado se agregan tres campos vinculados al comprobante de referencia que se explican a continuación. Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
 
-| Campo | Requerido | Descripción | Tipo de dato | Valores posibles/Ejemplos |
+**Propiedades nuevas o modificadas**
+
+| Propiedad | Requerido | Descripción | Tipo | Observaciones |
 |--- |--- |--- |--- |--- |
 |**Encabezado**|||||
 |codigoTipoComprobanteDeReferencia|Si|Código de tipo de comprobante de referencia|Alfanumérico de 3 carácteres|FAC, CDE, CIN, DIN, N/D, CDC, DDC, CDP, NDM, AJD, AJC|
 |numeroDeComprobanteDeReferencia|Si|Número de comprobante de referencia|Alfanumérico de 14 carácteres||
 |comprobanteCanceladoCompletamente|Si|Indica si el comprobante de referencia es cancelado completamente o no|De tipo lógico|True / false|
 
-**Json ejemplo**
+**JSON ejemplo**
 
 ```json
 [
@@ -1177,17 +1276,25 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 
 <a name="ej7"></a>
 
-**07 - Nota de débito-crédito - Sin comprobante de referencia**
+### 07 - Nota de débito-crédito - Sin comprobante de referencia
+
+**Descripción**
 
 Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, la única diferencia es que en el encabezado se encuentran los dos campos vinculados al comprobante de referencia que se explican a continuación y que para este caso el nro. de comprobante puede ser vacío y el campo comprobanteCanceladoCompletamente debe tener el valor "false" . Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
 
-| Campo | Requerido | Descripción | Tipo de dato | Valores posibles/Ejemplos |
+**Propiedades nuevas o modificadas**
+
+| Propiedad | Requerido | Descripción | Tipo | Observaciones |
 |--- |--- |--- |--- |--- |
 |**Encabezado**|||||
 |numeroDeComprobanteDeReferencia|No|Número de comprobante de referencia|Alfanumérico de 14 carácteres||
 |comprobanteCanceladoCompletamente|No|Indica si el comprobante de referencia es cancelado completamente o no|De tipo lógico|True / false|
+|fechaDesdeReferencia|No|Indica la fecha de inicio del período que está ajustando|Date|yyyy-mm-dd|
+|fechaHastaReferencia|No|Indica la fecha de fin del período que está ajustando|Date|yyyy-mm-dd|
 
-**Json ejemplo**
+>**Aclaración:** Para comprobantes electrónicos de Nota de débito o crédito, si no se informa las propiedades "cAE" y "fechaVtoCAE", se debe indicar el período que se está ajustando mediante las propiedades "fechaDesdeReferencia" y "fechaHastaReferencia".
+
+**JSON ejemplo**
 
 ```json
 [
@@ -1200,8 +1307,8 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 		"numeroDeProyecto": "",
 		"codigoOperacionRG3685": "",
 		"codigoClasificacion": "",
-		"fechaComprobante": "2021-08-12",
-		"fechaCierreTesoreria": "2021-07-12",
+		"fechaComprobante": "2023-08-12",
+		"fechaCierreTesoreria": "2023-07-12",
 		"codigoListaPrecio": "2",
 		"cotizacionVentas": null,
 		"codigoContracuenta": "20",
@@ -1211,6 +1318,8 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 		"idMotivo" : "03",
 		"numeroDeComprobanteDeReferencia": "",
 		"comprobanteCanceladoCompletamente" : false,
+		"fechaDesdeReferencia": "2023-08-01",
+        "fechaHastaReferencia": "2023-08-28",
 		"leyenda1": "",
 		"leyenda2": "",
 		"leyenda3": "",
@@ -1255,11 +1364,15 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 
 <a name="ej8"></a>
 
-**08 - Factura - Con cliente ocasional**
+### 08 - Factura - Con cliente ocasional
+
+**Descripción**
 
 Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, pero existen las siguientes diferencias: en el encabezado se agrega un campo "mailDestinatario" y existe una nueva sección llamada "clienteOcasional", ambas diferencias se describen a continuación. Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
 
-| Campo | Requerido | Descripción | Tipo de dato | Valores posibles/Ejemplos |
+**Propiedades nuevas o modificadas**
+
+| Propiedad | Requerido | Descripción | Tipo | Observaciones |
 |--- |--- |--- |--- |--- |
 |**Encabezado**|||||
 |mailDestinatario|No|Correo electrónico del destinatario|Alfanumérico de hasta 60 carácteres||
@@ -1286,7 +1399,7 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 |paisEntrega|No|País del domicilio de entrega|Alfanumérico de hasta 100 carácteres||
 |telefonoEntrega|No|Teléfono del domicilio de entrega|Alfanumérico de hasta 100 carácteres||
 
-**Json ejemplo**
+**JSON ejemplo**
 
 ```json
 [
@@ -1377,11 +1490,13 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 
 <a name="ej9"></a>
 
-**09 - Factura - Con descuentos y recargos**
+### 09 - Factura - Con descuentos y recargos
+
+**Descripción**
 
 Los datos de encabezado e ítems son los explicados en los Tópicos Principal e Ítems, mientras que la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
 
-**Json ejemplo**
+**JSON ejemplo**
 
 ```json
 [
@@ -1456,16 +1571,20 @@ Los datos de encabezado e ítems son los explicados en los Tópicos Principal e 
 
 <a name="ej10"></a>
 
-**10 - Factura - Items con descuento**
+### 10 - Factura - Ítems con descuento
+
+**Descripción**
 
 Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, la única diferencia es que en la sección Ítems se agrega un campo de bonificación que se explica a continuación. Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
 
-| Campo | Requerido | Descripción | Tipo de dato | Valores posibles/Ejemplos |
+**Propiedades nuevas o modificadas**
+
+| Propiedad | Requerido | Descripción | Tipo | Observaciones |
 |--- |--- |--- |--- |--- |
 |**Ítems**|||||
 |bonificacion|No|Porcentaje de bonificación|Numérico de tipo entero|>=0|
 
-**Json ejemplo**
+**JSON ejemplo**
 
 ```json
 [
@@ -1548,11 +1667,15 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 
 <a name="ej11"></a>
 
-**11 - Factura - Items con impuestos internos**
+### 11 - Factura - Items con impuestos internos
+
+**Descripción**
 
 Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, la única diferencia es que se agregan dos secciones correspondientes a los impuestos internos: impuestoInterno e impuestoInternoAdicional que se describen a continuación. Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
 
-| Campo | Requerido | Descripción | Tipo de dato | Valores posibles/Ejemplos |
+**Propiedades nuevas o modificadas**
+
+| Propiedad | Requerido | Descripción | Tipo | Observaciones |
 |--- |--- |--- |--- |--- |
 |**Sección impuestoInterno**|||||
 |Codigo|Si|Código del impuesto|Numérico de tipo entero|>0|
@@ -1563,7 +1686,7 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 |Porcentaje|No|Porcentaje de alícuota|Numérico de 22 dígitos con hasta 7 decimales. Usando el punto como separador de decimales.|>=0|
 |importe|Si|Importe del impuesto|Numérico de 22 dígitos con hasta 7 decimales. Usando el punto como separador de decimales.|>=0|
 
-**Json ejemplo**
+**JSON ejemplo**
 
 ```json
 [
@@ -1658,13 +1781,15 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 
 <a name="ej12"></a>
 
-**12 - Factura - Items con kit fijo o variable**
+### 12 - Factura - Items con kit fijo o variable
+
+**Descripción**
 
 Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, la única diferencia es que en la sección Ítems se agregan tres secciones correspondientes a los "componentes" del kit y a las "partidas" y "series" de los artículos que corresponda. Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
 
-Aclaración: en este ejemplo la sección "componentes" si es obligatoria pero las secciones "partidas" y "series" solo deben estar presentes si alguno de los componentes del kit esta configurado para trabajar con partidas y series. En este caso, por ejemplo el artículo componente de código "030006527" no se encuentra en la sección de partidas y series.
+**Propiedades nuevas o modificadas**
 
-| Campo | Requerido | Descripción | Tipo de dato | Valores posibles/Ejemplos |
+| Propiedad | Requerido | Descripción | Tipo | Observaciones |
 |--- |--- |--- |--- |--- |
 |**Sección componentes**|||||
 |Codigo|Si|Código del artículo|Alfanumérico de hasta 15 carácteres||
@@ -1681,7 +1806,9 @@ Aclaración: en este ejemplo la sección "componentes" si es obligatoria pero la
 |**Sub-sección series**|||||
 |numero|Si|Numero de serie del artículo|Alfanumérico de hasta 30 carácteres||
 
-**Json ejemplo**
+>**Aclaración:** en este ejemplo la sección "componentes" si es obligatoria pero las secciones "partidas" y "series" solo deben estar presentes si alguno de los componentes del kit esta configurado para trabajar con partidas y series. En este caso, por ejemplo el artículo componente de código "030006527" no se encuentra en la sección de partidas y series.
+
+**JSON ejemplo**
 
 ```json
 [
@@ -1776,11 +1903,15 @@ Aclaración: en este ejemplo la sección "componentes" si es obligatoria pero la
 
 <a name="ej13"></a>
 
-**13 - Factura - Items con percepciones**
+### 13 - Factura - Ítems con percepciones
+
+**Descripción**
 
 Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, la única diferencia con respecto a los mismos es que se agrega una sección "Percepciones" que se explica a continuación. Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
 
-| Campo | Requerido | Descripción | Tipo de dato | Valores posibles/Ejemplos |
+**Propiedades nuevas o modificadas**
+
+| Propiedad | Requerido | Descripción | Tipo | Observaciones |
 |--- |--- |--- |--- |--- |
 |**Sub-sección percepciones**|||||
 |codigoAlicuota|Si|Código del impuesto|Numérico de tipo entero|>0|
@@ -1788,6 +1919,8 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 |porcentaje|No|Porcentaje de alícuota|Numérico de 22 dígitos con hasta 7 decimales. Usando el punto como separador de decimales.|>=0|
 |base|No|Base imponible|Numérico de 22 dígitos con hasta 7 decimales. Usando el punto como separador de decimales.|>=0|
 |importe|Si|Importe del impuesto|Numérico de 22 dígitos con hasta 7 decimales. Usando el punto como separador de decimales.|>=0|
+
+>**Aclaración:** Si informa una percepción de IVA en la sección "percepciones" de un ítem, su importe debe incluirse en la propiedad totalIva.
 
 **Json ejemplo**
 
@@ -1802,8 +1935,8 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 		"numeroDeProyecto": "",
 		"codigoOperacionRG3685": "",
 		"codigoClasificacion": "",
-		"fechaComprobante": "2021-07-10",
-		"fechaCierreTesoreria": "2021-06-07",
+		"fechaComprobante": "2023-07-10",
+		"fechaCierreTesoreria": "2023-06-07",
 		"codigoListaPrecio": "2",
 		"cotizacionVentas": null,
 		"leyendaCotizacion": "",
@@ -1819,11 +1952,11 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 		"leyenda4": "ley4",
 		"leyenda5": "ley5",
 		"esMonedaExtranjera": false,
-		"total" : 126.79,
+		"total" : 129.79,
 		"totalSinImpuestos": 100.00,
 		"totalExento": 0.00,
-		"totalIva": 21.00,
-		"subtotal": 121.00,
+		"totalIva": 24.00,
+		"subtotal": 124.00,
 		"subtotalSinImpuestos": 100.00,
 		"descuentoPorcentaje": 0,
 		"descuentoMonto": 0,
@@ -1856,6 +1989,12 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 				"importeIva": 21.00,
 				"percepciones":
 				[
+						"codigoAlicuota": 12,
+						"codigoPercepcion": "",
+						"porcentaje": 3,
+						"base": 100.00,
+						"importe": 3
+					},
 					{
 						"codigoAlicuota": 51,
 						"codigoPercepcion": "",
@@ -1879,7 +2018,7 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 				"codigoDeCuenta": "1",
 				"descuentoPorcentaje" : 0.00,
 				"recargoPorcentaje" : 0.00,
-				"monto": 126.79
+				"monto": 129.79
 			}
 		]
 	}
@@ -1888,11 +2027,15 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 
 <a name="ej14"></a>
 
-**14 - Factura - Items con series y partidas**
+### 14 - Factura - Ítems con series y partidas
+
+**Descripción**
 
 Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, la única diferencia es que en la sección Ítems se agregan dos secciones correspondientes a las "partidas" y "series" de los artículos que corresponda. Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
 
-| Campo | Requerido | Descripción | Tipo de dato | Valores posibles/Ejemplos |
+**Propiedades nuevas o modificadas**
+
+| Propiedad | Requerido | Descripción | Tipo | Observaciones |
 |--- |--- |--- |--- |--- |
 |**Sección items**|||||
 |**Sub-sección partidas**|||||
@@ -1901,7 +2044,7 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 |**Sub-sección series**|||||
 |numero|Si|Número de serie del artículo|Alfanumérico de hasta 30 carácteres||
 
-**Json ejemplo**
+**JSON ejemplo**
 
 ```json
 [
@@ -1979,18 +2122,23 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 
 <a name="ej15"></a>
 
-**15 - Factura - Moneda extranjera**
+### 15 - Factura - Moneda extranjera
+
+**Descripción**
 
 Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, la única diferencia con respecto a los mismos es que en el encabezado se agregan dos campos vinculados a la moneda extranjera que se describen a continuación. Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
 
-En este caso el campo "esMonedaExtranjera" debe tener el valor "true".
+**Propiedades nuevas o modificadas**
 
-| Campo | Requerido | Descripción | Tipo de dato | Valores posibles/Ejemplos |
+| Propiedad | Requerido | Descripción | Tipo | Observaciones |
 |--- |--- |--- |--- |--- |
 |cotizacion|No|Cotización de la moneda extranjera|Numérico de 22 dígitos con hasta 7 decimales. Usando el punto como separador de decimales.|En caso de que no se ingrese un valor o sea igual a cero entonces se utilizará el valor de parámetros de venta.|
 |totalMonedaExtranjera|Si|Total en moneda extranjera|Numérico de 22 dígitos con hasta 7 decimales. Usando el punto como separador de decimales.|>=0|
 
-**Json ejemplo**
+>**Aclaración:**
+En este caso la propiedad "esMonedaExtranjera" debe tener el valor "true".
+
+**JSON ejemplo**
 
 ```json
 [
@@ -2058,7 +2206,9 @@ En este caso el campo "esMonedaExtranjera" debe tener el valor "true".
 
 <a name="ej16"></a>
 
-**16 - Factura - Sin Tesorería**
+### 16 - Factura - Sin Tesorería
+
+**Descripción**
 
 Los datos de encabezado e ítems ya se encuentran explicados en los Tópicos Principal e Ítems. Lo que se destaca de este caso es que no existe una sección de pagos.
 Cabe aclarar que este caso es aplicable siempre y cuando se cuente con una licencia del sistema que no tenga el módulo de tesorería activado.
@@ -2135,13 +2285,15 @@ Cabe aclarar que este caso es aplicable siempre y cuando se cuente con una licen
 
 <a name="ej17"></a>
 
-**17 - Factura - Exportacion**
+### 17 - Factura - Exportacion
+
+**Descripción**
 
 Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, la diferencia con respecto a los mismos es que en el encabezado se agregan campos vinculados a la exportación que se describen a continuación. Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
 
-El campo cAE debe ser utilizado en el caso de que el comprobante sea electrónico.
+**Propiedades nuevas o modificadas**
 
-| Campo | Requerido | Descripción | Tipo de dato | Valores posibles/Ejemplos |
+| Propiedad | Requerido | Descripción | Tipo | Observaciones |
 |--- |--- |--- |--- |--- |
 |cAE|No|Código de Autorización Electrónico otorgado por AFIP|Alfanumérico de 14 carácteres||
 |CuitDestino|Si|Cuit destino de la exportación|Alfanumérico de 1 carácter|J/F|
@@ -2150,7 +2302,10 @@ El campo cAE debe ser utilizado en el caso de que el comprobante sea electrónic
 |CodigoIncoterms|Si|Código incoterms|Alfanumérico de 3 carácteres|Ver tablas de referencia, [Códigos Incoterms](#codigosincoterms)|
 |DescripcionIncoterms|No|Descripción del código incoterms|Alfanumérico de hasta 20 carácteres||
 
-**Json ejemplo**
+>**Aclaración:**
+La propiedad cAE debe ser utilizado en el caso de que el comprobante sea electrónico.
+
+**JSON ejemplo**
 
 ```json
 [
@@ -2218,13 +2373,15 @@ El campo cAE debe ser utilizado en el caso de que el comprobante sea electrónic
 
 <a name="ej18"></a>
 
-**18 - Factura - Exportacion con permisos de embarco**
+### 18 - Factura - Exportacion con permisos de embarco
+
+**Descripción**
 
 Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, la única diferencia con respecto a los mismos es que en el encabezado se agregan campos vinculados a la exportación y una sección "PermisosEmbarque" que se describen a continuación. Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
 
-El campo cAE debe ser utilizado en el caso de que el comprobante sea electrónico.
+**Propiedades nuevas o modificadas**
 
-| Campo | Requerido | Descripción | Tipo de dato | Valores posibles/Ejemplos |
+| Propiedad | Requerido | Descripción | Tipo | Observaciones |
 |--- |--- |--- |--- |--- |
 |cAE|No|Código de Autorización Electrónico otorgado por AFIP|Alfanumérico de 14 carácteres||
 |CuitDestino|Si|Cuit destino de la exportación|Alfanumérico de 1 carácter|J/F|
@@ -2236,8 +2393,10 @@ El campo cAE debe ser utilizado en el caso de que el comprobante sea electrónic
 |CodigoDespacho|Si|Código de despacho|Alfanumérico de 16 carácteres||
 |paisafip|Si|Código AFIP del País destino de las mercaderías|Numérico de tipo entero|Ver tablas de referencia, [Código Países AFIP](#codigopaises)|
 
+>**Aclaración:**
+La propiedad cAE debe ser utilizado en el caso de que el comprobante sea electrónico.
 
-**Json ejemplo**
+**JSON ejemplo**
 
 ```json
 [
@@ -2315,9 +2474,9 @@ El campo cAE debe ser utilizado en el caso de que el comprobante sea electrónic
 
 Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems, la única diferencia con respecto a los mismos es que en el encabezado se agregan campos vinculados a la exportación y dos secciones "PermisosEmbarque" y "RemitosTabaco" que se describen a continuación. Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
 
-El campo cAE debe ser utilizado en el caso de que el comprobante sea electrónico.
+**Propiedades nuevas o modificadas**
 
-| Campo | Requerido | Descripción | Tipo de dato | Valores posibles/Ejemplos |
+| Propiedad | Requerido | Descripción | Tipo | Observaciones |
 |--- |--- |--- |--- |--- |
 |cAE|No|Código de Autorización Electrónico otorgado por AFIP|Alfanumérico de 14 carácteres||
 |CuitDestino|Si|Cuit destino de la exportación|Alfanumérico de 1 carácter|J/F|
@@ -2333,7 +2492,10 @@ El campo cAE debe ser utilizado en el caso de que el comprobante sea electrónic
 |TipoRemito|No|Tipo de remito|Alfanumérico de 1 carácter||
 |CuitRemito|Si|Cuit del remito|Alfanumérico de 11 carácteres||
 
-**Json ejemplo**
+>**Aclaración:**
+La propiedad cAE debe ser utilizado en el caso de que el comprobante sea electrónico.
+
+**JSON ejemplo**
 
 ```json
 [
@@ -2414,13 +2576,15 @@ El campo cAE debe ser utilizado en el caso de que el comprobante sea electrónic
 
 <a name="ej20"></a>
 
-**20 - Factura - Artículo con más de una descripción adicional**
+### 20 - Factura - Artículo con más de una descripción adicional
+
+**Descripción**
 
 En el caso que se desee agregar a un artículo más de una descripción adicional entonces en la propiedad "descripcionAdicional" se deberá utilizar el salto de línea "\r\n".
 
 Cabe destacar que como se indicó en el tópico "Ítems" cada línea de descripción adicional puede contener hasta 20 carácteres.
 
-**Json ejemplo**
+**JSON ejemplo**
 
 ```json
 [
@@ -2499,6 +2663,224 @@ Cabe destacar que como se indicó en el tópico "Ítems" cada línea de descripc
 				"monto": 242.00
 			}
 		]
+	}
+]
+```
+<a name="ej21"></a>
+
+### 21 - Nota de débito-crédito - Solo impuestos
+
+**Descripción**
+
+Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems. En este caso, se incorpora la sección "Impuestos" cuyos campos se describen a continuación. El campo comprobanteCanceladoCompletamente debe tener el valor "false" . Por otro lado, la sección de pagos contiene datos de la modalidad de pago con efectivo ([01 - Factura - Efectivo](#ej1)).
+
+**Propiedades nuevas o modificadas**
+
+| Propiedad | Requerido | Descripción | Tipo | Observaciones |
+|--- |--- |--- |--- |--- |
+|**Sección Impuestos**|||||
+|tipo|Si|Indica si el impuesto corresponde a una alícuota o Percepción|Alfanumérico|Alícuota/Percepción|
+|esPercepcionDefinible|Si|Indica si se trata de una percepción definible o no|De tipo lógico|True / false|
+|porcentajeAlicuota|No|Porcentaje de la alícuota|Numérico con 22 dígitos con hasta 7 decimales. Usando el punto como separador de decimales.|>=0|
+|porcentajePercepcion|No|Porcentaje de la percepción|Numérico con 22 dígitos con hasta 7 decimales. Usando el punto como separador de decimales.|>=0|
+|descripcionAlicuota|No|Descripción de la alícuota|Alfanumérico de hasta 20 carácteres||
+|descripcionPercepcion|No|Descripción de la percepción|Alfanumérico de hasta 20 carácteres||
+|descripcionProvincia|No|Descripción de la provincia|Alfanumérico de hasta 20 carácteres||
+
+>**Aclaración:** En este tipo de comprobante de solo impuestos no se informan ítems. Si el impuesto corresponde a una percepción definible (esPercepcionDefinible = true), deberá informar las propiedades "codigoAlicuota" y "codigoPercepcion". Caso contrario, deberá informar unicamente "codigoAlicuota".
+
+**JSON ejemplo**
+```json
+[
+ {
+			"codigoTipoComprobante": "CDP",
+			"numeroComprobante": "A0000100000108",
+			"codigoTalonario": "1",
+			"codigoCliente": "010001",
+			"codigoCondicionDeVenta": 1,
+			"codigoContracuenta": "20",
+			"codigoListaPrecio": "1",
+			"fechaComprobante": "2026-05,
+			"numeroDeComprobanteDeReferencia",
+			"comprobanteCanceladoCompletamente" : false,
+			"codigoDeposito": "2",
+			"codigoVendedor": "3", 
+			"total": 23000.00,
+			"totalIva": 10000.00,
+			"impuestos": [
+				{
+					"codigoAlicuota": "1",
+					"descripcionAlicuota": "TASA GRAL.",
+					"codigoPercepcion": "",
+					"descripcionPercepcion": "",
+					"porcentajeAlicuota": 21.00,
+					"porcentajePercepcion": 0.00,
+					"importe": 10000.00,
+					"codigoProvincia": "",
+					"descripcionProvincia": "",
+					"tipo": "Alicuota",
+					"esPercepcionDefinible": false
+				},
+				{
+					"codigoAlicuota": "51",
+					"descripcionAlicuota": "PERCEP. INGR. BRUTOS",
+					"codigoPercepcion": "",
+					"descripcionPercepcion": "",
+					"porcentajeAlicuota": 1.50,
+					"porcentajePercepcion": 0.00,
+					"importe": 5000.00,
+					"codigoProvincia": "",
+					"descripcionProvincia": "",
+					"tipo": "Percepcion",
+					"esPercepcionDefinible": false
+				},
+				{
+					"codigoAlicuota": "1",
+					"descripcionAlicuota": "Alicuota RG",
+					"codigoPercepcion": "AR",
+					"descripcionPercepcion": "A.R.C.I.B.A REGIMEN GENERAL",
+					"porcentajeAlicuota": 0.0,
+					"porcentajePercepcion": 3.50,
+					"importe": 8000.00,
+					"codigoProvincia": "",
+					"descripcionProvincia": "",
+					"tipo": "Percepcion",
+					"esPercepcionDefinible": true
+				}
+			],
+			"pagos": [
+				{
+					"tipo": "Efectivo",
+					"codigoDeCuenta": "1",
+					"monto": 23000.00
+				}
+			]
+ }
+] 
+```
+
+<a name="ej22"></a>
+
+### 22 - Factura de turismo
+
+**Descripción**
+
+Los datos de encabezado e ítems se encuentran explicados en los Tópico Principal e Ítems. En este caso, se incorporan las propiedades correspondientes al régimen de Factura de Turismo (RG 3971), la sección "datoTurista" y nuevos campos en la sección "items", cuyos datos se describen a continuación.
+
+**Propiedades nuevas o modificadas**
+
+| Propiedad | Requerido | Descripción | Tipo | Observaciones |
+|--- |--- |--- |--- |--- |
+|**Encabezado**|||||
+|rg3971IdPaisReceptor|Si|Código AFIP del País|Numérico de tipo entero|Ver tablas de referencia, [Código Países AFIP](#codigopaises)|
+|rg3971IdRelacionEmisorReceptor|Si|Código correspondiente a la relación con el cliente según la tabla Relación-Cliente|Numérico de tipo entero|Ver tablas de referencia, [Relación Emisor - Receptor RG3971](#RG3971)|
+|rg3971CuitHotel|Si|CUIT del hotel|Alfanumérico de hasta 20 carácteres||
+|rg3971IdTipoFormaPagoTurismo|Si|Numérico de tipo entero |Forma de pago|Ver tablas de referencia, [Forma de Pago Turismo](#FormaPagoTurismo)|
+|rg3971NumeroTarjeta|No|Si la forma de pago seleccionada es 'Tarjeta de crédito' o 'Tarjeta de débito', complete este dato|Alfanumérico de hasta 20 carácteres||
+|rg3971NumeroCuenta|No|Si la forma de pago es 'Transferencia bancaria', complete este dato|Alfanumérico de hasta 20 carácteres||
+|rg3971IdTipoCuentaPagoTurismo|No|Si la forma de pago es 'Transferencia bancaria', complete este dato|Numérico con 22 dígitos|Ver tablas de referencia, [Tipo de Cuenta](#TipoCuenta)|
+|rg3971CodigoSwift|No|Si la forma de pago es 'Transferencia bancaria', complete este dato|Alfanumérico de hasta 20 carácteres||
+|**Sección items**|||||
+|fechaIngreso|No|Fecha de ingreso al hospedaje|Date|yyyy-mm-dd|
+|unidad|No|Cantidad de habitaciones o unidades funcionales|Alfanumérico de hasta 20 carácteres||
+|cantidadNoches|No|Cantidad de noches|Numérico con 22 dígitos |>=0|
+|cantidadPersonas|No|Cantidad de personas|Numérico con 22 dígitos |>=0|
+|**Sección datoturista**|||||
+|nombreTurista|No|Nombre del turista|Alfanumérico de hasta 20 carácteres||
+|codigoTipoIdentificacion|No|Tipo Identificación|Numérico con 22 dígitos|Ver tablas de referencia, [Tipo Identificacion Turista](#IdentificacionTurista)|
+|numeroIdentificacion|No|Identificación del turista|Alfanumérico de hasta 20 carácteres||
+|codigoPaisEmisor|No|Código AFIP del País|Numérico de tipo entero|Ver tablas de referencia, [Código Países AFIP](#codigopaises)|
+|codigoPaisNacionalidad|No|Código AFIP del País|Numérico de tipo entero|Ver tablas de referencia, [Código Países AFIP](#codigopaises)|
+|codigoPaisResidencia|No|Código AFIP del País|Numérico de tipo entero|Ver tablas de referencia, [Código Países AFIP](#codigopaises)|
+
+>**Aclaración:** Para las propiedades que requieren informar un país, utilice los códigos de la tabla Código Países AFIP. Para informar el reintegro de IVA, complete la sección "impuestoInterno" con el código 91 y el importe correspondiente
+
+**JSON ejemplo**
+```json
+[
+	{
+			"codigoTipoComprobante": "FAC",
+			"numeroComprobante": "T0000900000010",
+			"codigoTalonario": "12",
+			"codigoCliente": "HOLB",
+			"codigoCondicionDeVenta": 2,
+			"numeroDeProyecto": "",
+			"codigoOperacionRG3685": "0",
+			"codigoClasificacion": "",
+			"fechaComprobante": "2026-07-20",
+			"fechaCierreTesoreria": "2024-01-01",
+			"codigoListaPrecio": "2",
+			"cotizacionVentas": null,
+			"leyendaCotizacion": "",
+			"codigoContracuenta": "20",
+			"codigoDeposito": "01",
+			"codigoVendedor": "01",
+			"codigoAsiento": "",
+			"codigoFlete": "01",
+			"leyenda1": "",
+			"total": 100.00,
+			"totalSinImpuestos": 100.00,
+			"totalExento": 0.00,
+			"totalIva": 21.00,
+			"totalreintegroIVA": 10.00,
+			"subtotal": 121.00,
+			"subtotalSinImpuestos": 100.00,
+			"rg3668TipoIdentificacionFirmante": null,
+			"rg3668CaracterDelFirmante": null,
+			"rg3668CodigoIdentificacionFirmante": "",
+			"rg3668MotivoDeExcepcion": null,
+			"rg3668CodigoWeb": "666",
+			"rg3971IdPaisReceptor": "102",
+			"rg3971IdRelacionEmisorReceptor": "5",
+			"rg3971CuitHotel": "27-95696407-0",
+			"rg3971IdTipoFormaPagoTurismo":"3" ,
+			"rg3971CodigoSwift":"BBUBUS33XXX",
+			"rg3971NumeroCuenta":"11621270000000000000",
+			"rg3971NumeroTarjeta":"",
+			"rg3971IdTipoCuentaPagoTurismo": "1",
+			"datoturista": [
+				{
+					"nombreTurista": "Alejandro",
+					"codigoTipoIdentificacion": 96,
+					"numeroIdentificacion": "55555555",
+					"codigoPaisEmisor": "200",
+					"codigoPaisNacionalidad": "200",
+					"codigoPaisResidencia": "200"
+				}
+			],
+			"items": [
+			{
+				"codigo": "T02",
+				"codigoDeposito": "01",
+				"codigoTasaIva": "1",
+				"cantidad": 1,
+				"precio": 100,
+				"importe": 100,
+				"importeSinImpuestos": 100,
+				"importeIva": 21,
+				"fechaIngreso": "2026-07-14",
+				"unidad": 1,
+				"cantidadNoches": 1,
+				"cantidadPersonas": 1,
+				"impuestoInterno":
+				{
+					"codigo": 91,
+					"porcentaje": 0,
+					"importe": -21
+				}
+			}
+			],
+			"cuotasCuentaCorriente" :
+			[
+			{
+				"fechaVencimiento": "2026-07-01",
+				"importe" : 50
+			},
+			{
+				"fechaVencimiento": "2026-08-01",
+				"importe" : 50
+			}
+			]
 	}
 ]
 ```
