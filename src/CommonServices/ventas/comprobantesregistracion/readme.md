@@ -2702,7 +2702,7 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 			"codigoContracuenta": "20",
 			"codigoListaPrecio": "1",
 			"fechaComprobante": "2026-07-10",
-			"numeroDeComprobanteDeReferencia",
+			"numeroDeComprobanteDeReferencia": "",
 			"comprobanteCanceladoCompletamente" : false,
 			"codigoDeposito": "2",
 			"codigoVendedor": "3", 
