@@ -1989,6 +1989,7 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 				"importeIva": 21.00,
 				"percepciones":
 				[
+					{
 						"codigoAlicuota": 12,
 						"codigoPercepcion": "",
 						"porcentaje": 3,
@@ -2700,7 +2701,7 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 			"codigoCondicionDeVenta": 1,
 			"codigoContracuenta": "20",
 			"codigoListaPrecio": "1",
-			"fechaComprobante": "2026-05,
+			"fechaComprobante": "2026-07-10",
 			"numeroDeComprobanteDeReferencia",
 			"comprobanteCanceladoCompletamente" : false,
 			"codigoDeposito": "2",
@@ -2793,7 +2794,7 @@ Los datos de encabezado e ítems se encuentran explicados en los Tópico Princip
 |codigoPaisNacionalidad|No|Código AFIP del País|Numérico de tipo entero|Ver tablas de referencia, [Código Países AFIP](#codigopaises)|
 |codigoPaisResidencia|No|Código AFIP del País|Numérico de tipo entero|Ver tablas de referencia, [Código Países AFIP](#codigopaises)|
 
->**Aclaración:** Para las propiedades que requieren informar un país, utilice los códigos de la tabla Código Países AFIP. Para informar el reintegro de IVA, complete la sección "impuestoInterno" con el código 91 y el importe correspondiente
+>**Aclaración:** Para las propiedades que requieren informar un país, utilice los códigos de la tabla Código Países AFIP. Para informar el reintegro de IVA, complete la sección "impuestoInterno" con el código 91 y el importe correspondiente.
 
 **JSON ejemplo**
 ```json
